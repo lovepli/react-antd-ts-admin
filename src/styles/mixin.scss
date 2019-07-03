@@ -1,0 +1,13 @@
+// 混合器
+
+// 清除浮动
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: block;
+    visibility: hidden;
+    height: 0;
+    line-height: 0;
+    clear: both;
+  }
+}
