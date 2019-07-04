@@ -5,6 +5,7 @@ import './Login.less';
 import { login } from '@/api/account';
 import { connect } from 'react-redux';
 import { saveToken } from '@/store/account/action'
+import { createVerification } from '@/utils/utils';
 
 interface ILoginProps extends FormComponentProps {
   saveToken: (token: string) => void;
@@ -14,6 +15,26 @@ interface ILoginProps extends FormComponentProps {
 
 
 class Login extends React.Component<ILoginProps, any> {
+
+  public canvas: any;
+
+  public readonly state = {
+    varificationCode: ''
+  }
+
+  public componentDidMount() {
+    this.createVerification();
+  }
+
+  // 创建验证码
+  public createVerification = () => {
+    this.setState({
+      varificationCode: createVerification(this.canvas)
+    })
+    console.log(this.state.varificationCode)
+  }
+
+  // 登录
   public handleSubmit = (e: React.MouseEvent) => {
     e.preventDefault();
     this.props.form.validateFields((error, values) => {
@@ -33,7 +54,7 @@ class Login extends React.Component<ILoginProps, any> {
         <div className="login">
           <div className="login-title">后台管理系统</div>
           <Form labelAlign="left" onSubmit={this.handleSubmit}>
-            <Form.Item label="账号：">
+            <Form.Item>
               {
                 getFieldDecorator('username', {
                   initialValue: 'admin',
@@ -50,7 +71,7 @@ class Login extends React.Component<ILoginProps, any> {
               }
             </Form.Item>
 
-            <Form.Item label="密码：">
+            <Form.Item>
               {
                 getFieldDecorator('password', {
                   initialValue: 'admin123456',
@@ -71,6 +92,24 @@ class Login extends React.Component<ILoginProps, any> {
               }
             </Form.Item>
 
+            <Form.Item>
+              {
+                getFieldDecorator('verification', {
+                  initialValue: '',
+                  rules: [{
+                    required: true,
+                    message: '验证码不能为空！'
+                  }],
+                })(
+                  <Input
+                    prefix={<Icon type="property-safety" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    placeholder="请输入验证码"
+                  />,
+                )
+              }
+            </Form.Item>
+
+            <canvas onClick={this.createVerification} width="80" height='39' ref={el => this.canvas = el} />
             <Form.Item>
               <Button type="primary" htmlType="submit" block={true}>登录</Button>
             </Form.Item>

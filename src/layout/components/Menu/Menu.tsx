@@ -46,8 +46,13 @@ function YGMenu() {
       <Menu.Item key="6">
         <NavLink path="/structure" icon="pie-chart" title="组织架构" />
       </Menu.Item>
-    </Menu>
-  )
-}
 
-export default YGMenu;
+
+        <Menu.Item key="7">
+          <NavLink path="/user" icon="user" title="用户管理" />
+        </Menu.Item>
+      </Menu>
+      )
+    }
+
+    export default YGMenu;

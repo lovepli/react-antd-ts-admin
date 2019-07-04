@@ -8,7 +8,8 @@ const ArticleDetail = lazy(() => import( /* webpackChunkName:"ArticleDetail" */ 
 const Component = lazy(() => import( /* webpackChunkName:"Component" */ '@/pages/Component'));
 const Structure = lazy(() => import( /* webpackChunkName:"Structure" */ '@/pages/structure/Page'));
 const NotFound = lazy(() => import( /* webpackChunkName:"NotFound" */ '@/pages/Error/NotFound'));
-const Layout = React.lazy(() => import( /* webpackChunkName:"layout" */ '@/layout'));
+const User = lazy(() => import( /* webpackChunkName:"Home" */ '@/pages/User'));
+
 
 const routes: RouteProps[] = [{
   path: '/',
@@ -34,6 +35,10 @@ const routes: RouteProps[] = [{
   path: '/structure',
   exact: true,
   component: Structure
+}, {
+  path: '/user',
+  exact: true,
+  component: User
 }, {
   path: '*',
   exact: true,
