@@ -263,8 +263,8 @@ class EditorForm extends React.Component<IEditorFormProps> {
           <Button type="primary" onClick={this.handleCancle}>取消</Button>
           <Button type="primary" htmlType="submit" style={{ marginLeft: "20px" }}>保存</Button>
         </Form.Item>
-
       </Form>
+
     );
   }
 }

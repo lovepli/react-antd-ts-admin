@@ -107,3 +107,25 @@ export const createVerification = (canvas: any): string => {
   }
   return verificationCode;
 }
+
+
+/**
+ * 滚动
+ * @param {HTMLDOM} element  要滚动的元素
+ * @param {Number} target    目标位置
+ * @param {Number} interval  间隔时间
+ */
+export const scroll = (element: any, target: number, interval: number) => {
+  clearInterval(element.timer);
+  element.timer = setInterval(() => {
+    const currentPosition = element.scrollTop;
+    const distance = target - currentPosition;
+    const step = distance / 10;
+    if (Math.abs(distance) > 1) {
+      element.scrollTop = currentPosition + step;
+    } else {
+      clearInterval(element.timer);
+      element.scrollTop = target;
+    }
+  }, interval);
+}

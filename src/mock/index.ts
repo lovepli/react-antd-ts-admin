@@ -16,5 +16,5 @@ Mock.XHR.prototype.send = function () {
 
 Mock.mock(/login/, 'post', account.login);
 
-Mock.mock(/\/user\/userList/, 'post', user.getUserList);
-Mock.mock(/\/user\/userDetail/, 'post', user.getUserDetail);
+Mock.mock(/\/user\/userList/, 'post', user.getList);
+Mock.mock(/\/user\/userDetail/, 'post', user.getDetail);

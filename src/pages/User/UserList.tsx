@@ -1,17 +1,27 @@
 import React from 'react';
 import { Button, Modal, Popconfirm } from 'antd';
-import CURDTable from '@/components/CURDTable';
-import CURDModal from '@/components/CURDModal';
-import { getUserList } from '@/api/user';
+import CURDTable from './components/CURDTable';
+import CURDEdit from './components/CURDEdit';
+import CURDHeader from './components/CURDHeader';
+import './UserList.less';
+
+import { scroll } from '@/utils/utils';
+import { getList } from '@/api/user';
+import { TypeMap } from '@/assets/typeMap';
+const genderMap = TypeMap.gender;
+const roleMap = TypeMap.role;
 
 
 class UserList extends React.Component {
 
   public state = {
+    tableData: [],
     tableLoading: false,
     total: 0,
-    tableData: [],
-    visibleModal: false,
+    selectedRows: [],
+    editVisible: false,
+    editKey: '',
+    detail: {}
   }
 
   public queryCondition = {
@@ -35,12 +45,12 @@ class UserList extends React.Component {
     key: 'gender',
     filters: [
       {
-        text: '男',
-        value: '男',
+        text: genderMap['1'],
+        value: genderMap['1'],
       },
       {
-        text: '女',
-        value: '女',
+        text: genderMap['2'],
+        value: genderMap['2'],
       },
     ],
     filterMultiple: false,
@@ -55,7 +65,7 @@ class UserList extends React.Component {
     width: 200,
     render: (text: string, record: any) => (
       <Button.Group>
-        <Button type="primary" onClick={() => this.handleDetail(record.key)}>修改</Button>
+        <Button type="primary" onClick={() => this.handleEdit(record.key)}>修改</Button>
         <Popconfirm
           title={`确认删除用户${record.name}?`}
           onConfirm={() => this.handleDelete([record])}
@@ -69,66 +79,67 @@ class UserList extends React.Component {
   }];
 
   public componentDidMount() {
-    this.getUserList();
+    this.getList();
   }
 
-  public getUserList = () => {
+  public getList = () => {
     this.setState({
       tableLoading: true
     })
-    getUserList(this.queryCondition).then((res) => {
-      const data = res.data.userList.map((item: any) => ({
+    getList(this.queryCondition).then((res) => {
+      const data = res.data.list.map((item: any) => ({
+        ...item,
         key: item.id,
-        name: item.name,
-        age: item.age,
-        gender: item.gender,
-        role: item.role
-      }))
+        gender: genderMap[item.gender],
+        role: item.role.map(item => roleMap[item]).join(',')
+      }));
       this.setState({
         tableLoading: false,
         tableData: data,
-        total: res.data.userAmount,
+        total: res.data.total,
       })
     })
   }
 
   public handleSearch = (value: string) => {
     this.queryCondition.name = value;
-    this.getUserList()
+    this.getList()
   }
 
-  public handleDetail = (id?: string) => {
+  public handleEdit = (id?: string) => {
     this.setState({
-      visibleModal: true
+      editVisible: true,
+      editKey: id || ''
     })
-    if (id) {
-      console.log(id)
-    } else {
-      console.log(id)
-    }
   }
 
-  public handleDelete = (rows: any[]) => {
-    if (rows.length === 0) {
-      $msg.warning('请选择要删除的用户');
-      return;
-    }
-    const ids = rows.map(row => row.key);
-    const names = rows.map(row => row.name).join('，');
-    if (ids.length === 1) {
-      $msg.success(`成功删除用户“${names}”！`)
-      this.getUserList()
+  public handleDelete = (rows?: any[]) => {
+    if (rows) {
+      const ids = rows.map(row => row.key);
+      const names = rows.map(row => row.name).join('，');
+      $msg.success(`成功删除用户“${names}”！`);
     } else {
-      const { confirm } = Modal;
-      confirm({
-        title: '确认删除以下这些用户吗?',
+      const selectedRows = this.state.selectedRows;
+      if (selectedRows.length === 0) {
+        $msg.warning('请选择要删除的用户');
+        return;
+      }
+      const ids = selectedRows.map((row: any) => row.key);
+      const names = selectedRows.map((row: any) => row.name).join('，');
+      Modal.confirm({
+        title: '确认删除以下用户吗?',
         content: names,
         onOk: () => {
-          $msg.success(`成功删除用户“${names}”！`)
-          this.getUserList()
+          $msg.success(`成功删除用户“${names}”！`);
         }
       });
     }
+  }
+
+  public handleSelectedRows = (selectedRows: any[]) => {
+    this.setState({
+      selectedRows
+    })
   }
 
   public handlePaginationChange = (pagination: any) => {
@@ -136,25 +147,43 @@ class UserList extends React.Component {
       pageNum: pagination.current,
       pageSize: pagination.pageSize
     })
-    this.getUserList();
+    this.getList();
+    scroll(document.querySelector('.page'), 0, 15);
+  }
+
+  public handleClose = () => {
+    this.setState({
+      editVisible: false
+    })
   }
 
   public render() {
     return (
-      <React.Fragment>
+      <div className="curd-table">
+        <CURDHeader
+          onAdd={this.handleEdit}
+          onDelete={this.handleDelete}
+          onSearch={this.handleSearch}
+        />
         <CURDTable
-          tableLoading={this.state.tableLoading}
           columns={this.columns}
           dataSource={this.state.tableData}
-          onPaginationChange={this.handlePaginationChange}
-          onSearch={this.handleSearch}
-          onDetail={this.handleDetail}
-          onDelete={this.handleDelete}
           total={this.state.total}
+          tableLoading={this.state.tableLoading}
+          onSelectedRows={(this.handleSelectedRows)}
+          onPaginationChange={this.handlePaginationChange}
         />
-        <CURDModal visibleModal={this.state.visibleModal} />
-      </React.Fragment>
+        <CURDEdit
+          title="用户信息"
+          editVisible={this.state.editVisible}
+          editKey={this.state.editKey}
+          onClose={this.handleClose}
+        />
+      </div>
     )
   }
 }
 export default UserList;
+
+
+

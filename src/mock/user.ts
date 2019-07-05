@@ -2,35 +2,29 @@ import Mock from 'mockjs';
 
 
 
-const userList = Mock.mock({
+const listData = Mock.mock({
   "list|127": [{
     id: "@lower(@guid)",
     name: "@cname",
     age: "@natural(20,60)",
-    gender: '@pick(["男","女"])',
-    role: '@pick(["管理员", "编辑","普通会员","高级会员","普通用户"])',
+    gender: '@pick(["1","2"])',
+    role: ['2', '3'],
+    account: /^[a-zA-Z0-9_]{4,9}$/,
+    avatar: "@image('100x100', '#02adea', 'avatar')",
+    email: "@email",
+    mobilePhone: /^1[345789]\d{9}$/,
   }]
 })
 
 
-const userDetail = Mock.mock({
-  account: /^[a-zA-Z0-9_]{4,9}$/,
-  name: "@cname",
-  gender: '@pick(["男", "女"])',
-  avatar: "@image('100x100', '#02adea', 'avatar')",
-  email: "@email",
-  mobilePhone: /^1[345789]\d{9}$/,
-  role: '@pick(["管理员", "编辑","普通会员","高级会员","普通用户"])'
-})
-
 export default {
-  getUserList(config: any) {
+  getList(config: any) {
     let { name, pageNum, pageSize } = JSON.parse(config.body);
     name = name ? name : '';
     pageNum = pageNum ? pageNum : 10;
     pageSize = pageSize ? pageSize : 1;
 
-    const filterList = userList.list.filter((item: any) => {
+    const filterList = listData.list.filter((item: any) => {
       let validName = false;
       validName = item.name.includes(name);
       return validName;
@@ -41,16 +35,18 @@ export default {
     return {
       code: 200,
       data: {
-        userList: filterList.slice(startIndex, endIndex),
-        userAmount: filterList.length
+        list: filterList.slice(startIndex, endIndex),
+        total: filterList.length
       }
     }
   },
-  getUserDetail() {
+  getDetail(config: any) {
+    const { id } = JSON.parse(config.body);
+    const detail = listData.list.find(item => item.id === id);
     return {
       code: 200,
       data: {
-        userDetail
+        detail
       }
     }
   }
