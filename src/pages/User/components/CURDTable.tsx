@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input, Row, Col, Table } from 'antd';
+import { Table } from 'antd';
 
 interface ICURDTableProps {
   columns: any[];

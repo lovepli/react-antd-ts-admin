@@ -1,10 +1,7 @@
 import React from 'react';
 import { Menu, Dropdown, Icon } from 'antd';
-
-
-import Avatar from './Avatar';
 import './Header.less';
-
+import Avatar from './Avatar';
 
 interface IHeader {
   collapse: boolean;
@@ -17,11 +14,13 @@ function Header(props: IHeader) {
   return (
     <div className="header">
       <Icon
-        className="trigger"
+        className="header-trigger"
         type={props.collapse ? 'menu-unfold' : 'menu-fold'}
         onClick={props.toggle}
       />
-      <Avatar />
+      <div className="header-menu">
+        <Avatar />
+      </div>
     </div>
   )
 }

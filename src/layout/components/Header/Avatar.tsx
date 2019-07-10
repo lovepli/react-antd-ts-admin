@@ -25,14 +25,16 @@ class Avatar extends React.Component<IAvatarProps> {
     };
     this.menuList = (
       <Menu onClick={this.handleMenuClick}>
-        <Menu.Item key="0">
-          <a href="http://www.alipay.com/">1st menu item</a>
-        </Menu.Item>
         <Menu.Item key="1">
-          <a href="http://www.taobao.com/">2nd menu item</a>
+          <Icon type="user" /> 个人中心
+        </Menu.Item>
+        <Menu.Item key="2">
+          <Icon type="setting" /> 个人设置
         </Menu.Item>
         <Menu.Divider />
-        <Menu.Item key="3">退出登录</Menu.Item>
+        <Menu.Item key="3">
+          <Icon type="logout" />退出登录
+        </Menu.Item>
       </Menu>
     )
   }
@@ -40,9 +42,13 @@ class Avatar extends React.Component<IAvatarProps> {
   public render() {
     console.log(this.props.history);
     return (
-      <Dropdown overlay={this.menuList}>
-        <AntdAvatar style={{ backgroundColor: '#87d068', cursor: 'pointer' }} icon="user" />
-      </Dropdown>
+      <div>
+        <Dropdown overlay={this.menuList}>
+          <AntdAvatar style={{ backgroundColor: '#87d068', cursor: 'pointer' }} icon="user" />
+        </Dropdown>
+        <span>姓名</span>
+      </div>
+
     )
   }
 }

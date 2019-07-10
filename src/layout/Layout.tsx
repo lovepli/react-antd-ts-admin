@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { HashRouter as Router } from 'react-router-dom';
-import { Layout } from 'antd';
+import { Layout, BackTop } from 'antd';
 const { Sider, Content } = Layout;
 
 import Logo from './components/Logo';
 import Menu from './components/Menu';
 import Header from './components/Header';
-import Footer from './components/Footer';
 
 import RouterView from '@/router'
 import './Layout.less';
 
-class BaseLayout extends Component {
+class BaseLayout extends React.Component {
   public state = {
     collapse: false,
   };
@@ -21,6 +20,11 @@ class BaseLayout extends Component {
       collapse: !this.state.collapse,
     });
   };
+
+  public getScrollElementById = (id: string): HTMLElement | Window => {
+    const elem = document.getElementById(id);
+    return elem ? elem : window;
+  }
 
   public render() {
     // const authorized = sessionStorage.getItem('token') ? true : false;
@@ -32,19 +36,16 @@ class BaseLayout extends Component {
             <Menu />
           </Sider>
 
-          <Layout>
+          <Layout id="layoutRight" className="layout-right" >
             <Header collapse={this.state.collapse} toggle={this.toggle} />
-
-            <Content>
-              <div className="page">
-                <RouterView/>
-                {/* {RouterView(authorized)} */}
-              </div>
-            </Content>
-
-            <Footer />
+            <div className="page">
+              <RouterView />
+              {/* {RouterView(authorized)} */}
+            </div>
+            <BackTop target={() => this.getScrollElementById('layoutRight')} style={{ right: '50px' }} />
           </Layout>
         </Layout>
+        <BackTop />
       </Router>
     );
   }
