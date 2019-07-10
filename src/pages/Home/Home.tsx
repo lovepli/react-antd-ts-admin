@@ -1,31 +1,34 @@
-import React from "react";
-
-import './Home.less'
-
+import React from 'react'
+import './style.less'
 
 
-interface IProps {
-  history: any
+
+interface IState {
+  count: number;
+  name: string
 }
 
-class Home extends React.Component<IProps>{
+class App extends React.PureComponent<any, IState> {
+  public readonly state: Readonly<IState> = {
+    name: 'wly'
+  } as IState;
 
-
-
-
-  public handleClick = () => {
-    console.log(this.props.history)
-
+  public componentDidMount() {
+    this.setState({
+      count: 2
+    })
   }
+
   public render() {
     return (
       <div>
-        <p className="c">dddd</p>
-        <button onClick={this.handleClick}>kkkk</button>
+        <p>{this.state.count}</p>
+        <p>{this.state.name}</p>
       </div>
     )
   }
 }
 
 
-export default Home;
+
+export default App;

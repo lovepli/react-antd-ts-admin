@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Form, Input, Radio, Checkbox, InputNumber, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 
-import { getDetail } from '@/api/user';
+import { getDetail } from '../service';
 import { TypeMap, createOptions } from '@/assets/typeMap';
 
 

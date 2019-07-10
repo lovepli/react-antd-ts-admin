@@ -1,28 +1,25 @@
 import React from 'react';
-import { Menu, Dropdown, Icon, Avatar as AntdAvatar } from 'antd';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Menu, Dropdown, Icon, Avatar } from 'antd';
 
 
-interface IAvatarProps {
-  history: any;
-}
-
-
-class Avatar extends React.Component<IAvatarProps> {
+class AvatarMenu extends React.Component<RouteComponentProps, any> {
   private menuList: React.ReactNode;
 
   private handleMenuClick: (arg: any) => void;
 
-  constructor(props: IAvatarProps) {
+  constructor(props: RouteComponentProps) {
     super(props)
-
     this.handleMenuClick = ({ key }) => {
-      if (key === '3') {
-        sessionStorage.removeItem('token');
-        this.props.history.replace('/login')
-        location.reload();
+      switch (key) {
+        case '3':
+          sessionStorage.removeItem('token');
+          this.props.history.replace('/login')
+          location.reload();
+          break;
       }
     };
+
     this.menuList = (
       <Menu onClick={this.handleMenuClick}>
         <Menu.Item key="1">
@@ -40,17 +37,15 @@ class Avatar extends React.Component<IAvatarProps> {
   }
 
   public render() {
-    console.log(this.props.history);
     return (
       <div>
         <Dropdown overlay={this.menuList}>
-          <AntdAvatar style={{ backgroundColor: '#87d068', cursor: 'pointer' }} icon="user" />
+          <Avatar style={{ backgroundColor: '#87d068', cursor: 'pointer' }} icon="user" />
         </Dropdown>
         <span>姓名</span>
       </div>
-
     )
   }
 }
 
-export default withRouter(Avatar as any);
+export default withRouter(AvatarMenu);

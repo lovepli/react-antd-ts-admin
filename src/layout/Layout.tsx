@@ -1,14 +1,13 @@
 import React from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import { Layout, BackTop } from 'antd';
-const { Sider, Content } = Layout;
+const { Sider } = Layout;
 
 import Logo from './components/Logo';
 import Menu from './components/Menu';
 import Header from './components/Header';
-
 import RouterView from '@/router'
-import './Layout.less';
+import './style.less';
 
 class BaseLayout extends React.Component {
   public state = {
@@ -43,6 +42,7 @@ class BaseLayout extends React.Component {
               {/* {RouterView(authorized)} */}
             </div>
             <BackTop target={() => this.getScrollElementById('layoutRight')} style={{ right: '50px' }} />
+            {/* <BackTop target={() =>document.getElementById('layoutRight')!} style={{ right: '50px' }} /> */}
           </Layout>
         </Layout>
         <BackTop />

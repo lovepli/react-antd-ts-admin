@@ -3,7 +3,7 @@ import { HashRouter as Router, Route, Switch} from 'react-router-dom';
 import { Spin } from 'antd';
 
 const Layout = React.lazy(() => import( /* webpackChunkName:"layout" */ '@/layout'));
-const Login = React.lazy(() => import( /* webpackChunkName:"login" */ '@/pages/login'))
+const Login = React.lazy(() => import( /* webpackChunkName:"login" */ '@/pages/Login'))
 
 const token = sessionStorage.getItem('token');
 

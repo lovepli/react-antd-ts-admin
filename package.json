@@ -27,6 +27,7 @@
   "devDependencies": {
     "@types/react": "^16.8.22",
     "@types/react-dom": "^16.8.4",
+    "@types/react-redux": "^7.1.1",
     "@types/react-router-dom": "^4.3.4",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",

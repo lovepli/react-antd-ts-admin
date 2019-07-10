@@ -3,10 +3,10 @@ import { Button, Modal, Popconfirm } from 'antd';
 import CURDTable from './components/CURDTable';
 import CURDEdit from './components/CURDEdit';
 import CURDHeader from './components/CURDHeader';
-import './UserList.less';
+import './style.less';
 
 import { scroll } from '@/utils/utils';
-import { getList } from '@/api/user';
+import { getList } from './service';
 import { TypeMap } from '@/assets/typeMap';
 const genderMap = TypeMap.gender;
 const roleMap = TypeMap.role;
