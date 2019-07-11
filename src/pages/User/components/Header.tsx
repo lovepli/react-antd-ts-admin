@@ -1,14 +1,14 @@
 import React from 'react';
 import { Button, Input, Row, Col } from 'antd';
 
-interface ICURDHeaderProps {
+interface IHeaderProps {
   onAdd: (id?: string) => void;
   onDelete: (rows?: any[]) => void;
   onSearch: (value: string) => void;
 }
 
 
-class CURDHeader extends React.Component<ICURDHeaderProps> {
+class Header extends React.Component<IHeaderProps> {
   public render() {
     const { onAdd, onDelete, onSearch } = this.props;
     return (
@@ -28,4 +28,4 @@ class CURDHeader extends React.Component<ICURDHeaderProps> {
 
 }
 
-export default CURDHeader;
+export default Header;

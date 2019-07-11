@@ -1,7 +1,8 @@
 import React from 'react';
 import { Table } from 'antd';
+import scrollTo from '@/utils/scrollTo';
 
-interface ICURDTableProps {
+interface IUserTableProps {
   columns: any[];
   dataSource: any[];
   total: number;
@@ -10,7 +11,7 @@ interface ICURDTableProps {
   onPaginationChange: (pagination: any) => void;
 }
 
-class CURDTable extends React.Component<ICURDTableProps> {
+class UserTable extends React.Component<IUserTableProps> {
 
   public rowSelection = {
     onChange: (selectedRowKeys: any, selectedRows: any) => {
@@ -18,8 +19,13 @@ class CURDTable extends React.Component<ICURDTableProps> {
     },
   }
 
+  public handleChange = (pagination: any) => {
+    this.props.onPaginationChange(pagination);
+    scrollTo(document.getElementById('mainContent')!, 0);
+  }
+
   public render() {
-    const { tableLoading, columns, dataSource, total, onPaginationChange } = this.props;
+    const { tableLoading, columns, dataSource, total } = this.props;
     return (
       <Table
         bordered={true}
@@ -28,7 +34,7 @@ class CURDTable extends React.Component<ICURDTableProps> {
         dataSource={dataSource}
         loading={tableLoading}
         rowSelection={this.rowSelection}
-        onChange={onPaginationChange}
+        onChange={this.handleChange}
         pagination={{
           total,
           defaultCurrent: 1,
@@ -42,4 +48,4 @@ class CURDTable extends React.Component<ICURDTableProps> {
     )
   }
 }
-export default CURDTable;
+export default UserTable;

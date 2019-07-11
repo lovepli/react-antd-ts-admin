@@ -35,12 +35,12 @@ class InnerLayout extends React.Component<any, IState> {
             <Menu />
           </Layout.Sider>
 
-          <Layout id="layoutRight" className="layout-right" >
+          <Layout id="mainContent" className="main-content" >
             <Header collapse={this.state.collapse} onToggle={this.handleToggle} />
             <div className="page">
               <InnerRouter />
             </div>
-            <BackTop target={() => document.getElementById('layoutRight')!} style={{ right: '50px' }} />
+            <BackTop target={() => document.getElementById('mainContent')!} style={{ right: '50px' }} />
           </Layout>
           <BackTop />
         </Layout>

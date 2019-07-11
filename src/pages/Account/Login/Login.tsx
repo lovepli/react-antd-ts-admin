@@ -24,6 +24,10 @@ export interface ILoginData {
   varification: string;
 }
 
+const formItemLayout = {
+  labelCol: { span: 5 },
+  wrapperCol: { span: 19 }
+}
 
 class Login extends React.Component<ILoginProps, ILoginState> {
   public readonly state: Readonly<ILoginState> = {
@@ -31,7 +35,6 @@ class Login extends React.Component<ILoginProps, ILoginState> {
   }
 
   public canvas: any;
-
 
   public componentDidMount() {
     this.createVerification();
@@ -62,8 +65,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     return (
       <div className="login">
         <div className="login-title">后台管理系统</div>
-        <Form labelAlign="left" onSubmit={this.handleSubmit}>
-          <Form.Item>
+        <Form layout="horizontal" colon labelAlign="left" {...formItemLayout} onSubmit={this.handleSubmit}>
+          <Form.Item label="账    号">
             {
               getFieldDecorator('username', {
                 initialValue: 'admin',
@@ -80,7 +83,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
             }
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item label="密    码">
             {
               getFieldDecorator('password', {
                 initialValue: 'admin123456',
@@ -101,7 +104,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
             }
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item label="验证码">
             {
               getFieldDecorator('verification', {
                 initialValue: '',
@@ -114,13 +117,13 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                 }],
               })(
                 <Row>
-                  <Col span={18}>
+                  <Col span={16}>
                     <Input
                       prefix={<Icon type="property-safety" style={{ color: 'rgba(0,0,0,.25)' }} />}
                       placeholder="请输入验证码"
                     />
                   </Col>
-                  <Col span={6} style={{ height: '40px' }}>
+                  <Col span={8} style={{ height: '40px' }}>
                     <canvas onClick={this.createVerification} width="80" height="40" style={{ cursor: 'pointer' }} ref={el => this.canvas = el} />
                   </Col>
                 </Row>
@@ -128,7 +131,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
             }
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item wrapperCol={{ span: 24 }}>
             <Button type="primary" htmlType="submit" block={true}>登录</Button>
           </Form.Item>
         </Form>

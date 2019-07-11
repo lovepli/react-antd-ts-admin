@@ -1,5 +1,5 @@
-// 生成ID
-export const guid = () => {
+// 生成guid
+export const guid = (): string => {
   const S4 = () => {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
   };
@@ -7,7 +7,7 @@ export const guid = () => {
 };
 
 // 获取url中的查询字符串参数
-export const getURLParams = (url: string) => {
+export const getURLParams = (url: string): any => {
   const search = url.split("?")[1];
   if (!search) {
     return {};
@@ -24,14 +24,14 @@ export const getURLParams = (url: string) => {
 
 
 // 将对象转换为查询字符串,用于post请求
-export const objToParams = (data: any) => {
+export const objToParams = (data: any):string => {
   const keys: string[] = Object.keys(data);
   const params: string[] = keys.map(key => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`);
   return params.join('&');
 }
 
 // 将get请求中的params参数转换为查询字符串
-export const paramsSerializer = (params: any) => {
+export const paramsSerializer = (params: any):string => {
   const paramArr: string[] = [];
   let key: string = '';
   let value: any = '';
@@ -50,13 +50,13 @@ export const paramsSerializer = (params: any) => {
 
 
 // 判断数据类型
-export const getType = (value: any) => {
+export const getType = (value: any):any => {
   return value === undefined ? "undefined" : value === null ? "null" : value.constructor.name.toLowerCase();
 }
 
 
 // 对base64格式的文件进行处理并下载
-export const downloadFile = (data: string, fileName: string, header: string = "") => {
+export const downloadFile = (data: string, fileName: string, header: string = ""):void => {
   const link = document.createElement("a");
   link.style.display = "none";
   link.href = header + data;
@@ -64,26 +64,4 @@ export const downloadFile = (data: string, fileName: string, header: string = ""
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-}
-
-
-/**
- * 滚动
- * @param {HTMLDOM} element  要滚动的元素
- * @param {Number} target    目标位置
- * @param {Number} interval  间隔时间
- */
-export const scroll = (element: any, target: number, interval: number) => {
-  clearInterval(element.timer);
-  element.timer = setInterval(() => {
-    const currentPosition = element.scrollTop;
-    const distance = target - currentPosition;
-    const step = distance / 10;
-    if (Math.abs(distance) > 1) {
-      element.scrollTop = currentPosition + step;
-    } else {
-      clearInterval(element.timer);
-      element.scrollTop = target;
-    }
-  }, interval);
 }

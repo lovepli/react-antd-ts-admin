@@ -1,5 +1,5 @@
 // 缓动公式
-const easeInOutQuad = (t: number, b: number, c: number, d: number) => {
+const easeInOutQuad = (t: number, b: number, c: number, d: number): number => {
   let time = t;
   time /= d / 2;
   if (time < 1) {
@@ -12,7 +12,7 @@ const easeInOutQuad = (t: number, b: number, c: number, d: number) => {
 
 
 // 设置要滚动到的位置
-const setScrollTo = (element: Element | Window, target: number) => {
+const setScrollTo = (element: Element | Window, target: number): void => {
   if (element === window) {
     document.body.scrollTop = target;
     document.documentElement.scrollTop = target;
@@ -22,7 +22,7 @@ const setScrollTo = (element: Element | Window, target: number) => {
 }
 
 // 获取当前已经滚动到的位置。
-const getCurrentScroll = (element: Element | Window) => {
+const getCurrentScroll = (element: Element | Window): number => {
   if (element === window) {
     return window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
   }
@@ -32,18 +32,18 @@ const getCurrentScroll = (element: Element | Window) => {
 /**
  * 滚动
  * @param {Element | Window} element 要滚动的元素
- * @param {Number} to 要滚动到的最终位置
- * @param {Number} duration    持续时间
+ * @param {Number} end 要滚动到的最终位置
+ * @param {Number} duration    滚动持续时间
  * @param { Function} callback  滚动完成后的回调函数
  */
-export const scrollTo = (element: Element | Window, to: number, duration: number = 500, callback?: any) => {
+const scrollTo = (element: Element | Window, end: number, duration: number = 500, callback?: () => void): void => {
   const start = getCurrentScroll(element);
-  const change = to - start;
+  const distance = end - start;
   const increment = 20;
   let currentTime = 0;
   const animateScroll = () => {
     currentTime += increment;
-    const target = easeInOutQuad(currentTime, start, change, duration);
+    const target = easeInOutQuad(currentTime, start, distance, duration);
     setScrollTo(element, target);
     if (currentTime < duration) {
       window.requestAnimationFrame(animateScroll);
@@ -55,4 +55,5 @@ export const scrollTo = (element: Element | Window, to: number, duration: number
   };
   animateScroll();
 }
+export default scrollTo;
 

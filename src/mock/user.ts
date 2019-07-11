@@ -13,6 +13,7 @@ const listData = Mock.mock({
     avatar: "@image('100x100', '#02adea', 'avatar')",
     email: "@email",
     mobilePhone: /^1[345789]\d{9}$/,
+    time: '@datetime'
   }]
 })
 

@@ -1,34 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { Menu, Icon } from 'antd';
-
 import './Menu.less';
 
-interface INavLink {
+interface INavLinkProps {
   path: string;
   icon: string;
   title: string
 }
 
-function NavLink(props: INavLink) {
+const NavLink: React.SFC<INavLinkProps> = ({ path, icon, title }) => {
   return (
-    <Link to={props.path}>
-      <Icon type={props.icon} />
-      <span>{props.title}</span>
+    <Link to={path}>
+      <Icon type={icon} />
+      <span>{title}</span>
     </Link>
   );
 }
 
-
-function YGMenu() {
+const SiderMenu: React.SFC = () => {
   return (
     <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
       <Menu.Item key="1">
         <NavLink path="/dashboard" icon="pie-chart" title="首页" />
       </Menu.Item>
 
-      <Menu.SubMenu key="sub1" title={<span><Icon type="mail" /><span>文章管理</span></span>}>
+      <Menu.SubMenu key="2" title={<span><Icon type="mail" /><span>文章管理</span></span>}>
         <Menu.Item key="3">
           <NavLink path="/articleList" icon="pie-chart" title="文章列表" />
         </Menu.Item>
@@ -48,11 +45,12 @@ function YGMenu() {
       </Menu.Item>
 
 
-        <Menu.Item key="7">
-          <NavLink path="/user" icon="user" title="用户管理" />
-        </Menu.Item>
-      </Menu>
-      )
-    }
+      <Menu.Item key="7">
+        <NavLink path="/user" icon="user" title="用户管理" />
+      </Menu.Item>
+    </Menu>
+  )
+}
 
-    export default YGMenu;
+
+export default SiderMenu;

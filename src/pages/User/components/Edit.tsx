@@ -6,7 +6,7 @@ import { getDetail } from '../service';
 import { TypeMap, createOptions } from '@/assets/typeMap';
 
 
-interface ICURDEditProps extends FormComponentProps {
+interface IEditProps extends FormComponentProps {
   title: string;
   editVisible: boolean;
   editKey: string;
@@ -19,7 +19,7 @@ const formItemLayout = {
 }
 
 
-class CURDEdit extends React.Component<ICURDEditProps> {
+class Edit extends React.Component<IEditProps> {
 
   public state = {
     detail: {
@@ -147,4 +147,4 @@ class CURDEdit extends React.Component<ICURDEditProps> {
   }
 }
 
-export default Form.create<ICURDEditProps>()(CURDEdit);
+export default Form.create<IEditProps>()(Edit);

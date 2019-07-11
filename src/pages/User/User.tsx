@@ -1,18 +1,17 @@
 import React from 'react';
 import { Button, Modal, Popconfirm } from 'antd';
-import CURDTable from './components/CURDTable';
-import CURDEdit from './components/CURDEdit';
-import CURDHeader from './components/CURDHeader';
+import Table from './components/Table';
+import Edit from './components/Edit';
+import Header from './components/Header';
 import './style.less';
 
-import { scroll } from '@/utils/utils';
 import { getList } from './service';
 import { TypeMap } from '@/assets/typeMap';
 const genderMap = TypeMap.gender;
 const roleMap = TypeMap.role;
 
 
-class UserList extends React.Component {
+class User extends React.Component {
 
   public state = {
     tableData: [],
@@ -59,6 +58,11 @@ class UserList extends React.Component {
     title: '角色',
     dataIndex: 'role',
     key: 'role',
+  }, {
+    title: '注册时间',
+    dataIndex: 'time',
+    key: 'time',
+    sorter: (a: any, b: any) => Date.parse(a.time) - Date.parse(b.time)
   }, {
     title: '操作',
     key: 'action',
@@ -148,7 +152,6 @@ class UserList extends React.Component {
       pageSize: pagination.pageSize
     })
     this.getList();
-    scroll(document.querySelector('.page'), 0, 15);
   }
 
   public handleClose = () => {
@@ -160,12 +163,12 @@ class UserList extends React.Component {
   public render() {
     return (
       <div className="curd-table">
-        <CURDHeader
+        <Header
           onAdd={this.handleEdit}
           onDelete={this.handleDelete}
           onSearch={this.handleSearch}
         />
-        <CURDTable
+        <Table
           columns={this.columns}
           dataSource={this.state.tableData}
           total={this.state.total}
@@ -173,7 +176,7 @@ class UserList extends React.Component {
           onSelectedRows={(this.handleSelectedRows)}
           onPaginationChange={this.handlePaginationChange}
         />
-        <CURDEdit
+        <Edit
           title="用户信息"
           editVisible={this.state.editVisible}
           editKey={this.state.editKey}
@@ -183,7 +186,7 @@ class UserList extends React.Component {
     )
   }
 }
-export default UserList;
+export default User;
 
 
 
