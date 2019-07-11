@@ -1,9 +1,7 @@
-// js入口文件
 import 'babel-polyfill';
-import React, { Fragment } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
-
+import { Provider } from 'react-redux';
 import { LocaleProvider } from 'antd';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 

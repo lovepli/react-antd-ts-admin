@@ -14,8 +14,7 @@ class AvatarMenu extends React.Component<RouteComponentProps, any> {
       switch (key) {
         case '3':
           sessionStorage.removeItem('token');
-          this.props.history.replace('/login')
-          location.reload();
+          this.props.history.replace('/account/login')
           break;
       }
     };

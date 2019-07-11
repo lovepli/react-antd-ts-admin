@@ -3,20 +3,18 @@ import { Menu, Dropdown, Icon } from 'antd';
 import './Header.less';
 import Avatar from './Avatar';
 
-interface IHeader {
+interface IHeaderProps {
   collapse: boolean;
-  toggle: any
+  onToggle: () => void
 }
 
-
-
-function Header(props: IHeader) {
+const Header: React.SFC<IHeaderProps> = ({ collapse, onToggle }) => {
   return (
     <div className="header">
       <Icon
         className="header-trigger"
-        type={props.collapse ? 'menu-unfold' : 'menu-fold'}
-        onClick={props.toggle}
+        type={collapse ? 'menu-unfold' : 'menu-fold'}
+        onClick={onToggle}
       />
       <div className="header-menu">
         <Avatar />
@@ -24,5 +22,7 @@ function Header(props: IHeader) {
     </div>
   )
 }
+
+
 
 export default Header;

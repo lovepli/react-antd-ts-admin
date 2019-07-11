@@ -5,7 +5,7 @@
  * @param {Number} max 最大数
  * @return {Number}
  */
-const randomNum = (min: number, max: number): number => Math.floor(Math.random() * (max - min) + min);
+const randomNum = (min: number, max: number): number => Math.floor(min + Math.random() * (max - min));
 
 /*
   生成验证码

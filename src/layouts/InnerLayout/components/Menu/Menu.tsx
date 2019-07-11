@@ -25,7 +25,7 @@ function YGMenu() {
   return (
     <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
       <Menu.Item key="1">
-        <NavLink path="/home" icon="pie-chart" title="首页" />
+        <NavLink path="/dashboard" icon="pie-chart" title="首页" />
       </Menu.Item>
 
       <Menu.SubMenu key="sub1" title={<span><Icon type="mail" /><span>文章管理</span></span>}>
@@ -34,7 +34,7 @@ function YGMenu() {
         </Menu.Item>
 
         <Menu.Item key="4">
-          <NavLink path="/home" icon="pie-chart" title="草稿箱" />
+          <NavLink path="/dashboard" icon="pie-chart" title="草稿箱" />
         </Menu.Item>
       </Menu.SubMenu>
 

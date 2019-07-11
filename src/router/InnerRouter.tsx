@@ -1,24 +1,20 @@
 import React, { Suspense, lazy } from 'react'
-import { Switch, Route, Redirect, RouteProps } from 'react-router-dom';
-import { Spin } from 'antd';
+import { Switch, Route,RouteProps } from 'react-router-dom';
+import PageLoading from '@/components/PageLoading';
 
-const Home = lazy(() => import( /* webpackChunkName:"Home" */ '@/pages/Home'));
+const Dashboard = lazy(() => import( /* webpackChunkName:"Dashboard" */ '@/pages/Dashboard'));
 const ArticleList = lazy(() => import( /* webpackChunkName:"ArticleList" */ '@/pages/Article/ArticleList'));
 const ArticleDetail = lazy(() => import( /* webpackChunkName:"ArticleDetail" */ '@/pages/Article/ArticleDetail'));
 const Component = lazy(() => import( /* webpackChunkName:"Component" */ '@/pages/Component'));
 const Structure = lazy(() => import( /* webpackChunkName:"Structure" */ '@/pages/structure/Page'));
 const NotFound = lazy(() => import( /* webpackChunkName:"NotFound" */ '@/pages/Error/NotFound'));
-const User = lazy(() => import( /* webpackChunkName:"Home" */ '@/pages/User'));
+const User = lazy(() => import( /* webpackChunkName:"User" */ '@/pages/User'));
 
 
 const routes: RouteProps[] = [{
-  path: '/',
+  path: '/dashboard',
   exact: true,
-  component: Home
-}, {
-  path: '/home',
-  exact: true,
-  component: Home
+  component: Dashboard
 }, {
   path: '/articleList',
   exact: true,
@@ -47,8 +43,8 @@ const routes: RouteProps[] = [{
 
 
 
-const Router = () => (
-  <Suspense fallback={<Spin />}>
+const InnerRouter:React.SFC = () => (
+  <Suspense fallback={<PageLoading />}>
     <Switch>
       {
         routes.map((route: RouteProps) => {
@@ -61,8 +57,4 @@ const Router = () => (
 )
 
 
-
-
-
-
-export default Router;
+export default InnerRouter;
