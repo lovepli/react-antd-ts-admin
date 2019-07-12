@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Divider } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
-import SvgIcon from '@/components/SvgIcon';
+// import SvgIcon from '@/components/SvgIcon';
 
 import { calcFileSize, getFileIcon } from '@/utils/file';
 import moment from 'moment';
@@ -30,7 +30,7 @@ class FileTable extends React.Component<IFileTableProps> {
     dataIndex: 'name',
     render: (text: string, record: IFileData) => (
       <span>
-        <SvgIcon type={record.icon} />
+        {/* <SvgIcon type={record.icon} /> */}
         <span style={{ marginLeft: "6px" }}>{text}</span>
       </span>
     )

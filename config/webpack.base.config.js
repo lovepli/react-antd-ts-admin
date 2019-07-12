@@ -6,7 +6,6 @@ const resolve = (dir) => {
   return path.resolve(process.cwd(), dir)
 }
 
-
 module.exports = {
   entry: {
     main: resolve('src/index.tsx'),
@@ -39,16 +38,11 @@ module.exports = {
           name: 'img/[name]-[hash:6].[ext]'
         }
       },
-      exclude: resolve('src/components/SvgIcon/icons')
+      exclude: resolve('src/assets/icons')
     }, {
       test: /\.svg$/,
-      use: {
-        loader: 'svg-sprite-loader',
-        options: {
-          symbolId: 'icon-[name]'
-        }
-      },
-      include: resolve('src/components/SvgIcon/icons')
+      use: ['@svgr/webpack'],
+      include: resolve('src/assets/icons')
     }, {
       test: /\.ttf|eot|woff|woff2$/,
       use: 'url-loader',

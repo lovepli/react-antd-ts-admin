@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dropdown, Icon, Menu } from 'antd';
 
-import SvgIcon from '@/components/SvgIcon'
+// import SvgIcon from '@/components/SvgIcon'
 import { tupleStr } from '@/utils/tuple';
 import './Dropdown.less';
 
@@ -94,7 +94,7 @@ class YGDropdown extends React.Component<IDropDownProps> {
 					this.props.items.map((item: { type: string; handle: () => void }) => (
 						<Menu.Item key={item.type}>
 							<span>
-								<SvgIcon type={dropMap[item.type].icon} />
+								{/* <SvgIcon type={dropMap[item.type].icon} /> */}
 								<span style={{ marginLeft: 10 }}>{dropMap[item.type].text}</span>
 							</span>
 						</Menu.Item>

@@ -6,11 +6,13 @@ import { LocaleProvider } from 'antd';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 
 
-import store from './store'
-import App from './App';
+import store from '@/store'
+import App from '@/App';
 import "@/styles/antd.less";
 
-import './mock';
+import '@/mock';
+// import '@/components/SvgIcon/requireAllSvg';
+
 
 
 ReactDOM.render((

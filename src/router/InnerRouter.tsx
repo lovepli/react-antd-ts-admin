@@ -3,6 +3,7 @@ import { Switch, Route,RouteProps } from 'react-router-dom';
 import PageLoading from '@/components/PageLoading';
 
 const Dashboard = lazy(() => import( /* webpackChunkName:"Dashboard" */ '@/pages/Dashboard'));
+const Icon = lazy(() => import( /* webpackChunkName:"Icon" */ '@/pages/Icon'));
 const ArticleList = lazy(() => import( /* webpackChunkName:"ArticleList" */ '@/pages/Article/ArticleList'));
 const ArticleDetail = lazy(() => import( /* webpackChunkName:"ArticleDetail" */ '@/pages/Article/ArticleDetail'));
 const Component = lazy(() => import( /* webpackChunkName:"Component" */ '@/pages/Component'));
@@ -16,6 +17,10 @@ const routes: RouteProps[] = [{
   exact: true,
   component: Dashboard
 }, {
+  path: '/icon',
+  exact: true,
+  component: Icon
+},{
   path: '/articleList',
   exact: true,
   component: ArticleList
