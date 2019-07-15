@@ -1,9 +1,10 @@
 import React, { Suspense, lazy } from 'react'
-import { Switch, Route,RouteProps } from 'react-router-dom';
+import { Switch, Route, RouteProps } from 'react-router-dom';
 import PageLoading from '@/components/PageLoading';
 
 const Dashboard = lazy(() => import( /* webpackChunkName:"Dashboard" */ '@/pages/Dashboard'));
 const Icon = lazy(() => import( /* webpackChunkName:"Icon" */ '@/pages/Icon'));
+const LineChart = lazy(() => import( /* webpackChunkName:"LineChart" */ '@/pages/Chart/LineChart'));
 const ArticleList = lazy(() => import( /* webpackChunkName:"ArticleList" */ '@/pages/Article/ArticleList'));
 const ArticleDetail = lazy(() => import( /* webpackChunkName:"ArticleDetail" */ '@/pages/Article/ArticleDetail'));
 const Component = lazy(() => import( /* webpackChunkName:"Component" */ '@/pages/Component'));
@@ -20,7 +21,11 @@ const routes: RouteProps[] = [{
   path: '/icon',
   exact: true,
   component: Icon
-},{
+}, {
+  path: '/chart/lineChart',
+  exact: true,
+  component: LineChart
+}, {
   path: '/articleList',
   exact: true,
   component: ArticleList
@@ -48,7 +53,7 @@ const routes: RouteProps[] = [{
 
 
 
-const InnerRouter:React.SFC = () => (
+const InnerRouter: React.SFC = () => (
   <Suspense fallback={<PageLoading />}>
     <Switch>
       {
