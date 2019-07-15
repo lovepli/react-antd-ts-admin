@@ -1,7 +1,7 @@
 {
-  "name": "react-ts-admin",
+  "name": "react-antd-ts-admin",
   "version": "1.0.0",
-  "description": "react-ts后台",
+  "description": "react-antd-ts后台",
   "main": "index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config ./config/webpack.prod.config.js",
@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "wangluyao",
+  "author": "wluyao",
   "license": "ISC",
   "dependencies": {
     "antd": "^3.19.3",
