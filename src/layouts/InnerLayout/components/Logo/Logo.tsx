@@ -1,14 +1,15 @@
 import React from 'react';
-
+import {Link} from 'react-router-dom';
 import './Logo.less';
+import logo from '@/assets/img/logo.png';
 
 function Logo() {
   return (
     <div className="logo">
-      <a href="#/home">
-        <img src={require('@/assets/img/logo.png')} alt="" />
+      <Link to="/dashboard">
+        <img src={logo} alt="" />
         <span className="title">Admin</span>
-      </a>
+      </Link>
     </div>
   )
 }

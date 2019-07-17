@@ -8,8 +8,7 @@ const resolve = (dir) => {
 
 module.exports = {
   entry: {
-    main: resolve('src/index.tsx'),
-    vendors: ['axios', 'react']
+    app: resolve('src/index.tsx'),
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -29,12 +28,11 @@ module.exports = {
   ],
   module: {
     rules: [{
-      test: /\.jpg|png|gif|jpeg|bmp|svg$/,
+      test: /\.jpg|png|gif|jpeg|bmp|svg$/i,
       use: {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          publicPath: '../',
           name: 'img/[name]-[hash:6].[ext]'
         }
       },

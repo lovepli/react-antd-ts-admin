@@ -1,6 +1,6 @@
 const path = require('path');
 const merge = require('webpack-merge');
-const baseWebpackConfig = require('./webpack.base.config.js');
+const baseWebpackConfig = require('./webpack.base.conf.js');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -27,6 +27,7 @@ module.exports = merge(baseWebpackConfig, {
       chunks: 'all',
       cacheGroups: {
         vendor: {
+          name: 'vendor',
           test: /[\\/]node_modules[\\/]/,
           chunks: 'initial',
           enforce: true,
@@ -50,10 +51,15 @@ module.exports = merge(baseWebpackConfig, {
     },
   },
   module: {
-    rules: [ {
+    rules: [{
       test: /\.(le|c)ss$/,
-      use: [MiniCssExtractPlugin.loader, 'css-loader', {
-       loader: 'less-loader',
+      use: [{
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          publicPath: '../',
+        }
+      }, 'css-loader', {
+        loader: 'less-loader',
         options: { javascriptEnabled: true }
       }, {
         loader: 'sass-resources-loader',
