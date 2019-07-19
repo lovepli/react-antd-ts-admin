@@ -1,21 +1,20 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import Basic from './components/Basic';
-import Double from './components/Double';
-
-class LineChart extends React.Component {
+import Overlay from './components/Overlay';
+class AreaChart extends React.Component {
 
   public render() {
     return (
       <div className="chart">
         <Row gutter={16}>
           <Col lg={12} sm={24}>
-            <h3>基础折线图</h3>
+            <h3>基础面积图</h3>
             <Basic />
           </Col>
           <Col lg={12} sm={24}>
-            <h3>双曲线图</h3>
-            <Double />
+            <h3>堆叠面积图</h3>
+            <Overlay />
           </Col>
         </Row>
       </div>
@@ -23,4 +22,4 @@ class LineChart extends React.Component {
   }
 }
 
-export default LineChart;
+export default AreaChart;

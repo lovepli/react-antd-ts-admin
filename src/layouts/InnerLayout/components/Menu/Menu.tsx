@@ -38,16 +38,16 @@ const SiderMenu: React.SFC = () => {
         }
       >
         <Menu.Item key="4">
-          <NavLink path="chart/lineChart" title="折线图" />
+          <NavLink path="/chart/lineChart" title="折线图" />
         </Menu.Item>
         <Menu.Item key="5">
-          <NavLink path="chart/areaChart" title="面积图" />
+          <NavLink path="/chart/areaChart" title="面积图" />
         </Menu.Item>
         <Menu.Item key="7">
-          <NavLink path="chart/pieChart" title="饼状图" />
+          <NavLink path="/chart/pieChart" title="饼状图" />
         </Menu.Item>
         <Menu.Item key="6">
-          <NavLink path="chart/pillarChart" title="柱状图" />
+          <NavLink path="/chart/pillarChart" title="柱状图" />
         </Menu.Item>
       </Menu.SubMenu>
 
