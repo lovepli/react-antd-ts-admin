@@ -44,41 +44,40 @@ class Basic extends React.Component {
       }
     };
     return (
-      <div>
-        <Chart
-          height={400}
-          padding={50}
-          background={{ fill: '#fff' }}
-          data={data}
-          scale={scale}
-          forceFit>
-          <Axis name="year" />
-          <Axis
-            name="value"
-            label={{
-              formatter: (val: string) => (Number(val) / 10000).toFixed(1) + "k"
-            }}
-          />
-          <Tooltip
-            showTitle={false}
-            crosshairs={{
-              type: 'cross'
-            }}
-          />
-          <Geom
-            type="area"
-            position="year*value"
-          />
-          <Geom
-            type="line"
-            position="year*value"
-            tooltip={['year*value', (year, value) => ({
-              name: '年份',
-              value: year
-            })]}
-          />
-        </Chart>
-      </div>
+
+      <Chart
+        height={400}
+        padding={50}
+        background={{ fill: '#fff' }}
+        data={data}
+        scale={scale}
+        forceFit>
+        <Axis name="year" />
+        <Axis
+          name="value"
+          label={{
+            formatter: (val: string) => (Number(val) / 10000).toFixed(1) + 'k'
+          }}
+        />
+        <Tooltip
+          showTitle={false}
+          crosshairs={{
+            type: 'cross'
+          }}
+        />
+        <Geom
+          type="area"
+          position="year*value"
+        />
+        <Geom
+          type="line"
+          position="year*value"
+          tooltip={['year*value', (year, value) => ({
+            name: '年份',
+            value: year
+          })]}
+        />
+      </Chart>
     );
   }
 }

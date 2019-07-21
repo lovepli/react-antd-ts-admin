@@ -27,4 +27,3 @@ const SvgIcon: React.SFC<ISvgIconProps> = (props) => {
 export default SvgIcon;
 
 
-
