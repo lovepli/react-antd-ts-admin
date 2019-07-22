@@ -27,7 +27,7 @@ class Basic extends React.Component {
       <div>
         <Chart
           height={400}
-          padding={[40, 0, 50, 0]}
+          padding={[40, 0, 60, 0]}
           background={{ fill: '#fff' }}
           data={data}
           scale={scale}
@@ -35,9 +35,7 @@ class Basic extends React.Component {
         >
           <Coord type="theta" radius={1} />
           <Axis name="percent" />
-          <Legend
-            position="bottom-center"
-          />
+          <Legend position="bottom-center" />
           <Tooltip
             showTitle={false}
             itemTpl='<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
@@ -53,7 +51,7 @@ class Basic extends React.Component {
           >
             <Label
               content="percent"
-              formatter={(val, item) => item.point.item + ': ' + val}
+              formatter={(text: string, item: any) => `${item.point.item}:${text}`}
             />
           </Geom>
         </Chart>

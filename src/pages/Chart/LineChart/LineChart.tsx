@@ -9,11 +9,11 @@ class LineChart extends React.Component {
     return (
       <div className="chart">
         <Row gutter={16}>
-          <Col lg={12} sm={24}>
+          <Col xl={12} lg={24}>
             <h3>基础折线图</h3>
             <Basic />
           </Col>
-          <Col lg={12} sm={24}>
+          <Col xl={12} lg={24}>
             <h3>双曲线图</h3>
             <Double />
           </Col>

@@ -27,20 +27,21 @@ class Fan extends React.Component {
       <div>
         <Chart
           height={400}
-          padding={[40, 0, 50, 0]}
+          padding={[40, 0, 60, 0]}
           background={{ fill: '#fff' }}
           data={data}
           scale={scale}
           forceFit
         >
-          <Coord type="theta" radius={1} startAngle={Math.PI} endAngle={Math.PI * (3 / 2)} />
+          <Coord
+            type="theta"
+            radius={1}
+            startAngle={Math.PI}
+            endAngle={Math.PI * (3 / 2)}
+          />
           <Axis name="percent" />
-          <Legend
-            position="bottom-center"
-          />
-          <Tooltip
-            showTitle={false}
-          />
+          <Legend position="bottom-center" />
+          <Tooltip showTitle={false} />
           <Geom
             type="intervalStack"
             position="percent"
@@ -52,7 +53,7 @@ class Fan extends React.Component {
           >
             <Label
               content="percent"
-              formatter={(val, item) => item.point.item + ': ' + val}
+              formatter={(text: string, item: any) => `${item.point.item}:${text}`}
             />
           </Geom>
         </Chart>

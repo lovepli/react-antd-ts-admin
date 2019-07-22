@@ -8,6 +8,8 @@ const Icon = lazy(() => import( /* webpackChunkName:"Icon" */ '@/pages/Icon'));
 const LineChart = lazy(() => import( /* webpackChunkName:"LineChart" */ '@/pages/Chart/LineChart'));
 const AreaChart = lazy(() => import( /* webpackChunkName:"AreaChart" */ '@/pages/Chart/AreaChart'));
 const PieChart = lazy(() => import( /* webpackChunkName:"PieChart" */ '@/pages/Chart/PieChart'));
+const PillarChart = lazy(() => import( /* webpackChunkName:"PillarChart" */ '@/pages/Chart/PillarChart'));
+const RadarChart = lazy(() => import( /* webpackChunkName:"RadarChart" */ '@/pages/Chart/RadarChart'));
 const ArticleList = lazy(() => import( /* webpackChunkName:"ArticleList" */ '@/pages/Article/ArticleList'));
 const ArticleDetail = lazy(() => import( /* webpackChunkName:"ArticleDetail" */ '@/pages/Article/ArticleDetail'));
 const Component = lazy(() => import( /* webpackChunkName:"Component" */ '@/pages/Component'));
@@ -32,11 +34,19 @@ const routes: RouteProps[] = [{
   path: '/chart/areaChart',
   exact: true,
   component: AreaChart
-},  {
+}, {
   path: '/chart/pieChart',
   exact: true,
   component: PieChart
-},{
+}, {
+  path: '/chart/pillarChart',
+  exact: true,
+  component: PillarChart
+}, {
+  path: '/chart/radarChart',
+  exact: true,
+  component: RadarChart
+}, {
   path: '/articleList',
   exact: true,
   component: ArticleList

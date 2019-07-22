@@ -4,29 +4,26 @@ import DataSet from "@antv/data-set";
 
 class InnerLabel extends React.Component {
   public render() {
+    const data = [{
+      item: "本科",
+      count: 40
+    }, {
+      item: "硕士",
+      count: 21
+    }, {
+      item: "博士",
+      count: 9
+    }, {
+      item: "初中",
+      count: 13
+    }, {
+      item: "专科",
+      count: 9
+    }, {
+      item: "未知",
+      count: 8
+    }];
     const { DataView } = DataSet;
-    const data = [
-      {
-        item: "本科",
-        count: 40
-      },
-      {
-        item: "硕士",
-        count: 21
-      },
-      {
-        item: "博士",
-        count: 17
-      },
-      {
-        item: "初中",
-        count: 13
-      },
-      {
-        item: "专科",
-        count: 9
-      }
-    ];
     const dv = new DataView();
     dv.source(data).transform({
       type: "percent",
@@ -34,22 +31,17 @@ class InnerLabel extends React.Component {
       dimension: "item",
       as: "percent"
     });
-    const cols = {
-      percent: {
-        formatter: val => {
-          val = val * 100 + "%";
-          return val;
-        }
-      }
+    const scale = {
+      percent: { formatter: (val: number) => val * 100 + '%' }
     };
     return (
       <div>
         <Chart
           height={400}
-          padding={[80, 50, 80, 0]}
+          padding={[20, 0, 20, 0]}
           background={{ fill: '#fff' }}
           data={dv}
-          scale={cols}
+          scale={scale}
           forceFit
         >
           <Coord type="theta" radius={1} />
@@ -57,7 +49,7 @@ class InnerLabel extends React.Component {
           <Legend
             position="right"
             offsetY={-200}
-            offsetX={-30}
+            offsetX={-60}
           />
           <Tooltip
             showTitle={false}
@@ -65,28 +57,11 @@ class InnerLabel extends React.Component {
           <Geom
             type="intervalStack"
             position="percent"
-            color="item"
-            tooltip={[
-              "item*percent",
-              (item, percent) => ({
-                name: item,
-                value: percent * 100 + '%'
-              })
-            ]}
-            style={{
-              lineWidth: 1,
-              stroke: "#fff"
-            }}
+            color={['item', ['#2593fc', '#38c060', '#27c1c1', '#705dc8', '#3b4771', '#f9cb34']]}
           >
             <Label
               content="percent"
               offset={-40}
-              htmlTemplate={
-                (text, item) => {
-                  const d = item.point;
-                  return `<div  style="display: inline-block;width: 50px; color:#fff">${d.item}${text}</div>`
-                }
-              }
             />
           </Geom>
         </Chart>

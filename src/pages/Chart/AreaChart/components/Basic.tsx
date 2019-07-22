@@ -72,10 +72,7 @@ class Basic extends React.Component {
         <Geom
           type="line"
           position="year*value"
-          tooltip={['year*value', (year, value) => ({
-            name: '年份',
-            value: year
-          })]}
+          tooltip="year*value"
         />
       </Chart>
     );
