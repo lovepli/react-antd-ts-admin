@@ -4,17 +4,25 @@ import PageLoading from '@/components/PageLoading';
 
 
 const Dashboard = lazy(() => import( /* webpackChunkName:"Dashboard" */ '@/pages/Dashboard'));
+
 const Icon = lazy(() => import( /* webpackChunkName:"Icon" */ '@/pages/Icon'));
+
 const LineChart = lazy(() => import( /* webpackChunkName:"LineChart" */ '@/pages/Chart/LineChart'));
 const AreaChart = lazy(() => import( /* webpackChunkName:"AreaChart" */ '@/pages/Chart/AreaChart'));
 const PieChart = lazy(() => import( /* webpackChunkName:"PieChart" */ '@/pages/Chart/PieChart'));
 const PillarChart = lazy(() => import( /* webpackChunkName:"PillarChart" */ '@/pages/Chart/PillarChart'));
 const RadarChart = lazy(() => import( /* webpackChunkName:"RadarChart" */ '@/pages/Chart/RadarChart'));
+
 const ArticleList = lazy(() => import( /* webpackChunkName:"ArticleList" */ '@/pages/Article/ArticleList'));
+const ArticleCreate = lazy(() => import( /* webpackChunkName:"ArticleCreate" */ '@/pages/Article/ArticleCreate'));
 const ArticleDetail = lazy(() => import( /* webpackChunkName:"ArticleDetail" */ '@/pages/Article/ArticleDetail'));
+
 const Component = lazy(() => import( /* webpackChunkName:"Component" */ '@/pages/Component'));
+
 const Structure = lazy(() => import( /* webpackChunkName:"Structure" */ '@/pages/structure/Page'));
+
 const NotFound = lazy(() => import( /* webpackChunkName:"NotFound" */ '@/pages/Error/NotFound'));
+
 const User = lazy(() => import( /* webpackChunkName:"User" */ '@/pages/User'));
 
 
@@ -51,6 +59,10 @@ const routes: RouteProps[] = [{
   exact: true,
   component: ArticleList
 }, {
+  path: '/ArticleCreate',
+  exact: true,
+  component: ArticleCreate
+},{
   path: '/articleDetail/:id',
   exact: true,
   component: ArticleDetail
