@@ -11,7 +11,6 @@ import App from '@/App';
 import "@/styles/antd.less";
 
 import '@/mock';
-// import '@/components/SvgIcon/requireAllSvg';
 
 
 

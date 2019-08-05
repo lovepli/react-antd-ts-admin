@@ -6,9 +6,9 @@ import Header from './components/Header';
 import './style.less';
 
 import { getList } from './service';
-import { TypeMap } from '@/assets/typeMap';
-const genderMap = TypeMap.gender;
-const roleMap = TypeMap.role;
+import { CodeMap } from '@/assets/CodeMap';
+const genderMap = CodeMap.gender;
+const roleMap = CodeMap.role;
 
 
 class User extends React.Component {

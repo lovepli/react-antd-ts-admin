@@ -1,28 +1,22 @@
 import React from 'react';
-import BraftEditor from 'braft-editor';
-import 'braft-editor/dist/index.css';
+import Edit from '../components/Edit';
+
+interface IProps { }
+
+interface IState {
+  editorState: any;
+}
 
 
-class ArticleCreate extends React.Component {
+class ArticleCreate extends React.Component<IProps, IState> {
 
-  public state = {
-    editorState: BraftEditor.createEditorState(null)
-  }
 
   public render() {
+
     return (
-      <BraftEditor
-        value={this.state.editorState}
-        onChange={this.handleChange} />
+      <Edit detail={{}} />
     )
   }
-
-  private handleChange = (editorState: any) => {
-    this.setState({
-      editorState
-    })
-  }
-
 }
 
 export default ArticleCreate;

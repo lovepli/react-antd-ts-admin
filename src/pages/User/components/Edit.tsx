@@ -3,7 +3,7 @@ import { Modal, Form, Input, Radio, Checkbox, InputNumber, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { getDetail } from '../service';
-import { TypeMap, createOptions } from '@/assets/typeMap';
+import { CodeMap, createOptions } from '@/assets/CodeMap';
 
 
 interface IEditProps extends FormComponentProps {
@@ -120,7 +120,7 @@ class Edit extends React.Component<IEditProps> {
             })(
               <Radio.Group >
                 {
-                  createOptions(TypeMap.gender).map(item => <Radio key={item.value} value={item.value}>{item.label}</Radio>)
+                  createOptions(CodeMap.gender).map(item => <Radio key={item.value} value={item.value}>{item.label}</Radio>)
                 }
               </Radio.Group>
             )}
@@ -133,7 +133,7 @@ class Edit extends React.Component<IEditProps> {
                 required: true,
                 message: '请至少选择一个用户角色!'
               }],
-            })(<Checkbox.Group options={createOptions(TypeMap.role)} />)}
+            })(<Checkbox.Group options={createOptions(CodeMap.role)} />)}
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8 }}>
