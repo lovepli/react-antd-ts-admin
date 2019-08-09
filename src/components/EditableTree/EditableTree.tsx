@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tree, Icon, Popconfirm, message, Button, Input } from 'antd';
+import { Tree, Icon, Popconfirm, message, Input } from 'antd';
 import './style.less';
 const { TreeNode } = Tree;
 
@@ -8,9 +8,8 @@ export interface INode {
   id: string;
   name: string;  // 节点名
   children?: INode[];   // 子节点
-  defaultName?: string;  // 取消编辑时恢复原始的节点名
   title?: React.ReactNode; //   TreeNode的title属性可接受ReactNode，利用这一点来实现节点名的编辑，以及显示编辑、添加和删除图标按钮。
-  parentId?: string;  // 父节点的id
+  parentId?: string;  // 父节点的id，添加节点的时候需要
   isEditable?: boolean;  // 控制节点是否为编辑状态
 }
 
@@ -68,7 +67,6 @@ class EditableTree extends React.Component<IProps, IState>{
     const formate = (node: INode) => {
       node.parentId = id;
       node.isEditable = false;
-      node.defaultName = node.name;
     }
     newNodes.forEach(node => {
       if (node.children) {
@@ -93,21 +91,18 @@ class EditableTree extends React.Component<IProps, IState>{
 
   // 渲染树
   private renderTreeNodes = (nodes: INode[]) => nodes.map((node) => {
-    // TreeNode的title可以接受ReactNdoe类型，这样就可以显示操作按钮
+    // TreeNode的title可以接受ReactNode类型，这样就可以显示操作按钮
     if (node.isEditable) {
       node.title = (
-        <div style={{ width: '160px' }}>
-          {/* 这里是直接在title的位置进行输入，比较占页面横向空间，也可以改为模态窗进行输入 */}
-          <Input
-            placeholder="请输入名称"
-            size="small"
-            value={node.name}
-            onChange={(event) => this.handleChange(event, node.id)}
-            onPressEnter={() => this.handleSave(node.id)}
-          />
-          <Button type="link" size="small" onClick={() => this.handleSave(node.id)}>保存</Button>
-          <Button type="link" size="small" onClick={() => this.handleClose(node.id)}>取消</Button>
-        </div>
+        <Input
+          style={{ width: '160px' }}
+          size="small"
+          placeholder="请输入名称"
+          value={node.name}
+          onChange={(event) => this.handleChange(event, node.id)}
+          onPressEnter={() => this.handleSave(node.id)}
+          onBlur={() => this.handleSave(node.id)}
+        />
       );
     } else {
       node.title = (
@@ -116,6 +111,7 @@ class EditableTree extends React.Component<IProps, IState>{
           <span className="tree-title__handle" >
             <Icon style={{ marginLeft: 10 }} type='edit' onClick={() => this.handleEdit(node.id)} />
             <Icon style={{ marginLeft: 10 }} type='plus' onClick={() => this.handleAdd(node.id)} />
+            {/* 最顶层的树不显示删除按钮 */}
             {
               node.parentId === '' ?
                 null :
@@ -154,8 +150,7 @@ class EditableTree extends React.Component<IProps, IState>{
         if (node.children) {
           node.children.push({
             name: '名称',
-            defaultName: '名称',
-            id: id + Math.random(),
+            id: id + new Date(),
             parentId: id,
             isEditable: false
           });
@@ -163,8 +158,7 @@ class EditableTree extends React.Component<IProps, IState>{
           node.children = [];
           node.children.push({
             name: '名称',
-            defaultName: '名称',
-            id: id + Math.random(),
+            id: id + new Date(),
             parentId: id,
             isEditable: false
           });
@@ -201,41 +195,18 @@ class EditableTree extends React.Component<IProps, IState>{
     })
   }
 
-  // 编辑节点名
+  // 点击编辑
   private handleEdit = (id: string, nodes: INode[] = this.nodes) => {
     nodes.forEach((item) => {
-      if (item.id !== id) {
-        item.isEditable = false;
-      } else {
+      if (item.id === id) {
         item.isEditable = true;
       }
-      // 当某节点处于编辑状态，并改变数据，点击编辑其他节点时，此节点变成不可编辑状态，name 需要回退到 defaultName
-      item.name = item.defaultName!;
       this.setState({
         nodes: this.nodes
       });
       if (item.children) {
         this.handleEdit(id, item.children)
       }
-    })
-  }
-
-  // 取消编辑，名称恢复为原名称
-  private handleClose = (id: string, nodes: INode[] = this.nodes) => {
-    nodes.some((node) => {
-      const isCurrentNode: boolean = node.id === id;
-      if (isCurrentNode) {
-        node.name = node.defaultName!;
-        node.isEditable = false;
-        this.setState({
-          nodes: this.nodes
-        });
-      } else {
-        if (node.children) {
-          this.handleClose(id, node.children)
-        }
-      }
-      return isCurrentNode;
     })
   }
 
@@ -247,7 +218,6 @@ class EditableTree extends React.Component<IProps, IState>{
         if (!node.name) {
           message.warning('名称不能为空');
         } else {
-          node.defaultName = node.name;
           node.isEditable = false;
           this.setState({
             nodes: this.nodes
