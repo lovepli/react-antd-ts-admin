@@ -8,7 +8,7 @@ import zh_CN from 'antd/lib/locale-provider/zh_CN';
 
 import store from '@/store'
 import App from '@/App';
-import "@/styles/antd.less";
+import '@/assets/styles/antd.less';
 
 import '@/mock';
 

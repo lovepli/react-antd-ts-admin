@@ -37,17 +37,6 @@ module.exports = merge(baseWebpackConfig, {
       test: /\.css$/,
       use: ['style-loader', 'css-loader']
     }, {
-      test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'less-loader', {
-        loader: 'sass-resources-loader',
-        options: {
-          resources: [
-            path.resolve(__dirname, '../src/styles/variable.less'),
-            path.resolve(__dirname, '../src/styles/mixin.less')
-          ]
-        }
-      }]
-    }, {
       test: /\.less$/,
       use: ['style-loader', 'css-loader', {
         loader: 'less-loader',
@@ -58,8 +47,8 @@ module.exports = merge(baseWebpackConfig, {
           loader: 'sass-resources-loader',
           options: {
             resources: [
-              path.resolve(__dirname, '../src/styles/variable.less'),
-              path.resolve(__dirname, '../src/styles/mixin.less')
+              path.resolve(__dirname, '../src/assets/styles/variable.less'),
+              path.resolve(__dirname, '../src/assets/styles/mixin.less')
             ]
           }
         }]

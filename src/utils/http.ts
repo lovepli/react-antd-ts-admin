@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { paramsSerializer, objToParams } from '@/utils/utils';
+import { paramsSerializer, objToParams } from '@/utils/core';
 
 // 接口根路径
 const BASE_URL = 'http://123.123.22.22.8080';

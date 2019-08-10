@@ -7,7 +7,7 @@
 - 图表：BizChart
 - Excel：js-xlsx
 - 图片生成：html2canvas
-- 富文本编辑器：Tinymce
+- 富文本编辑器：braft-editor
 - 数据：axios
 
 [线上地址](https://wluyao.github.io/admin/dist/index.html)  
@@ -76,20 +76,18 @@
 ```
 |-- config					            webpack配置文件
 |-- dist								webpack构建目录
-|-- public					            入口页面
-|-- shortcut							项目截图
+|-- public					            入口页面、favicon
 |-- src									源码目录
-|	|-- api									接口
-|	|-- assets								静态资源文件，会被webpack解析为模块依赖
-|		|-- img									图片
-|	|-- components                      	公共组件
-|	|-- layout								布局
+|	|-- assets							全局资源文件，会被webpack解析为模块依赖
+|		|-- images								图片
+|		|-- icons								字体
+|	    |-- styles							    样式	
+|	|-- components                      	全局公共组件
+|	|-- layouts								页面布局
 |	|-- mock								模拟数据
-|	|-- pages								页面级组件	
-|	|-- main.js								入口文件，加载各种组件
+|	|-- pages								功能页面	
 |	|-- router							    路由管理	
 |	|-- store							    状态管理	
-|	|-- styles							    全局样式	
 |	|-- utils								全局公用方法	
 |	|-- App.tsx								根组件
 |	|-- index.tsx							入口文件

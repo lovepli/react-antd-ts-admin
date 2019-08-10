@@ -1,32 +1,32 @@
-import React, { Suspense, lazy } from 'react'
+import React, { Suspense, lazy, Children } from 'react'
 import { Switch, Route, RouteProps } from 'react-router-dom';
 import PageLoading from '@/components/PageLoading';
 
 
-const Dashboard = lazy(() => import( /* webpackChunkName:"Dashboard" */ '@/pages/Dashboard'));
+const Dashboard = lazy(() => import( /* webpackChunkName:"dashboard" */ '@/pages/Dashboard'));
 
-const Icon = lazy(() => import( /* webpackChunkName:"Icon" */ '@/pages/Icon'));
+const Icon = lazy(() => import( /* webpackChunkName:"icon" */ '@/pages/Icon'));
 
-const LineChart = lazy(() => import( /* webpackChunkName:"LineChart" */ '@/pages/Chart/LineChart'));
-const AreaChart = lazy(() => import( /* webpackChunkName:"AreaChart" */ '@/pages/Chart/AreaChart'));
-const PieChart = lazy(() => import( /* webpackChunkName:"PieChart" */ '@/pages/Chart/PieChart'));
-const PillarChart = lazy(() => import( /* webpackChunkName:"PillarChart" */ '@/pages/Chart/PillarChart'));
-const RadarChart = lazy(() => import( /* webpackChunkName:"RadarChart" */ '@/pages/Chart/RadarChart'));
+const LineChart = lazy(() => import( /* webpackChunkName:"lineChart" */ '@/pages/Chart/LineChart'));
+const AreaChart = lazy(() => import( /* webpackChunkName:"areaChart" */ '@/pages/Chart/AreaChart'));
+const PieChart = lazy(() => import( /* webpackChunkName:"pieChart" */ '@/pages/Chart/PieChart'));
+const PillarChart = lazy(() => import( /* webpackChunkName:"pillarChart" */ '@/pages/Chart/PillarChart'));
+const RadarChart = lazy(() => import( /* webpackChunkName:"radarChart" */ '@/pages/Chart/RadarChart'));
 
-const ArticleList = lazy(() => import( /* webpackChunkName:"ArticleList" */ '@/pages/Article/ArticleList'));
-const ArticleCreate = lazy(() => import( /* webpackChunkName:"ArticleCreate" */ '@/pages/Article/ArticleCreate'));
-const ArticleDetail = lazy(() => import( /* webpackChunkName:"ArticleDetail" */ '@/pages/Article/ArticleDetail'));
+const ArticleList = lazy(() => import( /* webpackChunkName:"articleList" */ '@/pages/Article/ArticleList'));
+const ArticleCreate = lazy(() => import( /* webpackChunkName:"articleCreate" */ '@/pages/Article/ArticleCreate'));
+const ArticleDetail = lazy(() => import( /* webpackChunkName:"articleDetail" */ '@/pages/Article/ArticleDetail'));
 
-const Component = lazy(() => import( /* webpackChunkName:"Component" */ '@/pages/Component'));
+const EditableTree = lazy(() => import( /* webpackChunkName:"editableTree" */ '@/pages/Component/EditableTree'));
+const Mask = lazy(() => import( /* webpackChunkName:"mask" */ '@/pages/Component/Mask'));
 
-const Structure = lazy(() => import( /* webpackChunkName:"Structure" */ '@/pages/structure/Page'));
 
 const NotFound = lazy(() => import( /* webpackChunkName:"NotFound" */ '@/pages/Error/NotFound'));
 
 const User = lazy(() => import( /* webpackChunkName:"User" */ '@/pages/User'));
 
 
-const routes: RouteProps[] = [{
+const routeConfig: RouteProps[] = [{
   path: '/dashboard',
   exact: true,
   component: Dashboard
@@ -62,18 +62,18 @@ const routes: RouteProps[] = [{
   path: '/ArticleCreate',
   exact: true,
   component: ArticleCreate
-},{
+}, {
   path: '/articleDetail/:id',
   exact: true,
   component: ArticleDetail
 }, {
-  path: '/component',
+  path: '/component/editableTree',
   exact: true,
-  component: Component
+  component: EditableTree
 }, {
-  path: '/structure',
+  path: '/component/mask',
   exact: true,
-  component: Structure
+  component: Mask
 }, {
   path: '/user',
   exact: true,
@@ -85,12 +85,71 @@ const routes: RouteProps[] = [{
 }]
 
 
+export interface IMenu {
+  title: string;
+  icon?: string;
+  path?: string;
+  children?: IMenu[];
+}
+
+export const MenuConfig: IMenu[] = [{
+  title: '首页',
+  icon: 'dashboard',
+  path: '/dashboard'
+}, {
+  title: '图标',
+  icon: 'smile',
+  path: '/icon'
+}, {
+  title: '图表',
+  icon: 'line-chart',
+  children: [{
+    title: '折线图',
+    path: '/chart/lineChart'
+  }, {
+    title: '面积图',
+    path: '/chart/areaChart'
+  }, {
+    title: '饼状图',
+    path: '/chart/pieChart'
+  }, {
+    title: '柱状图',
+    path: '/chart/pillarChart'
+  }, {
+    title: '雷达图',
+    path: '/chart/radarChart'
+  }]
+}, {
+  title: '用户管理',
+  icon: 'user',
+  path: '/user'
+}, {
+  title: '文章管理',
+  icon: 'read',
+  children: [{
+    title: '文章列表',
+    path: '/article/list'
+  }, {
+    title: '创建文章',
+    path: '/article/create'
+  }]
+}, {
+  title: '组件',
+  icon: 'pie-chart',
+  children: [{
+    title: '可编辑树',
+    path: '/component/editableTree'
+  }, {
+    title: '遮罩',
+    path: '/component/mask'
+  }]
+}]
 
 const InnerRouter: React.SFC = () => (
   <Suspense fallback={<PageLoading />}>
     <Switch>
       {
-        routes.map((route: RouteProps) => {
+        routeConfig.map((route: RouteProps) => {
           const { path } = route;
           return <Route key={path + ''} {...route} />
         })

@@ -1,7 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Logo.less';
-import logo from '@/assets/img/logo.png';
+import logo from '@/assets/images/logo.png';
 
 function Logo() {
   return (

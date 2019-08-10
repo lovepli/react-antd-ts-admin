@@ -30,7 +30,7 @@ class InnerLayout extends React.Component<any, IState> {
     } else {
       return (
         <Layout>
-          <Layout.Sider trigger={null} collapsible collapsed={this.state.collapse}>
+          <Layout.Sider width={180} trigger={null} collapsible collapsed={this.state.collapse}>
             <Logo />
             <Menu />
           </Layout.Sider>

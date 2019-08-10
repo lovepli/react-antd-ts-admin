@@ -7,6 +7,7 @@ const InnerLayout = React.lazy(() => import( /* webpackChunkName:"InnerLayout" *
 
 
 class App extends React.Component {
+
   public render() {
     return (
       <Router>
