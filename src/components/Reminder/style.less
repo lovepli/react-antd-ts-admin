@@ -1,0 +1,78 @@
+  .reminder {
+    min-width: 380px;
+    box-sizing: border-box;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, 50%);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    z-index: 1000;
+
+    .reminder__icon {
+      margin-right: 10px;
+    }
+
+    .reminder__content {
+      padding-right: 16px;
+    }
+
+    .reminder__closeBtn {
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      transform: translateY(-50%);
+      font-size: 22px;
+      color: #C0C4CC;
+      cursor: pointer;
+
+      &:hover {
+        color: #aaa;
+      }
+    }
+  }
+
+  .reminder--info {
+    background-color: #edf2fc;
+    border-color: #ebeef5;
+    color: #909399;
+  }
+
+  .reminder--success {
+    background-color: #f0f9eb;
+    border-color: #e1f3d8;
+    color: #67c23a;
+  }
+
+  .reminder--warning {
+    background-color: #fdf6ec;
+    border-color: #faecd8;
+    color: #e6a23c;
+  }
+
+
+  .reminder--error {
+    background-color: #fef0f0;
+    border-color: #fde2e2;
+    color: #f56c6c;
+  }
+
+  .reminder--loading {
+    background-color: mix(#fff, #409eff, 90%);
+    border-color: mix(#fff, #409eff, 80%);
+    color: #409eff;
+  }
+
+  .reminder-fade-enter,
+  .reminder-fade-leave-to {
+    opacity: 0;
+  }
+
+  .reminder-fade-enter-active,
+  .reminder-fade-leave-active {
+    transition: opacity .5s;
+  }

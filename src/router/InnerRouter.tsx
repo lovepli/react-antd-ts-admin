@@ -21,9 +21,12 @@ const EditableTree = lazy(() => import( /* webpackChunkName:"editableTree" */ '@
 const Mask = lazy(() => import( /* webpackChunkName:"mask" */ '@/pages/Component/Mask'));
 
 
-const NotFound = lazy(() => import( /* webpackChunkName:"NotFound" */ '@/pages/Error/NotFound'));
+const NotFound = lazy(() => import( /* webpackChunkName:"notFound" */ '@/pages/Error/NotFound'));
 
-const User = lazy(() => import( /* webpackChunkName:"User" */ '@/pages/User'));
+const User = lazy(() => import( /* webpackChunkName:"user" */ '@/pages/User'));
+
+const Blank = lazy(() => import( /* webpackChunkName:"blank" */ '@/pages/Blank'));
+
 
 
 const routeConfig: RouteProps[] = [{
@@ -78,6 +81,10 @@ const routeConfig: RouteProps[] = [{
   path: '/user',
   exact: true,
   component: User
+}, {
+  path: '/blank',
+  exact: true,
+  component: Blank
 }, {
   path: '*',
   exact: true,
@@ -143,6 +150,10 @@ export const MenuConfig: IMenu[] = [{
     title: '遮罩',
     path: '/component/mask'
   }]
+}, {
+  title: '空页面',
+  icon: 'user',
+  path: '/blank'
 }]
 
 const InnerRouter: React.SFC = () => (
