@@ -4,12 +4,13 @@ import './style.less';
 const { TreeNode } = Tree;
 
 
+
 export interface INode {
   id: string;
   name: string;  // 节点名
   children?: INode[];   // 子节点
   title?: React.ReactNode; //   TreeNode的title属性可接受ReactNode，利用这一点来实现节点名的编辑，以及显示编辑、添加和删除图标按钮。
-  parentId?: string;  // 父节点的id，添加节点的时候需要
+  parentId?: string;  // 父节点的id
   isEditable?: boolean;  // 控制节点是否为编辑状态
 }
 
@@ -26,7 +27,7 @@ interface IState {
 
 class EditableTree extends React.Component<IProps, IState>{
 
-  // 由于树节点结构较复杂，当子节点层级较深时，不方便通过setState来改变状态，可以先修改nodes的值，然后在将其赋值给state。
+  // 由于树节点结构较复杂，当子节点层级较深时，不方便通过setState来改变状态，可以先修改nodes的值，然后再将其赋值给state。
   public nodes: INode[] = [];
 
   public readonly state: Readonly<IState> = {
@@ -81,8 +82,11 @@ class EditableTree extends React.Component<IProps, IState>{
 
 
   // 点击树节点时获取到点击的节点的key
-  private handleSelect = (selectedKeys: string[]) => {
+  private handleSelect = (selectedKeys: string[], info: any) => {
+    // 点击选中树节点之后，再点击一次会取消选中，此时selectedKeys会是一个空数组。
     if (selectedKeys.length === 0) { return; }
+    // 只有点击节点名区域的时候才允许传递selectedKey，不然点击输入框或者操作图标，由于事件冒泡，仍然会触发onSelect。
+    if (info.nativeEvent.target.id !== 'treeName') { return; }
     const selectedKey = selectedKeys[0];
     if (this.props.onSelectTree) {
       this.props.onSelectTree(selectedKey);
@@ -91,33 +95,32 @@ class EditableTree extends React.Component<IProps, IState>{
 
   // 渲染树
   private renderTreeNodes = (nodes: INode[]) => nodes.map((node) => {
-    // TreeNode的title可以接受ReactNode类型，这样就可以显示操作按钮
     if (node.isEditable) {
       node.title = (
         <Input
-          style={{ width: '160px' }}
+          style={{ width: '120px' }}
           size="small"
           placeholder="请输入名称"
           value={node.name}
-          onChange={(event) => this.handleChange(event, node.id)}
-          onPressEnter={() => this.handleSave(node.id)}
-          onBlur={() => this.handleSave(node.id)}
+          autoFocus={true}
+          onChange={this.handleChange.bind(this, node.id, this.nodes)}
+          onPressEnter={this.handleSave.bind(this, node.id, this.nodes)}
+          onBlur={this.handleSave.bind(this, node.id, this.nodes)}
         />
       );
     } else {
       node.title = (
         <div className="tree-title">
-          <span> {node.name} </span>
+          <span id="treeName"> {node.name} </span>
           <span className="tree-title__handle" >
-            <Icon style={{ marginLeft: 10 }} type='edit' onClick={() => this.handleEdit(node.id)} />
-            <Icon style={{ marginLeft: 10 }} type='plus' onClick={() => this.handleAdd(node.id)} />
-            {/* 最顶层的树不显示删除按钮 */}
+            <Icon style={{ marginLeft: 10 }} type='edit' onClick={this.handleEdit.bind(this, node.id, this.nodes)} />
+            <Icon style={{ marginLeft: 10 }} type='plus' onClick={this.handleAdd.bind(this, node.id, this.nodes)} />
             {
               node.parentId === '' ?
                 null :
                 <Popconfirm
                   title={`确认要删除${node.name}吗?`}
-                  onConfirm={() => this.handleDelete(node.id)}
+                  onConfirm={this.handleDelete.bind(this, node.id, this.nodes)}
                   okText="删除"
                   cancelText="取消"
                 >
@@ -142,15 +145,32 @@ class EditableTree extends React.Component<IProps, IState>{
     return <TreeNode title={node.title} key={node.id} />;
   })
 
+
+  // 编辑节点
+  private handleEdit = (id: string, nodes: INode[], event: React.MouseEvent) => {
+    event.stopPropagation()
+    nodes.forEach((item) => {
+      if (item.id === id) {
+        item.isEditable = true;
+      }
+      this.setState({
+        nodes: this.nodes
+      });
+      if (item.children) {
+        this.handleEdit(id, item.children, event)
+      }
+    })
+  }
+
   // 增加节点
-  private handleAdd = (id: string, nodes: INode[] = this.nodes) => {
+  private handleAdd = (id: string, nodes: INode[]) => {
     nodes.some((node) => {
       const isCurrentNode: boolean = node.id === id;
       if (isCurrentNode) {
         if (node.children) {
           node.children.push({
             name: '名称',
-            id: id + new Date(),
+            id: Date.now().toString(),
             parentId: id,
             isEditable: false
           });
@@ -158,7 +178,7 @@ class EditableTree extends React.Component<IProps, IState>{
           node.children = [];
           node.children.push({
             name: '名称',
-            id: id + new Date(),
+            id: Date.now().toString(),
             parentId: id,
             isEditable: false
           });
@@ -177,7 +197,7 @@ class EditableTree extends React.Component<IProps, IState>{
   }
 
   // 删除节点
-  private handleDelete = (id: string, nodes: INode[] = this.nodes) => {
+  private handleDelete = (id: string, nodes: INode[]) => {
     nodes.some((node: INode, index: number) => {
       const isCurrentNode: boolean = node.id === id;
       if (isCurrentNode) {
@@ -195,23 +215,8 @@ class EditableTree extends React.Component<IProps, IState>{
     })
   }
 
-  // 点击编辑
-  private handleEdit = (id: string, nodes: INode[] = this.nodes) => {
-    nodes.forEach((item) => {
-      if (item.id === id) {
-        item.isEditable = true;
-      }
-      this.setState({
-        nodes: this.nodes
-      });
-      if (item.children) {
-        this.handleEdit(id, item.children)
-      }
-    })
-  }
-
   // 保存编辑输入结果
-  private handleSave = (id: string, nodes: INode[] = this.nodes) => {
+  private handleSave = (id: string, nodes: INode[]) => {
     nodes.some((node) => {
       const isCurrentNode: boolean = node.id === id;
       if (isCurrentNode) {
@@ -233,7 +238,7 @@ class EditableTree extends React.Component<IProps, IState>{
     })
   }
 
-  private handleChange = (event: React.ChangeEvent<HTMLInputElement>, id: string, nodes: INode[] = this.nodes) => {
+  private handleChange = (id: string, nodes: INode[], event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.value;
     nodes.some((node) => {
       const isCurrentNode: boolean = node.id === id;
@@ -248,12 +253,13 @@ class EditableTree extends React.Component<IProps, IState>{
         });
       } else {
         if (node.children) {
-          this.handleChange(event, id, node.children)
+          this.handleChange(id, node.children, event)
         }
       }
       return isCurrentNode;
     })
   }
 }
+
 
 export default EditableTree;

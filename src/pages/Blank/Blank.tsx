@@ -18,12 +18,14 @@ class Blank extends BaseComponent {
   }
 
   private handleRemind = () => {
-    // reminder('222')
-    reminder({
-      type: 'success',
-      message: '123',
+    const ref: any = reminder({
+      type: 'loading',
+      message: <div>防静\电管疾风剑豪</div>,
+      autoClose: false
 
     })
+    setTimeout(ref.props.onClose, 3000)
+
   }
 
 

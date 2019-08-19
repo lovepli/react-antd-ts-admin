@@ -14,9 +14,14 @@ const iconType = {
 
 type ReminderType = 'info' | 'success' | 'error' | 'warning' | 'loading';
 interface IConfig {
+  // 提示类型
   type?: ReminderType;
-  message?: string;
+  // 消息内容
+  message?: string | React.ReactNode;
+  // 多久之后自动关闭
   duration?: number;
+  // 是否自动关闭
+  autoClose?: boolean;
 }
 
 interface IProps {
@@ -32,14 +37,12 @@ class Remind extends React.Component<IProps> {
     return (
       <div className={`reminder reminder--${type}`}>
         <Icon className="reminder__icon " type={iconType[type]} theme={type === 'loading' ? 'outlined' : 'filled'} />
-        <span className="reminder__content">{message}</span>
+        <div className="reminder__content">{message}</div>
         <span className="reminder__closeBtn" onClick={this.props.onClose}>×</span>
       </div>
     )
   }
 }
-
-
 
 // 参数处理
 const argManage = (config: string | IConfig) => {
@@ -52,26 +55,32 @@ const argManage = (config: string | IConfig) => {
   return Object.assign({
     type: 'info',
     message: '',
-    duration: 3000
+    duration: 3000,
+    autoClose: true
   }, options)
 }
 
 
 const reminder = (config: string | IConfig) => {
   const options = argManage(config);
-
+  let timer: any = null;
   const close = () => {
     document.body.removeChild(container);
     clearTimeout(timer);
   }
 
-  const { duration } = options;
-  const timer = setTimeout(close, duration)
+  const { duration, autoClose } = options;
+  if (autoClose) {
+    timer = setTimeout(close, duration);
+  }
 
   const container: HTMLDivElement = document.createElement('div');
   document.body.appendChild(container);
 
-  ReactDOM.render(<Remind config={options} onClose={close} />, container)
+  const ref = ReactDOM.render(<Remind config={options} onClose={close} />, container)
+  // 返回对组件的引用,
+  // TODO 改为callback ref
+  return ref;
 }
 
 

@@ -13,7 +13,6 @@ import '@/assets/styles/antd.less';
 import '@/mock';
 
 
-
 ReactDOM.render((
   <Provider store={store}>
     <LocaleProvider locale={zh_CN}>

@@ -23,12 +23,12 @@ class Mask extends React.Component<IProps> {
   }
 
   public render() {
-    const { visible, children, onClose } = this.props;
+    const { visible, children } = this.props;
     if (visible) {
       return ReactDOM.createPortal(
         <div
           className="mask"
-          onClick={onClose}
+          onClick={this.handleClick}
         >
           {
             children
@@ -38,6 +38,13 @@ class Mask extends React.Component<IProps> {
       )
     } else {
       return null
+    }
+  }
+
+
+  private handleClick = (event: any) => {
+    if (event.target.classList.contains('mask')) {
+      this.props.onClose();
     }
   }
 }
