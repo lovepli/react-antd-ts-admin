@@ -2,27 +2,35 @@ import React, { Suspense, lazy, Children } from 'react'
 import { Switch, Route, RouteProps } from 'react-router-dom';
 import PageLoading from '@/components/PageLoading';
 
-
+// 首页
 const Dashboard = lazy(() => import( /* webpackChunkName:"dashboard" */ '@/pages/Dashboard'));
 
+// 图标
 const Icon = lazy(() => import( /* webpackChunkName:"icon" */ '@/pages/Icon'));
 
+// 图表
 const LineChart = lazy(() => import( /* webpackChunkName:"lineChart" */ '@/pages/Chart/LineChart'));
 const AreaChart = lazy(() => import( /* webpackChunkName:"areaChart" */ '@/pages/Chart/AreaChart'));
 const PieChart = lazy(() => import( /* webpackChunkName:"pieChart" */ '@/pages/Chart/PieChart'));
 const PillarChart = lazy(() => import( /* webpackChunkName:"pillarChart" */ '@/pages/Chart/PillarChart'));
 const RadarChart = lazy(() => import( /* webpackChunkName:"radarChart" */ '@/pages/Chart/RadarChart'));
 
+// 表单
+const CustomForm = lazy(() => import( /* webpackChunkName:"customForm" */ '@/pages/Form/CustomForm'));
+
+// 文章管理
 const ArticleList = lazy(() => import( /* webpackChunkName:"articleList" */ '@/pages/Article/ArticleList'));
 const ArticleCreate = lazy(() => import( /* webpackChunkName:"articleCreate" */ '@/pages/Article/ArticleCreate'));
 const ArticleDetail = lazy(() => import( /* webpackChunkName:"articleDetail" */ '@/pages/Article/ArticleDetail'));
 
+// 组件
 const EditableTree = lazy(() => import( /* webpackChunkName:"editableTree" */ '@/pages/Component/EditableTree'));
 const Mask = lazy(() => import( /* webpackChunkName:"mask" */ '@/pages/Component/Mask'));
 
-
+// 错误处理
 const NotFound = lazy(() => import( /* webpackChunkName:"notFound" */ '@/pages/Error/NotFound'));
 
+// 用户管理
 const User = lazy(() => import( /* webpackChunkName:"user" */ '@/pages/User'));
 
 const Blank = lazy(() => import( /* webpackChunkName:"blank" */ '@/pages/Blank'));
@@ -57,6 +65,10 @@ const routeConfig: RouteProps[] = [{
   path: '/chart/radarChart',
   exact: true,
   component: RadarChart
+}, {
+  path: '/form/customForm',
+  exact: true,
+  component: CustomForm
 }, {
   path: '/articleList',
   exact: true,
@@ -125,6 +137,13 @@ export const MenuConfig: IMenu[] = [{
   }, {
     title: '雷达图',
     path: '/chart/radarChart'
+  }]
+}, {
+  title: '表单',
+  icon: 'form',
+  children: [{
+    title: '自定义表单控件',
+    path: '/form/customForm'
   }]
 }, {
   title: '用户管理',
