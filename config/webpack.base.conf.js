@@ -43,8 +43,23 @@ module.exports = {
       include: resolve('src/assets/icons')
     }, {
       test: /\.ttf|eot|woff|woff2$/,
-      use: 'url-loader',
+      use: {
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'font/[name]-[hash:6].[ext]'
+        },
+      }
     }, {
+      test: /\.mp4|webm|ogg|mp3|wav|flac|aac$/,
+      use: {
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'media/[name].[hash:7].[ext]'
+        }
+      }
+    },{
       test: /\.js$/,
       use: 'babel-loader',
       exclude: /node_modules/
