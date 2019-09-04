@@ -1,7 +1,9 @@
 import React from 'react';
-import { Form, Button } from 'antd';
+import { Form, Button, Typography } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import RadioHook from '@/components/RadioHook/RadioHook';
+import HookSelect from '@/components/HookSelect';
+
+const { Title } = Typography;
 
 const options = [{
   label: '山东省',
@@ -9,32 +11,49 @@ const options = [{
 }, {
   label: '广西省',
   value: "2002"
+}, {
+  label: '江西省',
+  value: "2003"
 }]
 
 interface IProps extends FormComponentProps { }
 
-class Blank extends React.Component<IProps> {
+interface IState {
+  province: any
+}
+
+class Blank extends React.Component<IProps, IState> {
+
+  public state = {
+    province: ['2001', '2002']
+  }
 
   public render() {
     const { getFieldDecorator } = this.props.form;
+
     return (
       <div>
-        <p>展示自定义的RadioHook表单项的使用</p>
+        <p>展示自定义的HookSelect表单控件的使用</p>
+        <p>可多选或单选，传入的value为数组是就是多选</p>
 
-        <p>单独使用：</p>
-        <RadioHook
-          defaultValue={options[0].value}
+        <Title level={4}>单独作为受控组件使用：</Title>
+        <HookSelect
+          value={this.state.province}
           options={options}
           onChange={this.handleChange}
         />
 
-        <p>在表单中使用：</p>
+        <Title level={4}>在表单中使用：</Title>
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item>
+          <Form.Item label="请选择地区" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
             {
               getFieldDecorator('province', {
-                initialValue: options[0].value
-              })(<RadioHook options={options} />)
+                initialValue: '2001',
+                rules: [{
+                  required: true,
+                  message: '请选择地区',
+                }],
+              })(<HookSelect options={options} />)
             }
           </Form.Item>
 
@@ -47,7 +66,9 @@ class Blank extends React.Component<IProps> {
   }
 
   private handleChange = (value: any) => {
-    console.log(value);
+    this.setState({
+      province: value
+    })
   }
 
   private handleSubmit = (e: any) => {
@@ -55,6 +76,7 @@ class Blank extends React.Component<IProps> {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log(values);
+        this.props.form.resetFields();
       }
     });
   }
