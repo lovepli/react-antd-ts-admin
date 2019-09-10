@@ -11,7 +11,6 @@ interface IOptions {
 }
 
 interface IProps {
-  defaultValue?: any,
   value?: any;
   options?: IOptions[];
   onChange?: (value: any) => void;
@@ -35,8 +34,8 @@ class HookSelect extends React.Component<IProps, IState>{
 
   constructor(props: IProps) {
     super(props);
-    const value = typeof props.value === 'undefined' ? props.defaultValue : props.value;
-    this.state = { value }
+    const value = props.value || '';
+    this.state = { value };
   }
 
 
@@ -48,7 +47,7 @@ class HookSelect extends React.Component<IProps, IState>{
           options.map((option: IOptions) => (
             <li
               key={option.value}
-              className={this.state.value === option.value ? 'active-border' : ''}
+              style={this.addBorder(option.value, this.state.value)}
               onClick={this.handleChange.bind(this, option.value)}
             >
               <div className="label">{option.label} </div>
@@ -77,6 +76,24 @@ class HookSelect extends React.Component<IProps, IState>{
       }
     }
     return hook;
+  }
+
+  // 为选中项添加蓝色边框
+  private addBorder = (currentValue: any, values: any) => {
+    let border: React.CSSProperties = {
+      borderColor: '#0085ff',
+      boxShadow: '0px 0px 5px #0085ff',
+    }
+    if (Array.isArray(values)) {
+      if (!values.includes(currentValue)) {
+        border = {};
+      }
+    } else {
+      if (currentValue !== values) {
+        border = {};
+      }
+    }
+    return border;
   }
 
   private triggerChange = (changedValue: any) => {

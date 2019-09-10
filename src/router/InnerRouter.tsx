@@ -15,8 +15,10 @@ const PieChart = lazy(() => import( /* webpackChunkName:"pieChart" */ '@/pages/C
 const PillarChart = lazy(() => import( /* webpackChunkName:"pillarChart" */ '@/pages/Chart/PillarChart'));
 const RadarChart = lazy(() => import( /* webpackChunkName:"radarChart" */ '@/pages/Chart/RadarChart'));
 
+
 // 表单
-const CustomForm = lazy(() => import( /* webpackChunkName:"customForm" */ '@/pages/Form/CustomForm'));
+const CustomField = lazy(() => import( /* webpackChunkName:"customField" */ '@/pages/Form/CustomField'));
+const RichEditor = lazy(() => import( /* webpackChunkName:"richEditor" */ '@/pages/Form/RichEditor'));
 
 // 文章管理
 const ArticleList = lazy(() => import( /* webpackChunkName:"articleList" */ '@/pages/Article/ArticleList'));
@@ -66,15 +68,19 @@ const routeConfig: RouteProps[] = [{
   exact: true,
   component: RadarChart
 }, {
-  path: '/form/customForm',
+  path: '/form/customField',
   exact: true,
-  component: CustomForm
+  component: CustomField
+}, {
+  path: '/form/richEditor',
+  exact: true,
+  component: RichEditor
 }, {
   path: '/articleList',
   exact: true,
   component: ArticleList
 }, {
-  path: '/ArticleCreate',
+  path: '/articleCreate',
   exact: true,
   component: ArticleCreate
 }, {
@@ -143,7 +149,10 @@ export const MenuConfig: IMenu[] = [{
   icon: 'form',
   children: [{
     title: '自定义表单控件',
-    path: '/form/customForm'
+    path: '/form/customField'
+  }, {
+    title: '富文本编辑器',
+    path: '/form/richEditor'
   }]
 }, {
   title: '用户管理',
@@ -154,10 +163,10 @@ export const MenuConfig: IMenu[] = [{
   icon: 'read',
   children: [{
     title: '文章列表',
-    path: '/article/list'
+    path: '/articleList'
   }, {
     title: '创建文章',
-    path: '/article/create'
+    path: '/articleCreate'
   }]
 }, {
   title: '组件',

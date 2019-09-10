@@ -10,6 +10,7 @@ declare global {
 
   export const $notice: NotificationApi
 
+
   export interface IProps extends RouteComponentProps {
     [key: string]: any
   }

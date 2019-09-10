@@ -22,7 +22,7 @@ interface IState {
   province: any
 }
 
-class Blank extends React.Component<IProps, IState> {
+class CustomField extends React.Component<IProps, IState> {
 
   public state = {
     province: ['2001', '2002']
@@ -45,10 +45,22 @@ class Blank extends React.Component<IProps, IState> {
 
         <Title level={4}>在表单中使用：</Title>
         <Form onSubmit={this.handleSubmit}>
-          <Form.Item label="请选择地区" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+          <Form.Item label="选择地区" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
             {
               getFieldDecorator('province', {
                 initialValue: '2001',
+                rules: [{
+                  required: true,
+                  message: '请选择地区',
+                }],
+              })(<HookSelect options={options} />)
+            }
+          </Form.Item>
+
+          <Form.Item label="选择地区(多选)" labelCol={{ span: 2 }} wrapperCol={{ span: 22 }}>
+            {
+              getFieldDecorator('provinceMultiple', {
+                initialValue: ['2001', '2002'],
                 rules: [{
                   required: true,
                   message: '请选择地区',
@@ -82,4 +94,4 @@ class Blank extends React.Component<IProps, IState> {
   }
 }
 
-export default Form.create<IProps>()(Blank);
+export default Form.create<IProps>()(CustomField);
