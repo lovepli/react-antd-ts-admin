@@ -10,9 +10,8 @@ const easeInOutQuad = (t: number, b: number, c: number, d: number): number => {
 };
 
 
-
 // 设置要滚动到的位置
-const setScrollTo = (element: Element | Window, target: number): void => {
+const setTargetPosition = (element: Element | Window, target: number): void => {
   if (element === window) {
     document.body.scrollTop = target;
     document.documentElement.scrollTop = target;
@@ -22,7 +21,7 @@ const setScrollTo = (element: Element | Window, target: number): void => {
 }
 
 // 获取当前已经滚动到的位置。
-const getCurrentScroll = (element: Element | Window): number => {
+const getCurrentPosition = (element: Element | Window): number => {
   if (element === window) {
     return window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
   }
@@ -37,14 +36,14 @@ const getCurrentScroll = (element: Element | Window): number => {
  * @param { Function} callback  滚动完成后的回调函数
  */
 const scrollTo = (element: Element | Window, end: number, duration: number = 500, callback?: () => void): void => {
-  const start = getCurrentScroll(element);
+  const start = getCurrentPosition(element);
   const distance = end - start;
   const increment = 20;
   let currentTime = 0;
   const animateScroll = () => {
     currentTime += increment;
     const target = easeInOutQuad(currentTime, start, distance, duration);
-    setScrollTo(element, target);
+    setTargetPosition(element, target);
     if (currentTime < duration) {
       window.requestAnimationFrame(animateScroll);
     } else {

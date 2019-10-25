@@ -35,14 +35,14 @@ class EditableTree extends React.Component<IProps, IState>{
   };
 
   public componentDidMount() {
-    this.nodes = this.formateNodes(this.props.nodes);
+    this.nodes = this.formatNodes(this.props.nodes);
     this.setState({
       nodes: this.nodes
     });
   }
 
   public componentWillReceiveProps(nextProps: IProps) {
-    this.nodes = this.formateNodes(nextProps.nodes);
+    this.nodes = this.formatNodes(nextProps.nodes);
     this.setState({
       nodes: this.nodes
     });
@@ -63,18 +63,18 @@ class EditableTree extends React.Component<IProps, IState>{
   }
 
   // 为每个树节点添加一些必要的属性
-  private formateNodes = (nodes: INode[], id = '') => {
+  private formatNodes = (nodes: INode[], id = '') => {
     const newNodes = [...nodes];
-    const formate = (node: INode) => {
+    const format = (node: INode) => {
       node.parentId = id;
       node.isEditable = false;
     }
     newNodes.forEach(node => {
       if (node.children) {
-        formate(node);
-        this.formateNodes(node.children, node.id)
+        format(node);
+        this.formatNodes(node.children, node.id)
       } else {
-        formate(node);
+        format(node);
       }
     })
     return newNodes;

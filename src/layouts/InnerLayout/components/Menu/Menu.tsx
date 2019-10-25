@@ -4,7 +4,6 @@ import NavLink from './components/NavLink';
 import { MenuConfig, IMenu } from '@/router/InnerRouter';
 
 
-
 const getMenu = (menu: IMenu) => {
   const { title, path, icon, children } = menu;
   if (children) {
@@ -18,9 +17,7 @@ const getMenu = (menu: IMenu) => {
           </span>
         }
       >
-        {
-          children.map((menu: IMenu) => getMenu(menu))
-        }
+        {children.map((menu: IMenu) => getMenu(menu))}
       </Menu.SubMenu>
     )
   }

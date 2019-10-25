@@ -3,41 +3,41 @@ import { Switch, Route, RouteProps } from 'react-router-dom';
 import PageLoading from '@/components/PageLoading';
 
 // 首页
-const Dashboard = lazy(() => import( /* webpackChunkName:"dashboard" */ '@/pages/Dashboard'));
+const Dashboard = lazy(() => import( /* webpackChunkName:"dashboard" */ '@/pages/dashboard'));
 
 // 图标
-const Icon = lazy(() => import( /* webpackChunkName:"icon" */ '@/pages/Icon'));
+const Icon = lazy(() => import( /* webpackChunkName:"icon" */ '@/pages/icon'));
 
 // 图表
-const LineChart = lazy(() => import( /* webpackChunkName:"lineChart" */ '@/pages/Chart/LineChart'));
-const AreaChart = lazy(() => import( /* webpackChunkName:"areaChart" */ '@/pages/Chart/AreaChart'));
-const PieChart = lazy(() => import( /* webpackChunkName:"pieChart" */ '@/pages/Chart/PieChart'));
-const PillarChart = lazy(() => import( /* webpackChunkName:"pillarChart" */ '@/pages/Chart/PillarChart'));
-const RadarChart = lazy(() => import( /* webpackChunkName:"radarChart" */ '@/pages/Chart/RadarChart'));
+const LineChart = lazy(() => import( /* webpackChunkName:"lineChart" */ '@/pages/chart/lineChart'));
+const AreaChart = lazy(() => import( /* webpackChunkName:"areaChart" */ '@/pages/chart/areaChart'));
+const PieChart = lazy(() => import( /* webpackChunkName:"pieChart" */ '@/pages/chart/pieChart'));
+const PillarChart = lazy(() => import( /* webpackChunkName:"pillarChart" */ '@/pages/chart/pillarChart'));
+const RadarChart = lazy(() => import( /* webpackChunkName:"radarChart" */ '@/pages/chart/radarChart'));
 
 
 // 表单
-const CustomField = lazy(() => import( /* webpackChunkName:"customField" */ '@/pages/Form/CustomField'));
-const RichEditor = lazy(() => import( /* webpackChunkName:"richEditor" */ '@/pages/Form/RichEditor'));
+const CustomField = lazy(() => import( /* webpackChunkName:"customField" */ '@/pages/form/customField'));
+const RichEditor = lazy(() => import( /* webpackChunkName:"richEditor" */ '@/pages/form/richEditor'));
 
 // 文章管理
-const ArticleList = lazy(() => import( /* webpackChunkName:"articleList" */ '@/pages/Article/ArticleList'));
-const ArticleCreate = lazy(() => import( /* webpackChunkName:"articleCreate" */ '@/pages/Article/ArticleCreate'));
-const ArticleDetail = lazy(() => import( /* webpackChunkName:"articleDetail" */ '@/pages/Article/ArticleDetail'));
+const ArticleList = lazy(() => import( /* webpackChunkName:"articleList" */ '@/pages/article/articleList'));
+const ArticleCreate = lazy(() => import( /* webpackChunkName:"articleCreate" */ '@/pages/article/articleCreate'));
+const ArticleDetail = lazy(() => import( /* webpackChunkName:"articleDetail" */ '@/pages/article/articleDetail'));
 
 // 组件
-const EditableTree = lazy(() => import( /* webpackChunkName:"editableTree" */ '@/pages/Component/EditableTree'));
-const Mask = lazy(() => import( /* webpackChunkName:"mask" */ '@/pages/Component/Mask'));
+const EditableTree = lazy(() => import( /* webpackChunkName:"editableTree" */ '@/pages/component/editableTree'));
+const Mask = lazy(() => import( /* webpackChunkName:"mask" */ '@/pages/component/mask'));
 
 // 错误处理
-const NotFound = lazy(() => import( /* webpackChunkName:"notFound" */ '@/pages/Error/NotFound'));
+const NotFound = lazy(() => import( /* webpackChunkName:"notFound" */ '@/pages/error/notFound'));
 
 // 用户管理
-const User = lazy(() => import( /* webpackChunkName:"user" */ '@/pages/User'));
+const User = lazy(() => import( /* webpackChunkName:"user" */ '@/pages/user'));
 
-const Blank = lazy(() => import( /* webpackChunkName:"blank" */ '@/pages/Blank'));
+const Blank = lazy(() => import( /* webpackChunkName:"blank" */ '@/pages/blank'));
 
-
+const Pdf = lazy(() => import( /* webpackChunkName:"pdf" */ '@/pages/other/pdf'));
 
 const routeConfig: RouteProps[] = [{
   path: '/dashboard',
@@ -103,6 +103,10 @@ const routeConfig: RouteProps[] = [{
   path: '/blank',
   exact: true,
   component: Blank
+}, {
+  path: '/other/pdf',
+  exact: true,
+  component: Pdf
 }, {
   path: '*',
   exact: true,
@@ -180,8 +184,15 @@ export const MenuConfig: IMenu[] = [{
   }]
 }, {
   title: '空页面',
-  icon: 'user',
+  icon: 'border',
   path: '/blank'
+}, {
+  title: '其他功能',
+  icon: 'ellipsis',
+  children: [{
+    title: 'pdf预览',
+    path: '/other/pdf'
+  }]
 }]
 
 const InnerRouter: React.SFC = () => (
