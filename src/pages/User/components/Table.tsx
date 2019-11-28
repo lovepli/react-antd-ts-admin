@@ -8,7 +8,7 @@ interface IUserTableProps {
   total: number;
   tableLoading: boolean;
   onSelectedRows: (rows: any[]) => void;
-  onPaginationChange: (pagination: any) => void;
+  onPagination: (pagination: any) => void;
 }
 
 class UserTable extends React.Component<IUserTableProps> {
@@ -20,7 +20,7 @@ class UserTable extends React.Component<IUserTableProps> {
   }
 
   public handleChange = (pagination: any) => {
-    this.props.onPaginationChange(pagination);
+    this.props.onPagination(pagination);
     scrollTo(document.getElementById('mainContent')!, 0);
   }
 

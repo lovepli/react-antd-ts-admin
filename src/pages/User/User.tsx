@@ -146,7 +146,7 @@ class User extends React.Component {
     })
   }
 
-  public handlePaginationChange = (pagination: any) => {
+  public handlePagination = (pagination: any) => {
     Object.assign(this.queryCondition, {
       pageNum: pagination.current,
       pageSize: pagination.pageSize
@@ -174,7 +174,7 @@ class User extends React.Component {
           total={this.state.total}
           tableLoading={this.state.tableLoading}
           onSelectedRows={(this.handleSelectedRows)}
-          onPaginationChange={this.handlePaginationChange}
+          onPagination={this.handlePagination}
         />
         <Edit
           title="用户信息"

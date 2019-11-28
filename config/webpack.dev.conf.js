@@ -38,12 +38,15 @@ module.exports = merge(baseWebpackConfig, {
       use: ['style-loader', 'css-loader']
     }, {
       test: /\.less$/,
-      use: ['style-loader', 'css-loader', {
-        loader: 'less-loader',
-        options: {
-          javascriptEnabled: true,
-        }
-      }, {
+      use: [
+        'style-loader',
+        'css-loader',
+        {
+          loader: 'less-loader',
+          options: {
+            javascriptEnabled: true,
+          }
+        }, {
           loader: 'sass-resources-loader',
           options: {
             resources: [

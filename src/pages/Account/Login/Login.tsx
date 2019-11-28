@@ -5,7 +5,7 @@ import { Form, Icon, Input, Button, Row, Col } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import { saveToken } from '@/store/account/action'
 import { login } from './service';
-import { createVerification } from './util';
+import { createCaptcha } from './util';
 import './style.less';
 
 
@@ -15,7 +15,7 @@ interface ILoginProps extends FormComponentProps, RouteComponentProps {
 }
 
 interface ILoginState {
-  varificationCode: string;
+  captcha: string;
 }
 
 export interface ILoginData {
@@ -31,34 +31,14 @@ const formItemLayout = {
 
 class Login extends React.Component<ILoginProps, ILoginState> {
   public readonly state: Readonly<ILoginState> = {
-    varificationCode: ''
+    captcha: ''
   }
 
   public canvas: any;
 
   public componentDidMount() {
-    this.createVerification();
+    this.createCaptcha();
   }
-
-  // 创建验证码
-  public createVerification = () => {
-    this.setState({
-      varificationCode: createVerification(this.canvas),
-    })
-  }
-
-  // 登录
-  public handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    this.props.form.validateFields((error: any, values: ILoginData) => {
-      if (!error) {
-        login(values).then(res => {
-          sessionStorage.setItem('token', res.data.token)
-          this.props.history.replace('/dashboard');
-        })
-      }
-    });
-  };
 
   public render() {
     const { getFieldDecorator } = this.props.form;
@@ -112,7 +92,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                   required: true,
                   message: '验证码不能为空！'
                 }, {
-                  pattern: new RegExp(this.state.varificationCode, 'i'),
+                  pattern: new RegExp(this.state.captcha, 'i'),
                   message: '验证码有误！'
                 }],
               })(
@@ -124,7 +104,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                     />
                   </Col>
                   <Col span={8} style={{ height: '40px' }}>
-                    <canvas onClick={this.createVerification} width="80" height="40" style={{ cursor: 'pointer' }} ref={el => this.canvas = el} />
+                    <canvas onClick={this.createCaptcha} width="80" height="40" style={{ cursor: 'pointer' }} ref={el => this.canvas = el} />
                   </Col>
                 </Row>
               )
@@ -138,6 +118,26 @@ class Login extends React.Component<ILoginProps, ILoginState> {
       </div>
     )
   }
+
+  // 创建验证码
+  private createCaptcha = () => {
+    this.setState({
+      captcha: createCaptcha(this.canvas),
+    })
+  }
+
+  // 登录
+  private handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    this.props.form.validateFields((error: any, values: ILoginData) => {
+      if (!error) {
+        login(values).then(res => {
+          sessionStorage.setItem('token', res.data.token)
+          this.props.history.replace('/dashboard');
+        })
+      }
+    });
+  };
 }
 
 
