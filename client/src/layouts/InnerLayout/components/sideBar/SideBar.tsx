@@ -1,10 +1,10 @@
 // 侧边栏
 
 import React from 'react';
-import { Menu, Icon } from 'antd';
-import NavLink from './NavLink';
+import { Menu } from 'antd';
 import { Link } from 'react-router-dom';
-import { MenuConfig, IMenu } from '@/router/InnerRouter';
+import { routeConfig } from '@/router/innerRouter';
+import MenuItem from './MenuItem';
 import './style.less';
 import logo from '@/assets/images/logo.png';
 
@@ -23,36 +23,15 @@ class SiderBar extends React.Component {
 
         {/* 侧边菜单 */}
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['dashboard']}>
-          {MenuConfig.map(menu => this.getMenu(menu))}
+          {routeConfig.map(route => <MenuItem key={route.path + ''} title={route.title} icon={route.icon} path={route.path + ''} />)}
         </Menu>
       </div>
     )
   }
 
-  // 生成菜单
-  private getMenu = (menu: IMenu) => {
-    const { title, path, icon, children } = menu;
-    if (children) {
-      return (
-        <Menu.SubMenu
-          key={title}
-          title={
-            <span>
-              <Icon type={icon} />
-              <span>{title}</span>
-            </span>
-          }
-        >
-          {children.map((menu: IMenu) => this.getMenu(menu))}
-        </Menu.SubMenu>
-      )
-    }
-    return (
-      <Menu.Item key={title}>
-        <NavLink path={path!} icon={icon} title={title} />
-      </Menu.Item>
-    )
-  }
+
+
+
 }
 
 export default SiderBar;

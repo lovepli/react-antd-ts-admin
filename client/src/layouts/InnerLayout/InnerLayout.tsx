@@ -1,9 +1,10 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { Redirect, Switch, Route, RouteProps } from 'react-router-dom';
 import { Layout, BackTop } from 'antd';
+import { routeConfig, IConfigProps } from '@/router/innerRouter';
+import PageLoading from '@/components/PageLoading';
 import HeaderBar from './components/headerBar';
 import SideBar from './components/sideBar';
-import { InnerRouter } from '@/router';
 import './style.less';
 
 interface IState {
@@ -14,13 +15,6 @@ class InnerLayout extends React.Component<any, IState> {
   public readonly state: Readonly<IState> = {
     collapse: false,
   };
-
-  public handleToggle = () => {
-    this.setState({
-      collapse: !this.state.collapse,
-    });
-  };
-
 
   public render() {
     const token = sessionStorage.getItem('token');
@@ -36,7 +30,16 @@ class InnerLayout extends React.Component<any, IState> {
           <Layout id="mainContent" className="main-content" >
             <HeaderBar collapse={this.state.collapse} onToggle={this.handleToggle} />
             <div className="main-content__page">
-              <InnerRouter />
+              <Suspense fallback={<PageLoading />}>
+                <Switch>
+                  {
+                    this.getRoutes(routeConfig).map((route: RouteProps) => {
+                      const { path } = route;
+                      return <Route key={path + ''} {...route} />
+                    })
+                  }
+                </Switch>
+              </Suspense>
             </div>
             <BackTop target={() => document.getElementById('mainContent')!} style={{ right: '50px' }} />
           </Layout>
@@ -46,6 +49,31 @@ class InnerLayout extends React.Component<any, IState> {
       )
     }
   }
+
+  // 切换菜单折叠状态
+  private handleToggle = () => {
+    this.setState({
+      collapse: !this.state.collapse,
+    });
+  };
+
+  // 根据路由配置生成路由
+  private getRoutes = (routeConfig: IConfigProps[]) => {
+    const routes: RouteProps[] = [];
+    const getRoute = (routeConfig: IConfigProps[]) => {
+      routeConfig.forEach(config => {
+        const { path, exact, component, children } = config;
+        if (children) {
+          getRoute(children);
+        } else {
+          routes.push({ path, exact, component });
+        }
+      })
+    }
+    getRoute(routeConfig);
+    return routes;
+  }
+
 }
 
 

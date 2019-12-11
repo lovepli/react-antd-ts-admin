@@ -2,8 +2,8 @@ import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import PageLoading from '@/components/PageLoading';
 
-const OuterLayout = React.lazy(() => import( /* webpackChunkName:"OuterLayout" */ '@/layouts/OuterLayout'));
-const InnerLayout = React.lazy(() => import( /* webpackChunkName:"InnerLayout" */ '@/layouts/InnerLayout'));
+const OuterLayout = React.lazy(() => import( /* webpackChunkName:"outerLayout" */ '@/layouts/OuterLayout'));
+const InnerLayout = React.lazy(() => import( /* webpackChunkName:"innerLayout" */ '@/layouts/InnerLayout'));
 
 
 class App extends React.Component {
