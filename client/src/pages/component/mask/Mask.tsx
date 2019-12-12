@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Avatar } from 'antd';
-import Mask from '@/components/Mask';
+import Mask from '@/components/mask';
 
 class MaskDemo extends React.Component {
 

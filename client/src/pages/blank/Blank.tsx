@@ -1,9 +1,6 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import Tinymce from '@/components/tinymce';
 import './style.less';
-import Aaa from './Aaa';
-import Bbb from './Bbb';
-
 
 
 
@@ -12,26 +9,36 @@ interface IProps {
 }
 
 
-interface IState { }
+interface IState {
+  value: string
+}
 
 
 class Pdf extends React.Component<IProps, IState> {
 
-
-
+  public state = {
+    value: ''
+  }
+  public componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        value: 'erwrr'
+      })
+    }, 2003)
+  }
   public render() {
 
 
     return (
       <div className="pdf">
         <p>blank</p>
-        <Switch>
-          <Route path="/blank/aaa" exact={true} component={Aaa} />
-          <Route path="/blank/bbb" exact={true} component={Bbb} />
-
-        </Switch>
+        <Tinymce value={this.state.value} onChange={this.handleChange} />
       </div>
     );
+  }
+
+  private handleChange = (s) => {
+    console.log(s);
   }
 
 

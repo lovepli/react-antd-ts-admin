@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon } from "antd";
-import SvgIcon from '@/components/SvgIcon';
+import SvgIcon from '@/components/svgIcon';
 
 
 import Basketball from "@/assets/icons/basketball.svg";

@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Switch, Route, RouteProps } from 'react-router-dom';
-import PageLoading from '@/components/PageLoading';
+import PageLoading from '@/components/pageLoading';
 import routes from '@/router/outerRouter/OutRouter';
 import './style.less';
 

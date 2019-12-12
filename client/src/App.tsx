@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import PageLoading from '@/components/PageLoading';
+import PageLoading from '@/components/pageLoading';
 
 const OuterLayout = React.lazy(() => import( /* webpackChunkName:"outerLayout" */ '@/layouts/OuterLayout'));
 const InnerLayout = React.lazy(() => import( /* webpackChunkName:"innerLayout" */ '@/layouts/InnerLayout'));

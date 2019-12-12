@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Button, Typography } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import HookSelect from '@/components/HookSelect';
+import HookSelect from '@/components/hookSelect';
 
 const { Title } = Typography;
 

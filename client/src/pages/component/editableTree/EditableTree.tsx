@@ -1,5 +1,5 @@
 import React from "react";
-import EditableTree, { INode } from '@/components/EditableTree';
+import EditableTree, { INode } from '@/components/editableTree';
 
 
 const nodes: INode[] = [{

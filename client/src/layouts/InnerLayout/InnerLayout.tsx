@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { Redirect, Switch, Route, RouteProps } from 'react-router-dom';
 import { Layout, BackTop } from 'antd';
 import { routeConfig, IRoute } from '@/router/innerRouter';
-import PageLoading from '@/components/PageLoading';
+import PageLoading from '@/components/pageLoading';
 import HeaderBar from './components/headerBar';
 import SideBar from './components/sideBar';
 import './style.less';

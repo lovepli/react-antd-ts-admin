@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button, Typography } from 'antd';
-import Editor from '@/components/WangEditor';
+import Editor from '@/components/wangEditor';
 import { FromTo } from 'moment';
 
 const { Title } = Typography;
