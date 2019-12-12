@@ -1,11 +1,11 @@
 // 图标
 import { lazy } from 'react';
-import IConfigProps from '../IConfigProps';
+import IRoute from '../IRoute';
 
 const Icon = lazy(() => import( /* webpackChunkName:"icon" */ '@/pages/icon'));
 
 
-const config: IConfigProps = {
+const route: IRoute = {
   name: 'Icon',
   title: '图标',
   icon: 'smile',
@@ -14,4 +14,4 @@ const config: IConfigProps = {
   component: Icon
 }
 
-export default config;
+export default route;

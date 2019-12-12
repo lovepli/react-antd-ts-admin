@@ -21,7 +21,6 @@ const SvgIcon: React.SFC<ISvgIconProps> = (props) => {
       <Icon component={type} style={style} className={className} />
     )
   }
-
 }
 
 export default SvgIcon;

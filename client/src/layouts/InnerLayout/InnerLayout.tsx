@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Redirect, Switch, Route, RouteProps } from 'react-router-dom';
 import { Layout, BackTop } from 'antd';
-import { routeConfig, IConfigProps } from '@/router/innerRouter';
+import { routeConfig, IRoute } from '@/router/innerRouter';
 import PageLoading from '@/components/PageLoading';
 import HeaderBar from './components/headerBar';
 import SideBar from './components/sideBar';
@@ -29,18 +29,24 @@ class InnerLayout extends React.Component<any, IState> {
 
           <Layout id="mainContent" className="main-content" >
             <HeaderBar collapse={this.state.collapse} onToggle={this.handleToggle} />
+
             <div className="main-content__page">
               <Suspense fallback={<PageLoading />}>
                 <Switch>
                   {
-                    this.getRoutes(routeConfig).map((route: RouteProps) => {
-                      const { path } = route;
-                      return <Route key={path + ''} {...route} />
-                    })
+                    this.getRoutes(routeConfig).map((route: RouteProps) =>
+                      <Route
+                        key={route.path + ''}
+                        path={route.path}
+                        exact={route.exact}
+                        component={route.component}
+                      />
+                    )
                   }
                 </Switch>
               </Suspense>
             </div>
+
             <BackTop target={() => document.getElementById('mainContent')!} style={{ right: '50px' }} />
           </Layout>
           <BackTop />
@@ -55,12 +61,12 @@ class InnerLayout extends React.Component<any, IState> {
     this.setState({
       collapse: !this.state.collapse,
     });
-  };
+  }
 
   // 根据路由配置生成路由
-  private getRoutes = (routeConfig: IConfigProps[]) => {
+  private getRoutes = (routeConfig: IRoute[]) => {
     const routes: RouteProps[] = [];
-    const getRoute = (routeConfig: IConfigProps[]) => {
+    const getRoute = (routeConfig: IRoute[]) => {
       routeConfig.forEach(config => {
         const { path, exact, component, children } = config;
         if (children) {
@@ -73,7 +79,6 @@ class InnerLayout extends React.Component<any, IState> {
     getRoute(routeConfig);
     return routes;
   }
-
 }
 
 

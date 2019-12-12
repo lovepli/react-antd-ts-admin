@@ -1,5 +1,8 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import './style.less';
+import Aaa from './Aaa';
+import Bbb from './Bbb';
 
 
 
@@ -21,7 +24,12 @@ class Pdf extends React.Component<IProps, IState> {
 
     return (
       <div className="pdf">
-        pp
+        <p>blank</p>
+        <Switch>
+          <Route path="/blank/aaa" exact={true} component={Aaa} />
+          <Route path="/blank/bbb" exact={true} component={Bbb} />
+
+        </Switch>
       </div>
     );
   }

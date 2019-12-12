@@ -1,10 +1,10 @@
 // 首页
 import { lazy } from 'react';
-import IConfigProps from '../IConfigProps';
+import IRoute from '../IRoute';
 const Dashboard = lazy(() => import( /* webpackChunkName:"dashboard" */ '@/pages/dashboard'));
 
 
-const config: IConfigProps = {
+const route: IRoute = {
   name: 'Dashboard',
   title: '首页',
   icon: 'dashboard',
@@ -12,4 +12,4 @@ const config: IConfigProps = {
   exact: true,
   component: Dashboard
 }
-export default config;
+export default route;

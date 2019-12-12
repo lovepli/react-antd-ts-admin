@@ -14,10 +14,14 @@ class OuterLayout extends React.Component {
         <Suspense fallback={<PageLoading />}>
           <Switch>
             {
-              routes.map((route: RouteProps) => {
-                const { path } = route;
-                return <Route key={path + ''} {...route} />
-              })
+              routes.map((route: RouteProps) => (
+                <Route
+                  key={route.path + ''}
+                  path={route.path}
+                  exact={route.exact}
+                  component={route.component}
+                />
+              ))
             }
           </Switch>
         </Suspense>

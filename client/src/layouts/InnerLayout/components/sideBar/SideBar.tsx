@@ -1,10 +1,8 @@
 // 侧边栏
 
 import React from 'react';
-import { Menu } from 'antd';
 import { Link } from 'react-router-dom';
-import { routeConfig } from '@/router/innerRouter';
-import MenuItem from './MenuItem';
+import SideMenu from './SideMenu';
 import './style.less';
 import logo from '@/assets/images/logo.png';
 
@@ -22,16 +20,10 @@ class SiderBar extends React.Component {
         </div>
 
         {/* 侧边菜单 */}
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['dashboard']}>
-          {routeConfig.map(route => <MenuItem key={route.path + ''} title={route.title} icon={route.icon} path={route.path + ''} />)}
-        </Menu>
+        <SideMenu />
       </div>
     )
   }
-
-
-
-
 }
 
 export default SiderBar;

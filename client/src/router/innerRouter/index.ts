@@ -1,15 +1,16 @@
-import IConfigProps from './IConfigProps';
+import IRoute from './IRoute';
 
-import dashboardConfig from './modules/dashboard';
-import iconConfig from './modules/icon';
-import chartConfig from './modules/chart';
+import dashboardRoute from './modules/dashboard';
+import iconRoute from './modules/icon';
+import chartRoute from './modules/chart';
+import blankRoute from './modules/blank';
 
 
 
-const routeConfig = [dashboardConfig, iconConfig, chartConfig];
+const routeConfig = [dashboardRoute, iconRoute, chartRoute, blankRoute];
 
 
 export {
-  IConfigProps,
+  IRoute,
   routeConfig
 }

@@ -1,6 +1,6 @@
 // 图表
 import { lazy } from 'react';
-import IConfigProps from '../IConfigProps';
+import IRoute from '../IRoute';
 
 
 const LineChart = lazy(() => import( /* webpackChunkName:"lineChart" */ '@/pages/chart/lineChart'));
@@ -9,11 +9,10 @@ const PieChart = lazy(() => import( /* webpackChunkName:"pieChart" */ '@/pages/c
 const PillarChart = lazy(() => import( /* webpackChunkName:"pillarChart" */ '@/pages/chart/pillarChart'));
 const RadarChart = lazy(() => import( /* webpackChunkName:"radarChart" */ '@/pages/chart/radarChart'));
 
-const config: IConfigProps = {
+const route: IRoute = {
   name: 'Chart',
-  title: '图标',
-  icon: 'smile',
-  path: '/chart',
+  title: '图表',
+  icon: 'line-chart',
   children: [{
     name: 'LineChart',
     title: '折线图',
@@ -46,4 +45,4 @@ const config: IConfigProps = {
     component: RadarChart
   }]
 }
-export default config;
+export default route;
