@@ -1,5 +1,6 @@
-import { lazy } from 'react'
-import { RouteProps } from 'react-router-dom';
+import React, { lazy, Suspense } from 'react';
+import { Switch, Route, RouteProps } from 'react-router-dom';
+import PageLoading from '@/components/pageLoading';
 
 
 const Login = lazy(() => import( /* webpackChunkName:"login" */ '@/pages/account/login'));
@@ -18,5 +19,21 @@ const routes: RouteProps[] = [{
 
 
 
+const OterRouter: React.SFC = () => (
+  <Suspense fallback={<PageLoading />}>
+    <Switch>
+      {
+        routes.map((route: RouteProps) => (
+          <Route
+            key={route.path + ''}
+            path={route.path}
+            exact={route.exact}
+            component={route.component}
+          />
+        ))
+      }
+    </Switch>
+  </Suspense>
+)
 
-export default routes;
+export default OterRouter;

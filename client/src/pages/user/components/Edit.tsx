@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Form, Input, Radio, Checkbox, InputNumber, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 
-import { getDetail } from '../service';
+import service from '../service';
 import { CodeMap, createOptions } from '@/assets/CodeMap';
 
 
@@ -32,7 +32,7 @@ class Edit extends React.Component<IEditProps> {
 
   public getDetail(id: string) {
     if (id) {
-      getDetail({
+      service.getDetail({
         id
       }).then(res => {
         this.setState({

@@ -1,8 +1,25 @@
-import { ILoginData } from './Login';
+export interface ILoginPayload {
+  username: string;
+  password: string;
+  captcha: string;
+}
 
-// 登录
-export const login = (data: ILoginData) => $http({
-  url: '/login',
-  method: 'post',
-  data
-});
+
+class Service {
+  // 登录
+  // public login = (data: ILoginPayload): Promise<any> => $http.post('/login', { data, responseType: 'json' })
+
+  public login = async (data: ILoginPayload) => {
+    const response = await $http.post('/login', { data, responseType: 'json' });
+    return {
+      token: response.token
+    }
+
+  }
+
+}
+
+export default new Service();
+
+
+

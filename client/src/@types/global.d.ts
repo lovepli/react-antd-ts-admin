@@ -1,17 +1,17 @@
+import { RouteComponentProps } from 'react-router-dom';
 import { MessageApi } from 'antd/lib/message'
-import { NotificationApi } from 'antd/lib/notification'
-import { RouteComponentProps } from 'react-router-dom'
-import { AxiosInstance } from 'axios'
+import { FormComponentProps } from 'antd/lib/form';
+import { Http } from '@/utils/http';
+import { TableMng } from '@/utils/tableMng';
 
 declare global {
-  export const $http: AxiosInstance
+  export const $http: Http
 
   export const $msg: MessageApi
 
-  export const $notice: NotificationApi
+  export const $tableMng: TableMng
 
-
-  export interface IProps extends RouteComponentProps {
+  export interface IPageProps extends FormComponentProps, RouteComponentProps {
     [key: string]: any
   }
 }

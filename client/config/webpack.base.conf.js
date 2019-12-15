@@ -23,7 +23,8 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       $http: [resolve('src/utils/http.ts'), 'default'],
-      $msg: [resolve('node_modules/antd/es/message/index.js'), 'default']
+      $msg: [resolve('node_modules/antd/es/message/index.js'), 'default'],
+      $tableMng: [resolve('src/utils/tableMng.ts'), 'default']
     })
   ],
   module: {

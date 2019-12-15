@@ -3,12 +3,10 @@ import { Button, Modal, Popconfirm } from 'antd';
 import Table from './components/Table';
 import Edit from './components/Edit';
 import Header from './components/Header';
+import service from './service';
 import './style.less';
 
-import { getList } from './service';
-import { CodeMap } from '@/assets/CodeMap';
-const genderMap = CodeMap.gender;
-const roleMap = CodeMap.role;
+
 
 
 class User extends React.Component {
@@ -42,16 +40,16 @@ class User extends React.Component {
     title: '性别',
     dataIndex: 'gender',
     key: 'gender',
-    filters: [
-      {
-        text: genderMap['1'],
-        value: genderMap['1'],
-      },
-      {
-        text: genderMap['2'],
-        value: genderMap['2'],
-      },
-    ],
+    // filters: [
+    //   {
+    //     text: genderMap['1'],
+    //     value: genderMap['1'],
+    //   },
+    //   {
+    //     text: genderMap['2'],
+    //     value: genderMap['2'],
+    //   },
+    // ],
     filterMultiple: false,
     onFilter: (value: string, record: any) => record.gender.indexOf(value) === 0,
   }, {
@@ -86,22 +84,21 @@ class User extends React.Component {
     this.getList();
   }
 
-  public getList = () => {
+  public getList = async () => {
+    this.setState({ tableLoading: true });
+    const response = await service.getList(this.queryCondition);
+    console.log(response);
+    const data = response.list.map((item: any) => ({
+      ...item,
+      key: item.id,
+      gender: $tableMng.getNameById('gender', item.gender),
+      role: item.role.map(item => $tableMng.getNameById('role', item)).join(',')
+    }));
+
     this.setState({
-      tableLoading: true
-    })
-    getList(this.queryCondition).then((res) => {
-      const data = res.data.list.map((item: any) => ({
-        ...item,
-        key: item.id,
-        gender: genderMap[item.gender],
-        role: item.role.map(item => roleMap[item]).join(',')
-      }));
-      this.setState({
-        tableLoading: false,
-        tableData: data,
-        total: res.data.total,
-      })
+      tableLoading: false,
+      tableData: data,
+      total: response.total,
     })
   }
 

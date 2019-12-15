@@ -1,10 +1,9 @@
 import React from 'react';
 import { Icon } from 'antd';
-import { CustomIconComponentProps } from 'antd/lib/icon'
 
 
 interface ISvgIconProps {
-  type: string | React.ComponentType<CustomIconComponentProps>;
+  type: string | React.ComponentType;
   style?: React.CSSProperties;
   className?: string;
 }

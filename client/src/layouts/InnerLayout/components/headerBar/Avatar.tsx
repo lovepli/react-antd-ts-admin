@@ -1,19 +1,22 @@
 import React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Menu, Dropdown, Icon, Avatar } from 'antd';
+import store from '@/store';
+import { removeToken } from '@/store/account/action';
 
 
-class AvatarMenu extends React.Component<RouteComponentProps, any> {
+
+class AvatarMenu extends React.Component<IPageProps, any> {
   private menuList: React.ReactNode;
 
   private handleMenuClick: (arg: any) => void;
 
-  constructor(props: RouteComponentProps) {
+  constructor(props: IPageProps) {
     super(props)
     this.handleMenuClick = ({ key }) => {
       switch (key) {
         case '3':
-          sessionStorage.removeItem('token');
+          store.dispatch(removeToken());
           this.props.history.replace('/account/login')
           break;
       }
@@ -41,7 +44,7 @@ class AvatarMenu extends React.Component<RouteComponentProps, any> {
         <Dropdown overlay={this.menuList}>
           <Avatar style={{ backgroundColor: '#87d068', cursor: 'pointer' }} icon="user" />
         </Dropdown>
-        <span>姓名</span>
+        <span>{store.getState().userInfo.name}</span>
       </div>
     )
   }

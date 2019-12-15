@@ -64,13 +64,31 @@ function getFileSuffix(fileName: string): string {
   }
   return suffix;
 }
+
 // 获取文件图标
 function getFileIcon(fileName: string): string {
   const suffix: string = getFileSuffix(fileName);
   return Icons[suffix];
 }
 
+// 下载文件
+function downloadByURI (data: string, fileName: string, header: string = '') {
+  const link = document.createElement('a');
+  link.style.display = 'none';
+  link.href = header + data;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function downloadByBlob() {
+
+}
+
 export {
   calcFileSize,
-  getFileIcon
+  getFileIcon,
+  downloadByURI,
+  downloadByBlob
 }

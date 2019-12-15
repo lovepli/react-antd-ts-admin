@@ -8,7 +8,7 @@ const listData = Mock.mock({
     name: "@cname",
     age: "@natural(20,60)",
     gender: '@pick(["1","2"])',
-    role: ['2', '3'],
+    role: ['admin'],
     account: /^[a-zA-Z0-9_]{4,9}$/,
     avatar: "@image('100x100', '#02adea', 'avatar')",
     email: "@email",

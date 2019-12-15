@@ -15,7 +15,14 @@ Mock.XHR.prototype.send = function () {
 }
 
 
+// 延时数据返回,模拟loading效果
+Mock.setup({
+  timeout: '300-800'
+})
+
+
 Mock.mock(/login/, 'post', account.login);
+Mock.mock(/userInfo/, 'get', account.getUserInfo);
 
 Mock.mock(/\/baseTable/, 'get', baseTable.getBaseTable);
 

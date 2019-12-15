@@ -1,51 +1,73 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
-import { paramsSerializer, objToParams } from '@/utils/core';
+export class Http {
 
-// 接口根路径
-const BASE_URL = 'http://123.123.22.22.8080';
+  private headers: any = {};
 
 
-const $http = axios.create({
-  baseURL: BASE_URL,
-  timeout: 8000,
-  // paramsSerializer(params = {}) {
-  //   return paramsSerializer(params);
-  // },
-  // transformRequest: [(data = {}) => {
-  //   return objToParams(data);
-  // }]
-});
+  private instance = axios.create({
+    baseURL: 'http://xxx',
+    headers: this.headers,
+    timeout: 8000
+  })
 
-// 请求拦截器
-$http.interceptors.request.use(
-  config => {
-    // if (store.state.sysUser.token) {
-    //   config.headers['X-Token'] = sessionStorage.getItem("token");
-    //   // 让每个请求携带token--'X-Token'为自定义key
-    // }
-    return config;
-  },
-  error => {
-    console.log(error);
-    return Promise.reject(error);
+
+  constructor() {
+    this.setReqInterceptors();
+    this.setResnterceptors();
   }
-);
 
-// 响应拦截器
-$http.interceptors.response.use(
-  res => {
-    if (res.data.code === 200) {
-      return res.data;
-    } else {
-      $msg.error(res.data.errorMsg)
-      return Promise.reject(res);
-    }
-  },
-  error => {
-    $msg.error('网络异常,请稍后再试！')
-    return Promise.reject(error);
+
+  public setheader = (headers: any) => {
+    this.headers = { ...this.headers, ...headers };
+  };
+
+
+  public get = (url: string, config?: AxiosRequestConfig): Promise<any> => this.instance({ ...config, ...{ url, method: 'get' } })
+
+  public post = (url: string, config: AxiosRequestConfig): Promise<any> => this.instance({ ...config, ...{ url, method: 'post' } })
+
+  public delete = (url: string, config: AxiosRequestConfig): Promise<any> => this.instance({ ...config, ...{ url, method: 'delete' } })
+
+
+
+  // 请求拦截器
+  private setReqInterceptors = () => {
+    this.instance.interceptors.request.use(
+      config => {
+        return config;
+      },
+      err => {
+        $msg.error('请求失败');
+        return Promise.reject(err);
+      })
   }
-);
 
-export default $http;
+  // 响应拦截器
+  private setResnterceptors = () => {
+    this.instance.interceptors.response.use(
+      res => {
+        const { code, data, msg } = res.data;
+        if (code === 200) {
+          return data;
+        } else {
+          $msg.error(msg || '获取数据失败');
+          return Promise.reject(res);
+        }
+      },
+      err => {
+        $msg.error('服务器响应失败')
+        return Promise.reject(err);
+      }
+    );
+  }
+
+}
+
+
+
+export default new Http();
+
+
+
+

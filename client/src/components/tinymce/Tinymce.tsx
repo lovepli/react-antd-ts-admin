@@ -123,7 +123,7 @@ class Tinymce extends React.Component<IProps, IState> {
         });
       },
       // 插入图片时的钩子
-      images_upload_handler: (blobInfo, success, failure) => {
+      images_upload_handler: (blobInfo: any, success: any, failure: any) => {
         // 图片file对象
         const file = blobInfo.blob();
         // 图片的base64数据

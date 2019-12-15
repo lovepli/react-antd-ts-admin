@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk'
-import * as account from './account/reducer';
+import account from './account/reducer';
 
 const reducer = combineReducers({
   ...account,
@@ -8,4 +8,10 @@ const reducer = combineReducers({
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
+// store.subscribe(() => {
+//   console.log('store发生了变化');
+// });
+
 export default store;
+
+

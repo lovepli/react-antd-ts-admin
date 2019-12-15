@@ -1,30 +1,14 @@
-import React, { Suspense } from 'react';
-import { Switch, Route, RouteProps } from 'react-router-dom';
-import PageLoading from '@/components/pageLoading';
-import routes from '@/router/outerRouter/OutRouter';
+
+import React from 'react';
+import OuterRouter from '@/router/outerRouter';
 import './style.less';
-
-
 
 
 class OuterLayout extends React.Component {
   public render() {
     return (
       <div className="outer-layout">
-        <Suspense fallback={<PageLoading />}>
-          <Switch>
-            {
-              routes.map((route: RouteProps) => (
-                <Route
-                  key={route.path + ''}
-                  path={route.path}
-                  exact={route.exact}
-                  component={route.component}
-                />
-              ))
-            }
-          </Switch>
-        </Suspense>
+        <OuterRouter />
       </div>
     )
   }

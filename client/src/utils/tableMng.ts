@@ -8,7 +8,7 @@ const TABLE_NAME_MAP = {
   article: 'article'
 }
 
-class TableMng {
+export class TableMng {
 
   public baseTable = {};
 
@@ -34,7 +34,7 @@ class TableMng {
    * 获取某个表
    * @param {String} tableName 表名
   */
-  public getTable(tableName) {
+  public getTable(tableName: string) {
     const table = this.baseTable[tableName];
     if (table) {
       return table;
@@ -47,7 +47,7 @@ class TableMng {
    * 获取某个表的所有项的id
    * @param {String} tableName 表名
   */
-  public getIds(tableName) {
+  public getIds(tableName: string) {
     const table = this.getTable(tableName);
     return table.map(item => item.id);
   }
@@ -56,7 +56,7 @@ class TableMng {
  * 获取某个表的所有项的name
  * @param {String} tableName 表名
 */
-  public getNames(tableName) {
+  public getNames(tableName: string) {
     const table = this.getTable(tableName);
     return table.map(item => item.name);
   }
@@ -67,7 +67,7 @@ class TableMng {
    * @param {String} id  ID
    *
   */
-  public getNameById(tableName, id) {
+  public getNameById(tableName: string, id: string) {
     const table = this.getTable(tableName);
     const result = table.find(item => item.id === id);
     return result ? result.name : '';
@@ -90,6 +90,5 @@ const fixTable = {};
 // 用户在使用的时候可能会刷新页面，这个时候会去重新请求baseTable的数据，而数据有可能会在页面渲染完成之后才返回，这个时候页面中使用到了baseTable，就会出现表不存在的情况。
 const storageTable = JSON.parse(sessionStorage.getItem('baseTable') || JSON.stringify({}));
 
-const tableMng = new TableMng({ ...fixTable, ...storageTable });
 
-export default tableMng;
+export default new TableMng({ ...fixTable, ...storageTable });

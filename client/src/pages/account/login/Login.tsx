@@ -1,26 +1,18 @@
 import React from "react";
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Form, Icon, Input, Button, Row, Col } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
-import { saveToken } from '@/store/account/action'
-import { login } from './service';
+import { saveToken } from '@/store/account/action';
+import service, { ILoginPayload } from './service';
 import { createCaptcha } from './util';
 import './style.less';
 
 
-interface ILoginProps extends FormComponentProps, RouteComponentProps {
-  saveToken: (token: string) => void;
+interface ILoginProps extends IPageProps {
   token: string;
+  onSaveToken: (token: string) => void;
 }
 
 interface ILoginState {
-  captcha: string;
-}
-
-export interface ILoginData {
-  username: string;
-  password: string;
   captcha: string;
 }
 
@@ -30,6 +22,7 @@ const formItemLayout = {
 }
 
 class Login extends React.Component<ILoginProps, ILoginState> {
+
   public readonly state: Readonly<ILoginState> = {
     captcha: ''
   }
@@ -124,44 +117,33 @@ class Login extends React.Component<ILoginProps, ILoginState> {
 
   // 创建验证码
   private createCaptcha = () => {
-    this.setState({
-      captcha: createCaptcha(this.canvas),
-    })
+    this.setState({ captcha: createCaptcha(this.canvas) })
   }
 
   // 登录
   private handleSubmit = (e: React.FormEvent) => {
+
     e.preventDefault();
-    this.props.form.validateFields((error: any, values: ILoginData) => {
+    this.props.form.validateFields(async (error: any, values: ILoginPayload) => {
       if (!error) {
-        login(values).then(res => {
-          sessionStorage.setItem('token', res.data.token)
-          this.props.history.replace('/dashboard');
-        })
+        const data = await service.login(values);
+        const token = data.token;
+        $http.setheader({ Authorization: token });
+        this.props.onSaveToken(token);
+        this.props.history.replace('/dashboard');
       }
     });
-  };
-}
-
-
-function mapStateToProps(state) {
-  return {
-    token: state.token
-  }
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    saveToken: token => dispatch(saveToken(token)),
   }
 }
 
 
-const LoginWrap = connect(
-  mapStateToProps,
-  mapDispatchToProps
+export default connect(
+  (state: any) => ({ token: state.token }),
+  { onSaveToken: saveToken }
 )(Form.create<ILoginProps>()(Login))
 
-export default withRouter(LoginWrap);
+
+
 
 
 
