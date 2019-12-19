@@ -1,5 +1,5 @@
 import React from 'react';
-import Tinymce from '@/components/tinymce';
+import Edit from './Edit'
 import './style.less';
 
 
@@ -10,36 +10,37 @@ interface IProps {
 
 
 interface IState {
-  value: string
+  visible: boolean;
+  row: any;
 }
 
 
 class Pdf extends React.Component<IProps, IState> {
 
   public state = {
-    value: ''
+    visible: false,
+    row: {}
   }
+
   public componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        value: 'erwrr'
-      })
-    }, 2003)
+    console.log(3);
   }
+
+  public componentWillUnmount() {
+    console.log(4);
+  }
+
   public render() {
 
 
     return (
-      <div className="pdf">
-        <p>blank</p>
-        <Tinymce value={this.state.value} onChange={this.handleChange} />
+      <div >
+        <Edit />
       </div>
     );
   }
 
-  private handleChange = (s) => {
-    console.log(s);
-  }
+
 
 
 }

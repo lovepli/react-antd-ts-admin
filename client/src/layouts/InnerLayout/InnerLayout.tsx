@@ -9,7 +9,6 @@ import service from './service';
 import './style.less';
 
 
-
 interface IProps extends IPageProps {
   token: string;
   onSaveUserInfo: (roles: string[]) => void;
@@ -38,30 +37,38 @@ class InnerLayout extends React.Component<IProps, IState> {
 
   public render() {
     return (
-      <Layout>
-        <Layout.Sider width={180} trigger={null} collapsible collapsed={this.state.collapse}>
+      <Layout className="inner-layout">
+        <Layout.Sider
+          className="inner-layout__sider"
+          width={180}
+          trigger={null}
+          collapsible
+          collapsed={this.state.collapse}
+        >
           <SideBar routeMap={this.state.routeMap} />
         </Layout.Sider>
 
-        <Layout id="mainContent" className="main-content" >
-          <HeaderBar collapse={this.state.collapse} onToggle={this.handleToggle} />
+        <Layout id="layoutMain" className="inner-layout__main" >
+          <HeaderBar collapse={this.state.collapse} onTrigger={this.handleTrigger} />
 
-          <div className="main-content__page">
+          <div className="content">
             <InnerRouter routeMap={this.state.routeMap} />
           </div>
 
-          <BackTop target={() => document.getElementById('mainContent')!} style={{ right: '50px' }} />
+          <BackTop
+            style={{ right: '50px' }}
+            target={() => document.getElementById('layoutMain')!}
+            visibilityHeight={600}
+          />
         </Layout>
-        <BackTop />
       </Layout>
     )
   }
 
   // 切换菜单折叠状态
-  private handleToggle = () => {
+  private handleTrigger = () => {
     this.setState({ collapse: !this.state.collapse });
   }
-
 }
 
 

@@ -84,79 +84,6 @@ class User extends React.Component {
     this.getList();
   }
 
-  public getList = async () => {
-    this.setState({ tableLoading: true });
-    const response = await service.getList(this.queryCondition);
-    console.log(response);
-    const data = response.list.map((item: any) => ({
-      ...item,
-      key: item.id,
-      gender: $tableMng.getNameById('gender', item.gender),
-      role: item.role.map(item => $tableMng.getNameById('role', item)).join(',')
-    }));
-
-    this.setState({
-      tableLoading: false,
-      tableData: data,
-      total: response.total,
-    })
-  }
-
-  public handleSearch = (value: string) => {
-    this.queryCondition.name = value;
-    this.getList()
-  }
-
-  public handleEdit = (id?: string) => {
-    this.setState({
-      editVisible: true,
-      editKey: id || ''
-    })
-  }
-
-  public handleDelete = (rows?: any[]) => {
-    if (rows) {
-      const ids = rows.map(row => row.key);
-      const names = rows.map(row => row.name).join('，');
-      $msg.success(`成功删除用户“${names}”！`);
-    } else {
-      const selectedRows = this.state.selectedRows;
-      if (selectedRows.length === 0) {
-        $msg.warning('请选择要删除的用户');
-        return;
-      }
-      const ids = selectedRows.map((row: any) => row.key);
-      const names = selectedRows.map((row: any) => row.name).join('，');
-      Modal.confirm({
-        title: '确认删除以下用户吗?',
-        content: names,
-        onOk: () => {
-          $msg.success(`成功删除用户“${names}”！`);
-        }
-      });
-    }
-  }
-
-  public handleSelectedRows = (selectedRows: any[]) => {
-    this.setState({
-      selectedRows
-    })
-  }
-
-  public handlePagination = (pagination: any) => {
-    Object.assign(this.queryCondition, {
-      pageNum: pagination.current,
-      pageSize: pagination.pageSize
-    })
-    this.getList();
-  }
-
-  public handleClose = () => {
-    this.setState({
-      editVisible: false
-    })
-  }
-
   public render() {
     return (
       <div className="curd-table">
@@ -181,6 +108,79 @@ class User extends React.Component {
         />
       </div>
     )
+  }
+
+  private getList = async () => {
+    this.setState({ tableLoading: true });
+    const response = await service.getList(this.queryCondition);
+    console.log(response);
+    const data = response.list.map((item: any) => ({
+      ...item,
+      key: item.id,
+      gender: $tableMng.getNameById('gender', item.gender),
+      role: item.role.map(item => $tableMng.getNameById('role', item)).join(',')
+    }));
+
+    this.setState({
+      tableLoading: false,
+      tableData: data,
+      total: response.total,
+    })
+  }
+
+  private handleSearch = (value: string) => {
+    this.queryCondition.name = value;
+    this.getList()
+  }
+
+  private handleEdit = (id?: string) => {
+    this.setState({
+      editVisible: true,
+      editKey: id || ''
+    })
+  }
+
+  private handleDelete = (rows?: any[]) => {
+    if (rows) {
+      const ids = rows.map(row => row.key);
+      const names = rows.map(row => row.name).join('，');
+      $msg.success(`成功删除用户“${names}”！`);
+    } else {
+      const selectedRows = this.state.selectedRows;
+      if (selectedRows.length === 0) {
+        $msg.warning('请选择要删除的用户');
+        return;
+      }
+      const ids = selectedRows.map((row: any) => row.key);
+      const names = selectedRows.map((row: any) => row.name).join('，');
+      Modal.confirm({
+        title: '确认删除以下用户吗?',
+        content: names,
+        onOk: () => {
+          $msg.success(`成功删除用户“${names}”！`);
+        }
+      });
+    }
+  }
+
+  private handleSelectedRows = (selectedRows: any[]) => {
+    this.setState({
+      selectedRows
+    })
+  }
+
+  private handlePagination = (pagination: any) => {
+    Object.assign(this.queryCondition, {
+      pageNum: pagination.current,
+      pageSize: pagination.pageSize
+    })
+    this.getList();
+  }
+
+  private handleClose = () => {
+    this.setState({
+      editVisible: false
+    })
   }
 }
 export default User;

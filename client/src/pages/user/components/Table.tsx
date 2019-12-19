@@ -19,11 +19,6 @@ class UserTable extends React.Component<IUserTableProps> {
     },
   }
 
-  public handleChange = (pagination: any) => {
-    this.props.onPagination(pagination);
-    scrollTo(document.getElementById('mainContent')!, 0);
-  }
-
   public render() {
     const { tableLoading, columns, dataSource, total } = this.props;
     return (
@@ -47,5 +42,11 @@ class UserTable extends React.Component<IUserTableProps> {
       />
     )
   }
+
+  private handleChange = (pagination: any) => {
+    this.props.onPagination(pagination);
+    scrollTo(document.getElementById('layoutMain')!, 0);
+  }
+
 }
 export default UserTable;
