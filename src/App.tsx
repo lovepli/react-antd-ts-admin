@@ -1,14 +1,12 @@
-import React from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import PageLoading from '@/components/pageLoading';
+import React from "react";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import PageLoading from "@/components/pageLoading";
+import codeTable from "@/utils/codeTable";
 
-const OuterLayout = React.lazy(() => import( /* webpackChunkName:"outerLayout" */ '@/layouts/outerLayout'));
-const InnerLayout = React.lazy(() => import( /* webpackChunkName:"innerLayout" */ '@/layouts/innerLayout'));
-
-
+const OuterLayout = React.lazy(() => import(/* webpackChunkName:"outerLayout" */ "@/layouts/outerLayout"));
+const InnerLayout = React.lazy(() => import(/* webpackChunkName:"innerLayout" */ "@/layouts/innerLayout"));
 
 const App: React.SFC = () => {
-
   initTable();
 
   return (
@@ -28,16 +26,12 @@ const App: React.SFC = () => {
         </Switch>
       </React.Suspense>
     </Router>
-  )
-}
-
+  );
+};
 
 const initTable = async () => {
-  const data = await $http.get('/baseTable');
-  $tableMng.initTable(data);
-}
-
+  const data = await $http.get("/baseTable");
+  codeTable.initTable(data);
+};
 
 export default App;
-
-

@@ -5,7 +5,7 @@
  * @param {Number} max 最大数
  * @return {Number}
  */
-const randomNum = (min: number, max: number): number => Math.floor(min + Math.random() * (max - min));
+const randomNum = (min: number, max: number): number => Math.floor(min + Math.random() * (max - min + 1));
 
 /*
   生成验证码
@@ -20,10 +20,10 @@ export const createCaptcha = (canvas: any): string => {
     captcha += char
     // 设置字体随机大小
     ctx.font = randomNum(20, 25) + 'px SimHei'
-      // 文字颜色
+    // 文字颜色
     ctx.fillStyle = '#D3D7F7'
     ctx.textBaseline = 'middle'
-     // 文字边缘阴影，执照模糊效果
+    // 文字边缘阴影，执照模糊效果
     ctx.shadowOffsetX = randomNum(-3, 3)
     ctx.shadowOffsetY = randomNum(-3, 3)
     ctx.shadowBlur = randomNum(-3, 3)
