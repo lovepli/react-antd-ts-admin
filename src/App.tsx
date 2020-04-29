@@ -1,7 +1,6 @@
 import React from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import PageLoading from "@/components/pageLoading";
-import codeTable from "@/utils/codeTable";
 
 const OuterLayout = React.lazy(() => import(/* webpackChunkName:"outerLayout" */ "@/layouts/outerLayout"));
 const InnerLayout = React.lazy(() => import(/* webpackChunkName:"innerLayout" */ "@/layouts/innerLayout"));
@@ -31,7 +30,7 @@ const App: React.SFC = () => {
 
 const initTable = async () => {
   const data = await $http.get("/baseTable");
-  codeTable.initTable(data);
+  $codeTable.initTable(data);
 };
 
 export default App;

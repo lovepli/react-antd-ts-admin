@@ -4,6 +4,7 @@ const listData = Mock.mock({
   "list|127": [
     {
       id: "@lower(@guid)",
+      key: "@lower(@guid)",
       name: "@cname",
       age: "@natural(20,60)",
       gender: '@pick(["1","2"])',

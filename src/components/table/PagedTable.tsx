@@ -1,7 +1,39 @@
 import { Table } from "antd";
-import {  TableSize } from "antd/lib/table";
+import { TableSize } from "antd/lib/table";
 import * as React from "react";
 import scrollTo from "@/utils/scrollTo";
+import { IColumnProps } from "./IColumnProps";
+
+const columns = [
+  {
+    title: "姓名",
+    dataIndex: "name",
+  },
+  {
+    title: "年龄",
+    dataIndex: "age",
+  },
+];
+
+const data = [
+  {
+    key: "1",
+    name: "John Brown",
+    age: 32,
+  },
+  {
+    key: "2",
+    name: "Jim Green",
+    age: 42,
+
+  },
+  {
+    key: "3",
+    name: "Joe Black",
+    age: 32,
+
+  },
+];
 
 interface IProps {
   // 表格大小
@@ -9,25 +41,23 @@ interface IProps {
   // 表格是否带边框
   borderd?: boolean;
   // 表格列定义
-  columns: any[];
+  columns: IColumnProps[];
   // 数据源
   dataSource: any[];
-  // 数据总数
-  total?: number;
   // 加载中
   loading?: boolean;
+  // 数据总数
+  total?: number;
   // 初始化时默认的首页
   defaultPageIndex?: number;
   // 初始化时默认的表格大小
   defaultPageSize?: number;
-  // 是否可多选
-  isSelectRows?: boolean;
   // 默认选中的行的key
   selectedRowKeys?: string[];
   // 翻页之后表格向上滚动到指定的位置
   scrollTo?: number;
   // 翻页或选择pageSize之后触发的方法
-  onPagination: (pageIndex: number, pageSize: number) => void;
+  onPagination: (pageNumber: number, pageSize: number) => void;
   // 多选之后触发的方法
   onSelectedRows?: (rows: any[]) => void;
   // 点击表格行
@@ -38,36 +68,51 @@ interface IState {
   selectedRowKeys: string[];
 }
 
-export class PaginationTable extends React.Component<IProps, IState> {
+export class PagedTable extends React.Component<IProps, IState> {
   public static defaultProps = {
-    isSelectRows: false,
+    size: "default",
     defaultPageIndex: 1,
     defaultPageSize: 10,
   };
 
   public readonly state: Readonly<IState> = {
-    selectedRowKeys: this.props.selectedRowKeys ? this.props.selectedRowKeys : [],
+    selectedRowKeys: this.props.selectedRowKeys || [],
   };
 
   public render() {
     const getRowKey = (record: any) => record.id;
     return (
       <div>
-        <Table
-          size={this.props.size ? this.props.size : "default"}
-          bordered={this.props.borderd}
+         <Table columns={columns} dataSource={data} />
+      {/*   <Table
+          // size={this.props.size}
+          // bordered={this.props.borderd}
           rowKey={getRowKey}
-          columns={this.props.columns}
+          columns={columns}
           dataSource={this.props.dataSource}
-          pagination={this.getPaginationOption()}
-          rowSelection={this.props.isSelectRows ? this.getRowSelection() : undefined}
-          loading={this.props.loading}
-          onChange={this.handlePagination}
-          onRow={this.handleRow}
-        />
+          // pagination={this.getPaginationOption()}
+          // rowSelection={this.props.onSelectedRows ? this.getRowSelection() : undefined}
+          // loading={this.props.loading}
+          // onChange={this.handlePagination}
+          // onRow={this.handleRow}
+        /> */}
       </div>
     );
   }
+
+  private getColumns = () => {
+    const columns = [
+      {
+        title: "姓名",
+        dataIndex: "name",
+      },
+      {
+        title: "年龄",
+        dataIndex: "age",
+      },
+    ];
+    return columns;
+  };
 
   // 设置行属性
   private handleRow = (record: any, index: number) => {

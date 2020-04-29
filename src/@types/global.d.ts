@@ -5,12 +5,9 @@ import { Http } from "@/utils/http";
 import { CodeTable } from "@/utils/codeTable";
 
 declare global {
-  export const $http: Http;
-
   export const $msg: MessageApi;
-
+  export const $http: Http;
   export const $codeTable: CodeTable;
-
   export interface IPageProps extends FormComponentProps, RouteComponentProps {
     [key: string]: any;
   }

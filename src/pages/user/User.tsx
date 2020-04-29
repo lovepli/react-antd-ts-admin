@@ -1,76 +1,48 @@
+import { Button, Icon, Input, Row, Col } from "antd";
 import React from "react";
-import { Divider, Modal, Popconfirm } from "antd";
-import { PaginationTable, createTableColumnBuilder, createOptColumnBuilder } from "@/components/table";
-import Table from "./components/Table";
+import { PagedTable, createColumnBuilder } from "@/components/table";
+import SectionTitle from "@/components/sectionTitle";
 import Edit from "./components/Edit";
-import Header from "./components/Header";
 import { IState, defaultState } from "./state";
 import service from "./service";
 import "./style.less";
 
+import { Table, Divider, Tag } from "antd";
+
+
+const columns = [
+  {
+    title: "Name",
+    dataIndex: "name",
+  },
+  {
+    title: "Age",
+    dataIndex: "age",
+  },
+
+];
+
+const data = [
+  {
+    key: "1",
+    name: "John Brown",
+    age: 32,
+  },
+  {
+    key: "2",
+    name: "Jim Green",
+    age: 42,
+
+  },
+  {
+    key: "3",
+    name: "Joe Black",
+    age: 32,
+
+  },
+];
 class User extends React.Component<{}, IState> {
   public readonly state: Readonly<IState> = defaultState;
-
-  public columns = [
-    {
-      title: "姓名",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "年龄",
-      dataIndex: "age",
-      key: "age",
-      sorter: (a: any, b: any) => a.age - b.age,
-    },
-    {
-      title: "性别",
-      dataIndex: "gender",
-      key: "gender",
-      // filters: [
-      //   {
-      //     text: genderMap['1'],
-      //     value: genderMap['1'],
-      //   },
-      //   {
-      //     text: genderMap['2'],
-      //     value: genderMap['2'],
-      //   },
-      // ],
-      filterMultiple: false,
-      onFilter: (value: string, record: any) => record.gender.indexOf(value) === 0,
-    },
-    {
-      title: "角色",
-      dataIndex: "role",
-      key: "role",
-    },
-    {
-      title: "注册时间",
-      dataIndex: "time",
-      key: "time",
-      sorter: (a: any, b: any) => Date.parse(a.time) - Date.parse(b.time),
-    },
-    {
-      title: "操作",
-      key: "action",
-      width: 200,
-      render: (text: string, record: any) => (
-        <span>
-          <a onClick={() => this.handleEdit(record.key)}>修改</a>
-          <Divider type="vertical" />
-          <Popconfirm
-            title={`确认删除用户${record.name}?`}
-            onConfirm={() => this.handleDelete([record])}
-            okText="确认"
-            cancelText="取消"
-          >
-            <a>删除</a>
-          </Popconfirm>
-        </span>
-      ),
-    },
-  ];
 
   public componentDidMount() {
     this.getList();
@@ -79,25 +51,30 @@ class User extends React.Component<{}, IState> {
   public render() {
     return (
       <div className="curd-table">
-        <Header onAdd={this.handleEdit} onDelete={this.handleDelete} onSearch={this.handleSearch} />
-
-        {/* <Table
-          columns={this.columns}
-          dataSource={this.state.list}
-          total={this.state.total}
-          tableLoading={this.state.tableLoading}
-          onSelectedRows={this.handleSelectedRows}
-          onPagination={this.handlePagination}
-        /> */}
-
-        <PaginationTable
-          total={this.state.total}
-          dataSource={this.state.list}
+        <Row type="flex" justify="space-between">
+          <Col>
+            <SectionTitle name="用户列表" />
+            <Button.Group>
+              <Button type="primary" icon="plus" onClick={this.handleEdit}>
+                新增用户
+              </Button>
+              <Button type="danger" icon="minus">
+                批量删除
+              </Button>
+            </Button.Group>
+          </Col>
+          <Col>
+            <Input.Search placeholder="请输入查询关键词" onSearch={this.handleSearch} enterButton={true} />
+          </Col>
+        </Row>
+        {/* <Table columns={columns} dataSource={data} /> */}
+        <PagedTable
           columns={this.getTableColumns()}
+          dataSource={this.state.list}
           loading={this.state.tableLoading}
+          total={this.state.total}
           defaultPageIndex={defaultState.query.pageNumber}
           defaultPageSize={defaultState.query.pageSize}
-          isSelectRows={true}
           onSelectedRows={this.handleSelectedRows}
           onPagination={this.handlePagination}
         />
@@ -112,30 +89,40 @@ class User extends React.Component<{}, IState> {
     );
   }
 
-  // 设置表格数据列
-  private getTableDataColumns(): object[] {
-    const builder = createTableColumnBuilder();
-    builder.AddText("姓名", "name");
-    builder.AddNumber("年龄", "age");
-    builder.AddConstantIdToName("性别", "gender", "gender");
-    const columns = builder.GetColumns();
+  // 创建表格列
+  private getTableColumns() {
+    const builder = createColumnBuilder();
+    // builder.AddSortNum(this.state.query.pageNumber, this.state.query.pageSize, 60);
+    builder.addText("姓名", "name");
+    builder.addText("年龄", "age");
+    // builder.addCodeIdToName("性别", "gender", "gender");
+    // builder.addHandle(
+    //   [
+    //     {
+    //       type: "edit",
+    //       handle: this.handleEdit,
+    //     },
+    //     {
+    //       type: "delete",
+    //       handle: this.handleDelete,
+    //     },
+    //   ],
+    //   140
+    // );
+
+    // const columns = builder.getColumns();
+    const columns = [
+      {
+        title: "姓名",
+        dataIndex: "name",
+      },
+      {
+        title: "年龄",
+        dataIndex: "age",
+      },
+    ];
+    console.log(columns)
     return columns;
-  }
-
-  // 设置表格操作列
-  private getTableOptionColumn(): object {
-    const builder = createOptColumnBuilder();
-    builder.OptColumnWidth = 140;
-    builder.AddButtonEdit(this.handleEdit);
-    builder.AddButtonDelete(this.handleDelete);
-    return builder.getOptColumn();
-  }
-
-  // 合并表格数据列和操作列
-  private getTableColumns(): object[] {
-    const dataColumns = this.getTableDataColumns();
-    const optionColumn = this.getTableOptionColumn();
-    return [...dataColumns, optionColumn];
   }
 
   // 获取表格数据
@@ -173,35 +160,38 @@ class User extends React.Component<{}, IState> {
   };
 
   // 新增或编辑
-  private handleEdit = (id?: string) => {
-    this.setState({
-      editVisible: true,
-      editKey: id || "",
-    });
+  private handleEdit = (e, id?: string) => {
+    console.log(222);
+    // this.setState({
+    //   editVisible: true,
+    //   editKey: id || "",
+    // });
   };
 
   // 删除
   private handleDelete = (rows?: any[]) => {
-    if (rows) {
-      const ids = rows.map((row) => row.key);
-      const names = rows.map((row) => row.name).join("，");
-      $msg.success(`成功删除用户“${names}”！`);
-    } else {
-      const selectedRows = this.state.selectedRows;
-      if (selectedRows.length === 0) {
-        $msg.warning("请选择要删除的用户");
-        return;
-      }
-      const ids = selectedRows.map((row: any) => row.key);
-      const names = selectedRows.map((row: any) => row.name).join("，");
-      Modal.confirm({
-        title: "确认删除以下用户吗?",
-        content: names,
-        onOk: () => {
-          $msg.success(`成功删除用户“${names}”！`);
-        },
-      });
-    }
+    console.log(111);
+    console.log(rows);
+    // if (rows) {
+    //   const ids = rows.map((row) => row.key);
+    //   const names = rows.map((row) => row.name).join("，");
+    //   $msg.success(`成功删除用户“${names}”！`);
+    // } else {
+    //   const selectedRows = this.state.selectedRows;
+    //   if (selectedRows.length === 0) {
+    //     $msg.warning("请选择要删除的用户");
+    //     return;
+    //   }
+    //   const ids = selectedRows.map((row: any) => row.key);
+    //   const names = selectedRows.map((row: any) => row.name).join("，");
+    //   Modal.confirm({
+    //     title: "确认删除以下用户吗?",
+    //     content: names,
+    //     onOk: () => {
+    //       $msg.success(`成功删除用户“${names}”！`);
+    //     },
+    //   });
+    // }
   };
 
   // 多选

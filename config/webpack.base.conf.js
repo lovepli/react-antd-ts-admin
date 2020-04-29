@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const resolve = (dir) => {
   return path.resolve(process.cwd(), dir)
@@ -24,8 +25,12 @@ module.exports = {
     new webpack.ProvidePlugin({
       $http: [resolve('src/utils/http.ts'), 'default'],
       $msg: [resolve('node_modules/antd/es/message/index.js'), 'default'],
-      $tableMng: [resolve('src/utils/tableMng.ts'), 'default']
-    })
+      $codeTable: [resolve('src/utils/codeTable.ts'), 'default']
+    }),
+    new CopyWebpackPlugin([{
+      from: resolve('static'),
+      to: 'static'
+    }])
   ],
   module: {
     rules: [{
@@ -61,3 +66,4 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', ".json"]
   }
 }
+
