@@ -3,12 +3,12 @@
     基于React+AntD+TypeScript的后台管理系统
 
 ## 技术依赖
-- 主体：React、TypeScript、AntD
-- 图表：BizChart
-- Excel：js-xlsx
-- 图片生成：html2canvas
-- 富文本编辑器：braft-editor
-- 数据：axios
+- React -（UI 框架）
+- Ant-Design - （组件库）
+- TypeScript - （静态类型）
+- Webpack
+- axios
+- less
 
 [线上地址](https://wluyao.github.io/admin/dist/index.html)  
 

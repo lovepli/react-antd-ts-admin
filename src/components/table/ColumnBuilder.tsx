@@ -1,4 +1,5 @@
 // 用于创建表格列
+
 import { Popconfirm, Divider } from "antd";
 import React from "react";
 import moment from "moment";
@@ -8,6 +9,11 @@ enum HandleButtonType {
   "edit" = "编辑",
   "delete" = "删除",
   "view" = "查看",
+}
+
+interface IHandleButton {
+  type: string;
+  handle: (record: object) => void;
 }
 
 class ColumnBuilder {
@@ -103,7 +109,7 @@ class ColumnBuilder {
   };
 
   // 创建操作列
-  public addHandle = (buttons: { type: string; handle: (record: any) => void }[], width?: string | number) => {
+  public addHandle = (buttons: IHandleButton[], width?: string | number) => {
     const column: IColumnProps = {
       dataIndex: "handle",
       title: "操作",
@@ -141,22 +147,22 @@ class ColumnBuilder {
     this.columnDefines.push(column);
   };
 
-  private getHandleButton = (button: any, record: any) => {
+  private getHandleButton = (button: IHandleButton, record: object) => {
     const { type, handle } = button;
     const handleClick = () => handle(record);
-    let content: React.ReactNode;
+    let handleButton: React.ReactNode;
     switch (type) {
       case "delete":
-        content = (
+        handleButton = (
           <Popconfirm title="确定删除这条数据吗？" onConfirm={handleClick}>
             <a>{HandleButtonType[type]}</a>
           </Popconfirm>
         );
         break;
       default:
-        content = <a onClick={handleClick}>{HandleButtonType[type]}</a>;
+        handleButton = <a onClick={handleClick}>{HandleButtonType[type]}</a>;
     }
-    return content;
+    return handleButton;
   };
 }
 

@@ -13,6 +13,8 @@ class Service {
 
   // 获取用户详情
   public getDetail = (id: string) => $http.post("/user/userDetail", { id });
+
+  public handeDelete = (ids: string[]) => $http.post("/user/delete", { ids });
 }
 
 export default new Service();

@@ -4,37 +4,6 @@ import * as React from "react";
 import scrollTo from "@/utils/scrollTo";
 import { IColumnProps } from "./IColumnProps";
 
-const columns = [
-  {
-    title: "姓名",
-    dataIndex: "name",
-  },
-  {
-    title: "年龄",
-    dataIndex: "age",
-  },
-];
-
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-
-  },
-];
-
 interface IProps {
   // 表格大小
   size?: TableSize;
@@ -49,7 +18,7 @@ interface IProps {
   // 数据总数
   total?: number;
   // 初始化时默认的首页
-  defaultPageIndex?: number;
+  defaultPageNumber?: number;
   // 初始化时默认的表格大小
   defaultPageSize?: number;
   // 默认选中的行的key
@@ -71,7 +40,7 @@ interface IState {
 export class PagedTable extends React.Component<IProps, IState> {
   public static defaultProps = {
     size: "default",
-    defaultPageIndex: 1,
+    defaultPageNumber: 1,
     defaultPageSize: 10,
   };
 
@@ -83,36 +52,21 @@ export class PagedTable extends React.Component<IProps, IState> {
     const getRowKey = (record: any) => record.id;
     return (
       <div>
-         <Table columns={columns} dataSource={data} />
-      {/*   <Table
-          // size={this.props.size}
-          // bordered={this.props.borderd}
-          rowKey={getRowKey}
-          columns={columns}
+        <Table
+          size={this.props.size}
+          bordered={this.props.borderd}
+          // rowKey={getRowKey}
+          columns={this.props.columns}
           dataSource={this.props.dataSource}
-          // pagination={this.getPaginationOption()}
-          // rowSelection={this.props.onSelectedRows ? this.getRowSelection() : undefined}
-          // loading={this.props.loading}
-          // onChange={this.handlePagination}
-          // onRow={this.handleRow}
-        /> */}
+          pagination={this.getPaginationOption()}
+          rowSelection={this.props.onSelectedRows ? this.getRowSelection() : undefined}
+          loading={this.props.loading}
+          onChange={this.handlePagination}
+          onRow={this.handleRow}
+        />
       </div>
     );
   }
-
-  private getColumns = () => {
-    const columns = [
-      {
-        title: "姓名",
-        dataIndex: "name",
-      },
-      {
-        title: "年龄",
-        dataIndex: "age",
-      },
-    ];
-    return columns;
-  };
 
   // 设置行属性
   private handleRow = (record: any, index: number) => {
@@ -139,7 +93,7 @@ export class PagedTable extends React.Component<IProps, IState> {
   // 分页
   private getPaginationOption = () => ({
     total: this.props.total,
-    defaultCurrent: this.props.defaultPageIndex,
+    defaultCurrent: this.props.defaultPageNumber,
     defaultPageSize: this.props.defaultPageSize,
     pageSizeOptions: ["10", "20", "30", "50", "100"],
     showQuickJumper: true,
@@ -150,10 +104,6 @@ export class PagedTable extends React.Component<IProps, IState> {
   // 换页
   private handlePagination = (pagination: any) => {
     this.props.onPagination(pagination.current, pagination.pageSize);
-    // 翻页之后清空选择的row
-    this.setState({
-      selectedRowKeys: [],
-    });
     const scroll = this.props.scrollTo;
     if (scroll || scroll === 0) {
       scrollTo(document.getElementsByClassName("ant-layout")[1], scroll, 500);

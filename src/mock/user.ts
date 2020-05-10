@@ -41,7 +41,7 @@ export default {
     };
   },
   getDetail(config: any) {
-    const id = JSON.parse(config.body);
+    const { id } = JSON.parse(config.body);
     const detail = list.find((item) => item.id === id);
     return {
       code: 200,

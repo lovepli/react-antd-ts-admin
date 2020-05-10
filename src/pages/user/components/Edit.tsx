@@ -115,15 +115,14 @@ class Edit extends React.Component<IEditProps> {
     );
   }
 
-  private getDetail(id: string) {
+  private getDetail = async (id: string) => {
     if (id) {
-      service.getDetail(id).then((res) => {
-        this.setState({
-          detail: res.data.detail,
-        });
+      const res = await service.getDetail(id);
+      this.setState({
+        detail: res.detail,
       });
     }
-  }
+  };
 
   private handleCancel = (e) => {
     this.props.onClose();
