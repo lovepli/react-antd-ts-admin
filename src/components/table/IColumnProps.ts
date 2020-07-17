@@ -1,3 +1,6 @@
+// import { ColumnProps} from 'antd/lib/table/interface'
+
+
 export interface IColumnProps {
   dataIndex: string;
   title?: string;

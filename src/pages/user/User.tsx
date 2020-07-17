@@ -1,4 +1,4 @@
-import { Button, Input, Row, Col, Modal } from "antd";
+import { Button, Input, Row, Col, Modal,Table } from "antd";
 import React from "react";
 import { PagedTable, createColumnBuilder } from "@/components/table";
 import SectionTitle from "@/components/sectionTitle";
@@ -6,6 +6,7 @@ import Edit from "./components/Edit";
 import { IState, defaultState, IItem } from "./state";
 import service from "./service";
 import "./style.less";
+
 
 class User extends React.Component<{}, IState> {
   public readonly state: Readonly<IState> = defaultState;
@@ -34,6 +35,7 @@ class User extends React.Component<{}, IState> {
           </Col>
         </Row>
 
+       
         <PagedTable
           columns={this.getTableColumns()}
           dataSource={this.state.list}

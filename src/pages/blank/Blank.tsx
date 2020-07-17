@@ -1,10 +1,20 @@
-import React from "react";
-import "./style.less";
+import React, { useRef } from 'react'
+import { useCounter } from '@/hooks'
+import './style.less'
 
-class Blank extends React.Component<{}, {}> {
-  public render() {
-    return <div className="blank">bbb</div>;
+const Blank: React.FC = () => {
+  const [page, { inc: incPage }] = useCounter(0)
+
+  const handleClick = () => {
+    incPage()
   }
+
+  return (
+    <div className="blank">
+      <div> {page}</div>
+      <div onClick={handleClick}>rrrr</div>
+    </div>
+  )
 }
 
-export default Blank;
+export default Blank
