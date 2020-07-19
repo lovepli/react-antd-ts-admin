@@ -108,12 +108,14 @@
 ### 运行
 
 ```
-npm run dev
+npm run start
+yarn start
 ```
 
 ###  构建
 
 ```
 npm run build
+yarn build
 ```
 
