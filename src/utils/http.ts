@@ -16,7 +16,7 @@ export class Http {
   }
 
   // 设置请求头
-  public setheader = (headers: any) => {
+  public setHeader = (headers: any) => {
     this.baseConfig.headers = { ...this.baseConfig.headers, ...headers };
     this.instance = axios.create(this.baseConfig);
     this.setReqInterceptors();

@@ -1,18 +1,34 @@
 import React, { useRef } from 'react'
-import { useCounter } from '@/hooks'
+import { Table } from 'antd'
+import { ColumnProps } from 'antd/lib/table/interface'
 import './style.less'
 
-const Blank: React.FC = () => {
-  const [page, { inc: incPage }] = useCounter(0)
+interface IItem {
+  name: string
+  age: number
+}
 
-  const handleClick = () => {
-    incPage()
-  }
+const Blank: React.FC = () => {
+  const data: IItem[] = [
+    {
+      name: 'www',
+      age: 2
+    }
+  ]
+
+  const columns: ColumnProps<IItem>[] = [
+    {
+      title: 'xxx',
+      key: 'name',
+      render(text: any, record, index: number) {
+        return <div>{record.name}</div>
+      }
+    }
+  ]
 
   return (
     <div className="blank">
-      <div> {page}</div>
-      <div onClick={handleClick}>rrrr</div>
+      <Table dataSource={data} columns={columns} />
     </div>
   )
 }
