@@ -1,3 +1,17 @@
+import { tupleStr } from '@/utils/tuple'
+
+const Types = tupleStr(
+  'mobile',
+  'email',
+  'IDCard',
+  'min',
+  'max',
+  'required',
+  'pattern'
+)
+
+type Type = typeof Types[number]
+
 interface IValidator {
   message: string
   value: any
@@ -11,12 +25,12 @@ interface IRule {
   // 是否必填
   required?: boolean
   // 策略类型
-  type: string
+  type: Type
 }
 
-interface IRules {
-  [key: string]: IRule[]
-}
+// interface IRules {
+//   [key: string]: IRule[]
+// }
 
 // 策略对象，封装校验规则
 const strategies = {
@@ -90,10 +104,69 @@ function addValidator(value: any, rules: IRule[]) {
 
 /**
  * 校验器
- * @param data {object}   要校验的数据
- * @param rules {IRules} 校验的规则。
+ * @param {object} data   要校验的数据
+ * @param {IRules} rules  校验的规则。
+ * @example
+ * ```tsx
+  const rules = {
+    username: [
+      {
+        required: true,
+        message: '用户名不能为空'
+      }
+    ],
+    password: [
+      {
+        required: true,
+        message: '密码不能为空'
+      },
+      {
+        min: 6,
+        message: '密码长度不能少于6位'
+      }
+    ],
+    email: [
+      {
+        required: true,
+        message: '请填写电子邮箱'
+      },
+      {
+        type: 'email',
+        message: '邮箱格式不正确'
+      }
+    ],
+    id: [
+      {
+        required: true,
+        message: '请填写身份证号码'
+      },
+      {
+        pattern: /^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/,
+        message: '身份证号码格式不正确'
+      },
+      {
+        aaa: 3,
+        message: '身份证号码格式不正确'
+      }
+    ]
+  }
+  const data = {
+    username: 'admin',
+    password: '123456',
+    email: '121@qq.com',
+    id: '123456197201012121'
+  }
+  function login() {
+    const msg = validate(data, rules)
+    if (msg) {
+      alert(msg)
+    } else {
+      alert('成功')
+    }
+  }
+ * ```
  */
-function validate(data: object, rules: IRules) {
+function validate(data: object, rules: object) {
   for (const [key, value] of Object.entries(rules)) {
     addValidator(data[key], value)
   }
