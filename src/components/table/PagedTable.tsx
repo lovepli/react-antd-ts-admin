@@ -55,7 +55,7 @@ interface IState {
 // }
 
 
-export class PagedTable extends React.Component<IProps<RecordType>, IState> {
+export class PagedTable extends React.Component<IProps<any>, IState> {
   public static defaultProps = {
     size: 'default',
     defaultPageNumber: 1,

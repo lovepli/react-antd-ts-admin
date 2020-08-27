@@ -151,7 +151,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         if (!error) {
           const data = await service.login(values)
           const token = data.token
-          $http.setheader({ Authorization: token })
+          $http.setHeader({ Authorization: token })
           this.props.onSaveToken(token)
           this.props.history.replace('/dashboard')
         }

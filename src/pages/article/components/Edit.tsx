@@ -3,7 +3,6 @@ import { Form, Input, Select, Row, Col } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import BraftEditor from 'braft-editor';
 import 'braft-editor/dist/index.css';
-import { CodeMap, createOptions } from '@/assets/CodeMap';
 import './style.less';
 
 interface IProps extends FormComponentProps {
@@ -53,9 +52,9 @@ class ArticleCreate extends React.Component<IProps, IState> {
                     }],
                   })(
                     <Select placeholder="请选择文章类型" >
-                      {
+                      {/* {
                         createOptions(CodeMap.articleType).map(item => <Select.Option key={item.value} value={item.value}>{item.label}</Select.Option>)
-                      }
+                      } */}
                     </Select>
                   )
                 }
