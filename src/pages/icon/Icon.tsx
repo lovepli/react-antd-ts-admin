@@ -1,22 +1,19 @@
-import React from "react";
-import { Icon } from "antd";
-import SvgIcon from '@/components/svgIcon';
+import React from 'react'
+import Icon from '@ant-design/icons'
 
-
-import Basketball from "@/assets/icons/basketball.svg";
-import Excel from "@/assets/icons/excel.svg";
-import Ppt from "@/assets/icons/ppt.svg";
-import Pdf from "@/assets/icons/pdf.svg";
-import Word from "@/assets/icons/word.svg";
-import Image from "@/assets/icons/image.svg";
-import Mine from "@/assets/icons/mine.svg";
+import Basketball from '@/assets/icons/basketball.svg'
+import Excel from '@/assets/icons/excel.svg'
+import Ppt from '@/assets/icons/ppt.svg'
+import Pdf from '@/assets/icons/pdf.svg'
+import Word from '@/assets/icons/word.svg'
+import Image from '@/assets/icons/image.svg'
+import Mine from '@/assets/icons/mine.svg'
 
 const iconClass: React.CSSProperties = {
   fontSize: '24px',
   marginRight: '10px',
-  marginBottom: '10px',
+  marginBottom: '10px'
 }
-
 
 const Svg: React.SFC = () => {
   return (
@@ -36,15 +33,8 @@ const Svg: React.SFC = () => {
         <Icon component={Image} style={iconClass} />
         <Icon component={Mine} style={iconClass} />
       </div>
-
-      <div>
-        <p>封装SvgIcon组件，既可以使用antd已有的图标，也可以使用导入的图标</p>
-        <SvgIcon type="user" style={iconClass} />
-        <SvgIcon type={Mine} style={iconClass} />
-        <SvgIcon type={Basketball} style={iconClass} />
-      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Svg;
+export default Svg

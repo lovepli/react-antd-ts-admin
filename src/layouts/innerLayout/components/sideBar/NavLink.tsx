@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Icon } from 'antd';
 
 
 interface IProps {
@@ -9,10 +8,10 @@ interface IProps {
   title: string;
 }
 
-const NavLink: React.SFC<IProps> = ({ path, icon, title }) => {
+const NavLink: React.FC<IProps> = ({ path, icon, title }) => {
   return (
     <Link to={path}>
-      {icon ? <Icon type={icon} /> : ''}
+      {/* {icon ? <Icon type={icon} /> : ''} */}
       <span>{title}</span>
     </Link>
   );

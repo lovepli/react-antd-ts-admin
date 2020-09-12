@@ -1,22 +1,22 @@
-import React from 'react';
-import { Icon } from 'antd';
-import './style.less';
-import Avatar from './Avatar';
+import React from 'react'
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
+import Avatar from './Avatar'
+import './style.less'
 
 interface IHeaderProps {
-  collapse: boolean;
+  collapse: boolean
   onTrigger: () => void
 }
 
 const HeaderBar: React.SFC<IHeaderProps> = (props) => {
-  const { collapse, onTrigger } = props;
+  const { collapse, onTrigger } = props
   return (
     <div className="header-bar">
-      <Icon
-        className="header-bar__trigger"
-        type={collapse ? 'menu-unfold' : 'menu-fold'}
-        onClick={onTrigger}
-      />
+      {collapse ? (
+        <MenuUnfoldOutlined className="header-bar__trigger" onClick={onTrigger} />
+      ) : (
+        <MenuFoldOutlined className="header-bar__trigger" onClick={onTrigger} />
+      )}
       <div className="header-bar__menu">
         <Avatar />
       </div>
@@ -24,6 +24,4 @@ const HeaderBar: React.SFC<IHeaderProps> = (props) => {
   )
 }
 
-
-
-export default HeaderBar;
+export default HeaderBar

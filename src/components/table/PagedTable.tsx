@@ -1,13 +1,11 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table } from 'antd'
-import { TableSize } from 'antd/lib/table'
-
 import scrollTo from '@/utils/scrollTo'
 import { IColumnProps } from './IColumnProps'
 
 interface IProps<RecordType> {
   // 表格大小
-  size?: TableSize
+  size?: any
   // 表格是否带边框
   borderd?: boolean
   // 表格列定义
@@ -54,7 +52,6 @@ interface IState {
 //   },[props.selectedRowKeys])
 // }
 
-
 export class PagedTable extends React.Component<IProps<any>, IState> {
   public static defaultProps = {
     size: 'default',
@@ -68,6 +65,7 @@ export class PagedTable extends React.Component<IProps<any>, IState> {
 
   public render() {
     const getRowKey = (record: any) => record.id
+    
     return (
       <div>
         <Table
@@ -77,9 +75,7 @@ export class PagedTable extends React.Component<IProps<any>, IState> {
           columns={this.props.columns}
           dataSource={this.props.dataSource}
           pagination={this.getPaginationOption()}
-          rowSelection={
-            this.props.onSelectedRows ? this.getRowSelection() : undefined
-          }
+          rowSelection={this.props.onSelectedRows ? this.getRowSelection() : undefined}
           loading={this.props.loading}
           onChange={this.handlePagination}
           onRow={this.handleRow}
@@ -89,11 +85,11 @@ export class PagedTable extends React.Component<IProps<any>, IState> {
   }
 
   // 设置行属性
-  private handleRow = (record: any, index: number) => {
+  private handleRow = (record: any, index?: number) => {
     return {
       onClick: () => {
         if (this.props.onClickRow) {
-          this.props.onClickRow(record, index)
+          this.props.onClickRow(record, index!)
         }
       }
     }

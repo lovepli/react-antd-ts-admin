@@ -1,37 +1,32 @@
-import React from 'react';
-import { Layout, BackTop } from 'antd';
-import { connect } from 'react-redux';
-import { saveUserInfo } from '@/store/account/action';
-import InnerRouter, { IRoute, initRoutes } from '@/router/innerRouter';
-import HeaderBar from './components/headerBar';
-import SideBar from './components/sideBar';
-import service from './service';
-import './style.less';
+import React from 'react'
+import { Layout, BackTop } from 'antd'
+import InnerRouter, { IRoute, initRoutes } from '@/router/innerRouter'
+import accountStore from '@/store/account'
+import HeaderBar from './components/headerBar'
+import SideBar from './components/sideBar'
+import service from './service'
+import './style.less'
 
-
-interface IProps extends IPageProps {
-  token: string;
-  onSaveUserInfo: (roles: string[]) => void;
-}
+interface IProps extends IPageProps {}
 interface IState {
-  collapse: boolean;
-  routeMap: IRoute[];
+  collapse: boolean
+  routeMap: IRoute[]
 }
 
 class InnerLayout extends React.Component<IProps, IState> {
   public readonly state: Readonly<IState> = {
     collapse: false,
     routeMap: []
-  };
+  }
 
   public async componentDidMount() {
-    const token = this.props.token;
+    const token = accountStore.token
     if (!token) {
-      this.props.history.replace('/account/login');
+      this.props.history.replace('/account/login')
     } else {
-      const userInfo = await service.getUserInfo({ token });
-      this.props.onSaveUserInfo(userInfo);
-      this.setState({ routeMap: initRoutes(userInfo.roles) });
+      const userInfo = await service.getUserInfo({ token })
+      accountStore.setAccountInfo(userInfo)
+      this.setState({ routeMap: initRoutes(userInfo.roles) })
     }
   }
 
@@ -48,7 +43,7 @@ class InnerLayout extends React.Component<IProps, IState> {
           <SideBar routeMap={this.state.routeMap} />
         </Layout.Sider>
 
-        <Layout id="layoutMain" className="inner-layout__main" >
+        <Layout id="layoutMain" className="inner-layout__main">
           <HeaderBar collapse={this.state.collapse} onTrigger={this.handleTrigger} />
 
           <div className="content">
@@ -67,23 +62,8 @@ class InnerLayout extends React.Component<IProps, IState> {
 
   // 切换菜单折叠状态
   private handleTrigger = () => {
-    this.setState({ collapse: !this.state.collapse });
+    this.setState({ collapse: !this.state.collapse })
   }
 }
 
-
-
-const mapStateToProps = (state: any) => ({
-  token: state.token,
-});
-
-const mapDispatchToProps = (dispatch: any) => ({
-  onSaveUserInfo: (userInfo: any) => dispatch(saveUserInfo(userInfo))
-})
-
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(InnerLayout)
-
+export default InnerLayout

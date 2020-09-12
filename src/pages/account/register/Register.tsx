@@ -1,14 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 
-
-class Register extends React.Component<any, any>{
-
-
-  public render() {
-    return (
-      <div>regidter</div>
-    )
-  }
+const Register: React.FC = () => {
+  return <div>regidter</div>
 }
 
-export default Register;
+export default Register
