@@ -1,12 +1,29 @@
-import React from "react";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
-import PageLoading from "@/components/pageLoading";
+import React, { useEffect } from 'react'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+import PageLoading from '@/components/pageLoading'
+import accountStore from '@/store/account'
 
-const OuterLayout = React.lazy(() => import(/* webpackChunkName:"outerLayout" */ "@/layouts/outerLayout"));
-const InnerLayout = React.lazy(() => import(/* webpackChunkName:"innerLayout" */ "@/layouts/innerLayout"));
+const OuterLayout = React.lazy(
+  () => import(/* webpackChunkName:"outer-layout" */ '@/layouts/outerLayout')
+)
+const InnerLayout = React.lazy(
+  () => import(/* webpackChunkName:"inner-layout" */ '@/layouts/innerLayout')
+)
 
-const App: React.SFC = () => {
-  initTable();
+const App: React.FC = () => {
+  // 获取一些全局状态
+  useEffect(() => {
+    accountStore.setPermission()
+  }, [])
+
+  // 初始化常量表
+  useEffect(() => {
+    const initTable = async () => {
+      const data = await $http.get('/baseTable')
+      $codeTable.initTable(data)
+    }
+    initTable()
+  }, [])
 
   return (
     <Router>
@@ -25,12 +42,7 @@ const App: React.SFC = () => {
         </Switch>
       </React.Suspense>
     </Router>
-  );
-};
+  )
+}
 
-const initTable = async () => {
-  const data = await $http.get("/baseTable");
-  $codeTable.initTable(data);
-};
-
-export default App;
+export default App

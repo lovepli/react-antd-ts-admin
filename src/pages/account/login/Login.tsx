@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Form, Input, Button, Row, Col } from 'antd'
 import { UserOutlined, LockOutlined, SafetyOutlined } from '@ant-design/icons'
@@ -7,16 +7,9 @@ import { createCaptcha } from './util'
 import service from './service'
 import './style.less'
 
-interface IProps {}
-
-const formItemLayout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 18 }
-}
-
-const Login: React.FC<IProps> = (props) => {
-  let canvas: any
+const Login: React.FC = () => {
   const history = useHistory()
+  const canvasRef = useRef(null)
   const [captcha, setCaptcha] = useState('')
 
   useEffect(() => {
@@ -25,7 +18,7 @@ const Login: React.FC<IProps> = (props) => {
 
   //  获取验证码
   const getCaptcha = () => {
-    setCaptcha(createCaptcha(canvas))
+    setCaptcha(createCaptcha(canvasRef.current))
   }
 
   // 提交
@@ -48,7 +41,8 @@ const Login: React.FC<IProps> = (props) => {
         layout="horizontal"
         colon={true}
         labelAlign="left"
-        {...formItemLayout}
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 18 }}
         onFinish={handleFinish}
         onFinishFailed={handleFinishFailed}
       >
@@ -90,7 +84,7 @@ const Login: React.FC<IProps> = (props) => {
 
         <Form.Item
           label="验证码"
-          name="verification"
+          name="captcha"
           validateTrigger="onBlur"
           rules={[
             {
@@ -116,7 +110,7 @@ const Login: React.FC<IProps> = (props) => {
                 width="80"
                 height="40"
                 style={{ cursor: 'pointer' }}
-                ref={(el) => (canvas = el)}
+                ref={canvasRef}
               />
             </Col>
           </Row>
