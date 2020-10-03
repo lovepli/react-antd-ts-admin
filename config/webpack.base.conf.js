@@ -1,7 +1,7 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const resolve = (dir) => {
   return path.resolve(process.cwd(), dir)
@@ -9,61 +9,67 @@ const resolve = (dir) => {
 
 module.exports = {
   entry: {
-    app: resolve('src/index.tsx'),
+    app: resolve('src/index.tsx')
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: resolve('public/index.html'),
       filename: 'index.html',
-      favicon: "public/favicon.ico",
+      favicon: 'public/favicon.ico',
       minify: {
         removeAttributeQuotes: true,
         removeComments: true,
-        collapseWhitespace: true,
+        collapseWhitespace: true
       }
     }),
     new webpack.ProvidePlugin({
-      $http: [resolve('src/utils/http.ts'), 'default'],
-      $msg: [resolve('node_modules/antd/es/message/index.js'), 'default'],
-      $codeTable: [resolve('src/utils/codeTable.ts'), 'default']
+      $request: [resolve('src/utils/request.ts'), 'default'],
+      $msg: [resolve('node_modules/antd/es/message/index.js'), 'default']
     }),
-    new CopyWebpackPlugin([{
-      from: resolve('static'),
-      to: 'static'
-    }])
+    new CopyWebpackPlugin([
+      {
+        from: resolve('static'),
+        to: 'static'
+      }
+    ])
   ],
   module: {
-    rules: [{
-      test: /\.jpg|png|gif|jpeg|bmp|svg$/i,
-      use: {
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'img/[name]-[hash:6].[ext]'
-        }
+    rules: [
+      {
+        test: /\.jpg|png|gif|jpeg|bmp|svg$/i,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: 'img/[name]-[hash:6].[ext]'
+          }
+        },
+        exclude: resolve('src/assets/icons')
       },
-      exclude: resolve('src/assets/icons')
-    }, {
-      test: /\.svg$/,
-      use: ['@svgr/webpack'],
-      include: resolve('src/assets/icons')
-    }, {
-      test: /\.ttf|eot|woff|woff2$/,
-      use: 'url-loader',
-    }, {
-      test: /\.js$/,
-      use: 'babel-loader',
-      exclude: /node_modules/
-    }, {
-      test: /\.tsx?$/,
-      loaders: ['babel-loader', 'ts-loader']
-    }]
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+        include: resolve('src/assets/icons')
+      },
+      {
+        test: /\.ttf|eot|woff|woff2$/,
+        use: 'url-loader'
+      },
+      {
+        test: /\.js$/,
+        use: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.tsx?$/,
+        loaders: ['babel-loader', 'ts-loader']
+      }
+    ]
   },
   resolve: {
     alias: {
       '@': resolve('src')
     },
-    extensions: ['.ts', '.tsx', '.js', ".json"]
+    extensions: ['.ts', '.tsx', '.js', '.json']
   }
 }
-

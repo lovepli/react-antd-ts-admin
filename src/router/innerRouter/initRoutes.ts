@@ -2,7 +2,6 @@ import config from '@/config'
 import IRoute from './IRoute'
 import dashboardRoute from './modules/dashboard'
 import blankRoute from './modules/blank'
-import iconRoute from './modules/icon'
 import chartRoute from './modules/chart'
 import formRoute from './modules/form'
 import userRoute from './modules/user'
@@ -12,14 +11,13 @@ import otherRoute from './modules/other'
 
 const routeMap = [
   dashboardRoute,
-  // iconRoute,
-  // chartRoute,
-  // blankRoute,
-  // formRoute,
-  // userRoute,
-  // articleRoute,
-  // componentRoute,
-  // otherRoute
+  chartRoute,
+  blankRoute,
+  formRoute,
+  userRoute,
+  articleRoute,
+  componentRoute,
+  otherRoute
 ]
 
 // 从路由权限表中获取到角色可访问的路由名称

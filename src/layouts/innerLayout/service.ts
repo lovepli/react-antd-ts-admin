@@ -1,16 +1,9 @@
 export interface IGetUserInfoPayload {
-  token: string;
-
+  token: string
 }
-
 
 class Service {
-
-  public getUserInfo = (params: IGetUserInfoPayload) => $http.get('/userInfo', { params })
-
+  public getUserInfo = (params: IGetUserInfoPayload) => $request.get('/userInfo', { params })
 }
 
-export default new Service();
-
-
-
+export default new Service()

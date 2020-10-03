@@ -1,6 +1,6 @@
 import React from 'react'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons'
-import Avatar from './Avatar'
+import Avatar from './components/Avatar'
 import './style.less'
 
 interface IHeaderProps {
@@ -8,7 +8,7 @@ interface IHeaderProps {
   onTrigger: () => void
 }
 
-const HeaderBar: React.SFC<IHeaderProps> = (props) => {
+const HeaderBar: React.FC<IHeaderProps> = (props) => {
   const { collapse, onTrigger } = props
   return (
     <div className="header-bar">
@@ -17,7 +17,8 @@ const HeaderBar: React.SFC<IHeaderProps> = (props) => {
       ) : (
         <MenuFoldOutlined className="header-bar__trigger" onClick={onTrigger} />
       )}
-      <div className="header-bar__menu">
+
+      <div>
         <Avatar />
       </div>
     </div>

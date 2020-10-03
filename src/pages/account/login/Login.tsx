@@ -7,6 +7,10 @@ import { createCaptcha } from './util'
 import service from './service'
 import './style.less'
 
+/**
+ * 登陆页
+ */
+
 const Login: React.FC = () => {
   const history = useHistory()
   const canvasRef = useRef(null)
@@ -25,7 +29,7 @@ const Login: React.FC = () => {
   const handleFinish = async (values) => {
     const data = await service.login(values)
     const token = data.token
-    $http.setHeader({ Authorization: token })
+    $request.setHeader({ Authorization: token })
     accountStore.setToken(token)
     history.replace('/dashboard')
   }
@@ -36,7 +40,7 @@ const Login: React.FC = () => {
       <Form onFinish={handleFinish}>
         <Form.Item
           label={<div className="form-item__label">账号</div>}
-          name="username"
+          name="accountName"
           validateTrigger="onBlur"
           initialValue="admin"
           rules={[{ required: true, message: '账号不能为空' }]}

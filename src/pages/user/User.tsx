@@ -1,5 +1,6 @@
 import { Button, Input, Row, Col, Modal, Table } from 'antd'
 import React from 'react'
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
 import { PagedTable, createColumnBuilder } from '@/components/table'
 import SectionTitle from '@/components/sectionTitle'
 import Edit from './components/Edit'
@@ -21,10 +22,10 @@ class User extends React.Component<{}, IState> {
           <Col>
             <SectionTitle name="用户列表" />
             <Button.Group>
-              <Button type="primary" icon="plus" onClick={this.handleEdit}>
+              <Button type="primary" icon={<PlusOutlined />} onClick={this.handleEdit}>
                 新增用户
               </Button>
-              <Button danger={true} icon="minus">
+              <Button danger={true} icon={<MinusOutlined />}>
                 批量删除
               </Button>
             </Button.Group>
@@ -129,14 +130,14 @@ class User extends React.Component<{}, IState> {
   private handleDeleteSingle = async (record: any) => {
     const { id, name } = record
     await service.handeDelete([id])
-    $msg.success(`成功删除用户“${name}”！`)
+    $message.success(`成功删除用户“${name}”！`)
   }
 
   // 批量删除
   private handleDeleteBatch = () => {
     const selectedRows = this.state.selectedRows
     if (selectedRows.length === 0) {
-      $msg.warning('请选择要删除的用户')
+      $message.warning('请选择要删除的用户')
       return
     }
     const ids = selectedRows.map((row: any) => row.key)
@@ -145,7 +146,7 @@ class User extends React.Component<{}, IState> {
       title: '确认删除以下用户吗?',
       content: names,
       onOk: () => {
-        $msg.success(`成功删除用户“${names}”！`)
+        $message.success(`成功删除用户“${names}”！`)
       }
     })
   }

@@ -1,9 +1,8 @@
 //  用户管理
-import { lazy } from 'react';
-import IRoute from '../IRoute';
+import { lazy } from 'react'
+import IRoute from '../IRoute'
 
-const User = lazy(() => import( /* webpackChunkName:"user" */ '@/pages/user'));
-
+const User = lazy(() => import(/* webpackChunkName:"user" */ '@/pages/user'))
 
 const route: IRoute = {
   name: 'User',
@@ -14,4 +13,4 @@ const route: IRoute = {
   component: User
 }
 
-export default route;
+export default route

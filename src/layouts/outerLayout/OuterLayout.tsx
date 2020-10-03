@@ -1,17 +1,13 @@
+import React from 'react'
+import OuterRouter from '@/router/outerRouter'
+import './style.less'
 
-import React from 'react';
-import OuterRouter from '@/router/outerRouter';
-import './style.less';
-
-
-class OuterLayout extends React.Component {
-  public render() {
-    return (
-      <div className="outer-layout">
-        <OuterRouter />
-      </div>
-    )
-  }
+const OuterLayout: React.FC = () => {
+  return (
+    <div className="outer-layout">
+      <OuterRouter />
+    </div>
+  )
 }
 
-export default OuterLayout;
+export default OuterLayout

@@ -3,12 +3,17 @@ import { useHistory } from 'react-router-dom'
 import { Menu, Dropdown, Avatar } from 'antd'
 import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons'
 import accountStore from '@/store/account'
+import './style.less'
 
 const AvatarMenu: React.FC = () => {
   const history = useHistory()
 
   const handleMenuClick = ({ key }) => {
     switch (key) {
+      case 'mine':
+        break
+      case 'setting':
+        break
       case 'logout':
         accountStore.setToken('')
         history.replace('/account/login')
@@ -35,12 +40,12 @@ const AvatarMenu: React.FC = () => {
   )
 
   return (
-    <div>
-      <Dropdown overlay={getMenuList}>
-        <Avatar style={{ backgroundColor: '#87d068', cursor: 'pointer' }} icon="user" />
-      </Dropdown>
-      <span>{accountStore.account.username}</span>
-    </div>
+    <Dropdown overlay={getMenuList}>
+      <div className="header-bar-avatar">
+        <Avatar src={accountStore.account.avatar} />
+        <div className="username">{accountStore.account.username}</div>
+      </div>
+    </Dropdown>
   )
 }
 

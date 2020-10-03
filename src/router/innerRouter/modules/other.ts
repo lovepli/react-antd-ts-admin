@@ -9,7 +9,7 @@ const Pdf = lazy(() => import( /* webpackChunkName:"pdf" */ '@/pages/other/pdf')
 const route: IRoute = {
   name: 'Other',
   title: '其他功能',
-  icon: 'ellipsis',
+  icon: 'other',
   children: [{
     name: 'Pdf',
     title: 'pdf预览',

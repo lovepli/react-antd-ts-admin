@@ -1,13 +1,13 @@
-const path = require('path');
-const merge = require('webpack-merge');
-const baseWebpackConfig = require('./webpack.base.conf.js');
-const webpack = require('webpack');
+const path = require('path')
+const merge = require('webpack-merge')
+const baseWebpackConfig = require('./webpack.base.conf.js')
+const webpack = require('webpack')
 // const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 module.exports = merge(baseWebpackConfig, {
   mode: 'development',
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin()
     // new HardSourceWebpackPlugin({
     //   cacheDirectory: '../node_modules/.cache/hard-source/[confighash]',
     //   configHash: function (webpackConfig) {
@@ -30,31 +30,36 @@ module.exports = merge(baseWebpackConfig, {
     port: 8000,
     open: true,
     hot: true,
-    overlay: true,
+    overlay: true
   },
   module: {
-    rules: [{
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader']
-    }, {
-      test: /\.less$/,
-      use: [
-        'style-loader',
-        'css-loader',
-        {
-          loader: 'less-loader',
-          options: {
-            javascriptEnabled: true,
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              javascriptEnabled: true
+            }
+          },
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: [
+                path.resolve(__dirname, '../src/assets/styles/variable.less'),
+                path.resolve(__dirname, '../src/assets/styles/mixin.less')
+              ]
+            }
           }
-        }, {
-          loader: 'sass-resources-loader',
-          options: {
-            resources: [
-              path.resolve(__dirname, '../src/assets/styles/variable.less'),
-              path.resolve(__dirname, '../src/assets/styles/mixin.less')
-            ]
-          }
-        }]
-    }]
+        ]
+      }
+    ]
   }
 })

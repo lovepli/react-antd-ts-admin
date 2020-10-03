@@ -35,15 +35,15 @@ const Edit: React.FC<IProps> = (props) => {
 
   const handleSubmit = (e: any) => {
     if (props.editKey) {
-      $msg.success('修改成功')
+      $message.success('修改成功')
     } else {
-      $msg.success('新增成功')
+      $message.success('新增成功')
     }
     onClose()
   }
 
   const handleFinishFailed = () => {
-    $msg.warning('请按照正确格式填写信息！')
+    $message.warning('请按照正确格式填写信息！')
   }
 
   return (

@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import { Menu } from 'antd'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { IRoute } from '@/router/innerRouter'
+import SvgIcon, { IconName } from '@/components/base/svg-icon'
+import logo from '@/assets/images/logo.png'
 import NavLink from './NavLink'
 import './style.less'
-import logo from '@/assets/images/logo.png'
 
 interface IProps {
   routeMap: IRoute[]
@@ -35,7 +36,7 @@ const SiderBar: React.FC<IProps> = ({ routeMap }) => {
           key={name}
           title={
             <span>
-              {/* <Icon type={icon} /> */}
+              {icon ? <SvgIcon name={icon} /> : null}
               <span>{title}</span>
             </span>
           }
@@ -54,7 +55,6 @@ const SiderBar: React.FC<IProps> = ({ routeMap }) => {
   return (
     <Scrollbars renderThumbHorizontal={renderThumb} renderThumbVertical={renderThumb}>
       <div className="side-bar">
-        {/* logo */}
         <div className="side-bar__logo">
           <Link to="/dashboard">
             <img className="image" src={logo} alt="" />
@@ -62,7 +62,6 @@ const SiderBar: React.FC<IProps> = ({ routeMap }) => {
           </Link>
         </div>
 
-        {/* 侧边菜单 */}
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['Dashboard']}>
           {routeMap.map((route) => getMenuItem(route))}
         </Menu>

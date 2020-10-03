@@ -3,6 +3,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import PageLoading from '@/components/pageLoading'
 import constantMng from '@/utils/constantMng'
 import accountStore from '@/store/account'
+import service from '@/service'
 
 const OuterLayout = React.lazy(
   () => import(/* webpackChunkName:"outer-layout" */ '@/layouts/outerLayout')
@@ -20,8 +21,8 @@ const App: React.FC = () => {
   // 初始化常量表
   useEffect(() => {
     const initTable = async () => {
-      const data = await $http.get('/baseTable')
-      constantMng.initGroup(data)
+      const res = await service.getConstant()
+      constantMng.initGroup(res)
     }
     initTable()
   }, [])
