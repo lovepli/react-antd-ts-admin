@@ -12,14 +12,14 @@ import otherRoute from './modules/other'
 
 const routeMap = [
   dashboardRoute,
-  iconRoute,
-  chartRoute,
-  blankRoute,
-  formRoute,
-  userRoute,
-  articleRoute,
-  componentRoute,
-  otherRoute
+  // iconRoute,
+  // chartRoute,
+  // blankRoute,
+  // formRoute,
+  // userRoute,
+  // articleRoute,
+  // componentRoute,
+  // otherRoute
 ]
 
 // 从路由权限表中获取到角色可访问的路由名称

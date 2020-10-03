@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import PageLoading from '@/components/pageLoading'
+import constantMng from '@/utils/constantMng'
 import accountStore from '@/store/account'
 
 const OuterLayout = React.lazy(
@@ -20,7 +21,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const initTable = async () => {
       const data = await $http.get('/baseTable')
-      $codeTable.initTable(data)
+      constantMng.initGroup(data)
     }
     initTable()
   }, [])

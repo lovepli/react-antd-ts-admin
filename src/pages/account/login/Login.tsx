@@ -30,24 +30,12 @@ const Login: React.FC = () => {
     history.replace('/dashboard')
   }
 
-  const handleFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
-
   return (
-    <div className="login">
-      <div className="login__title">后台管理系统</div>
-      <Form
-        layout="horizontal"
-        colon={true}
-        labelAlign="left"
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18 }}
-        onFinish={handleFinish}
-        onFinishFailed={handleFinishFailed}
-      >
+    <div className="page-login">
+      <div className="page-login__title">后台管理系统</div>
+      <Form onFinish={handleFinish}>
         <Form.Item
-          label="账    号"
+          label={<div className="form-item__label">账号</div>}
           name="username"
           validateTrigger="onBlur"
           initialValue="admin"
@@ -60,7 +48,7 @@ const Login: React.FC = () => {
         </Form.Item>
 
         <Form.Item
-          label="密    码"
+          label={<div className="form-item__label">密码</div>}
           name="password"
           validateTrigger="onBlur"
           initialValue="admin123456"
@@ -83,7 +71,7 @@ const Login: React.FC = () => {
         </Form.Item>
 
         <Form.Item
-          label="验证码"
+          label={<div className="form-item__label">验证码</div>}
           name="captcha"
           validateTrigger="onBlur"
           rules={[
@@ -116,7 +104,7 @@ const Login: React.FC = () => {
           </Row>
         </Form.Item>
 
-        <Form.Item wrapperCol={{ span: 24 }}>
+        <Form.Item>
           <Button type="primary" htmlType="submit" block={true}>
             登录
           </Button>

@@ -1,51 +1,47 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Menu, Dropdown, Avatar } from 'antd'
 import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons'
 import accountStore from '@/store/account'
 
-class AvatarMenu extends React.Component<IPageProps, any> {
-  constructor(props: IPageProps) {
-    super(props)
-    this.handleMenuClick = ({ key }) => {
-      switch (key) {
-        case '3':
-          accountStore.setToken('')
-          this.props.history.replace('/account/login')
-          break
-      }
+const AvatarMenu: React.FC = () => {
+  const history = useHistory()
+
+  const handleMenuClick = ({ key }) => {
+    switch (key) {
+      case 'logout':
+        accountStore.setToken('')
+        history.replace('/account/login')
+        break
     }
   }
 
-  private handleMenuClick: (arg: any) => void
-
-  public getMenuList = () => (
-    <Menu onClick={this.handleMenuClick}>
-      <Menu.Item key="1">
+  const getMenuList = () => (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="mine">
         <UserOutlined />
         个人中心
       </Menu.Item>
-      <Menu.Item key="2">
+      <Menu.Item key="setting">
         <SettingOutlined />
         个人设置
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3">
+      <Menu.Item key="logout">
         <LogoutOutlined />
         退出登录
       </Menu.Item>
     </Menu>
   )
-  public render() {
-    return (
-      <div>
-        <Dropdown overlay={this.getMenuList}>
-          <Avatar style={{ backgroundColor: '#87d068', cursor: 'pointer' }} icon="user" />
-        </Dropdown>
-        {/* <span>{store.getState().userInfo.name}</span> */}
-      </div>
-    )
-  }
+
+  return (
+    <div>
+      <Dropdown overlay={getMenuList}>
+        <Avatar style={{ backgroundColor: '#87d068', cursor: 'pointer' }} icon="user" />
+      </Dropdown>
+      <span>{accountStore.account.username}</span>
+    </div>
+  )
 }
 
-export default withRouter(AvatarMenu)
+export default AvatarMenu

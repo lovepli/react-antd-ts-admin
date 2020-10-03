@@ -4,7 +4,7 @@ import { Popconfirm, Divider } from 'antd'
 import React from 'react'
 import moment from 'moment'
 import { IColumnProps } from './IColumnProps'
-import { TableName } from '@/utils/codeTable'
+import constantMng, { GroupName } from '@/utils/constantMng'
 
 enum HandleButtonType {
   'edit' = '编辑',
@@ -25,11 +25,7 @@ class ColumnBuilder<RecordType> {
   }
 
   // 创建索引列
-  public AddSortNum = (
-    pageNumber: number,
-    pageSize: number,
-    width?: string | number
-  ) => {
+  public AddSortNum = (pageNumber: number, pageSize: number, width?: string | number) => {
     const col: IColumnProps<RecordType> = {
       dataIndex: 'index',
       title: '序号',
@@ -41,12 +37,7 @@ class ColumnBuilder<RecordType> {
   }
 
   //  创建文本列
-  public addText(
-    title: string,
-    filed: string,
-    width?: string | number,
-    ellipsis?: boolean
-  ) {
+  public addText(title: string, filed: string, width?: string | number, ellipsis?: boolean) {
     const column: IColumnProps<RecordType> = {
       dataIndex: filed,
       title,
@@ -111,15 +102,14 @@ class ColumnBuilder<RecordType> {
   public addCodeIdToName = (
     title: string,
     filed: string,
-    codeTableName: TableName,
+    codeTableName: GroupName,
     width?: string | number
   ) => {
     const column: IColumnProps<RecordType> = {
       dataIndex: filed,
       title,
       width,
-      render: (value: string): React.ReactNode =>
-        $codeTable.getNameById(codeTableName, value)
+      render: (value: number): React.ReactNode => constantMng.getNameById(codeTableName, value)
     }
     this.columnDefines.push(column)
   }
@@ -128,26 +118,21 @@ class ColumnBuilder<RecordType> {
   public addConstantIdsToName = (
     title: string,
     filed: string,
-    codeTableName: TableName,
+    codeTableName: GroupName,
     width?: string | number
   ) => {
     const column: IColumnProps<RecordType> = {
       dataIndex: filed,
       title,
       width,
-      render: (value: string[]): React.ReactNode =>
-        value
-          .map((item) => $codeTable.getNameById(codeTableName, item))
-          .toString()
+      render: (value: number[]): React.ReactNode =>
+        value.map((item) => constantMng.getNameById(codeTableName, item)).toString()
     }
     this.columnDefines.push(column)
   }
 
   // 创建操作列
-  public addHandle = (
-    buttons: IHandleButton<RecordType>[],
-    width?: string | number
-  ) => {
+  public addHandle = (buttons: IHandleButton<RecordType>[], width?: string | number) => {
     const column: IColumnProps<RecordType> = {
       dataIndex: 'handle',
       title: '操作',

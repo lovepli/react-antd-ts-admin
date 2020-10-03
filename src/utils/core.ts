@@ -14,11 +14,26 @@ export const guid = (): string => {
   const S4 = () => {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
   }
-  return S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4()
+  return (
+    S4() +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    S4() +
+    S4()
+  )
 }
 
-export const getUniqueKey = (len: number = 8): string => {
-  return Math.random().toString(16).substr(2, len)
+var _i = 1
+export const getUniqueKeyNumber = (len: number = 8): number => {
+  var _loadTime = new Date().getTime()
+  return _loadTime + _i++
 }
 
 /**
@@ -31,7 +46,10 @@ export const getURLParams = (url: string): any => {
   }
   return JSON.parse(
     '{"' +
-      decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') +
+      decodeURIComponent(search)
+        .replace(/"/g, '\\"')
+        .replace(/&/g, '","')
+        .replace(/=/g, '":"') +
       '"}'
   )
 }
@@ -84,7 +102,10 @@ export const deepClone = (source: any) => {
 /**
  * 加载第三方脚本
  */
-export const loadScript = (src: string, callback: (err: any, res: any) => void) => {
+export const loadScript = (
+  src: string,
+  callback: (err: any, res: any) => void
+) => {
   const existScript = document.getElementById(src)
   if (existScript) {
     callback(null, existScript)

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Modal, Form, Input, Radio, Checkbox, InputNumber, Button } from 'antd'
 import service from '../service'
-import codeTable from '@/utils/codeTable'
+import constantMng from '@/utils/constantMng'
 
-const genderList = codeTable.getTable('gender').list
-const roleList: any = codeTable.formatTable('gender', 'value', 'label')
+const genderList = constantMng.getGroup('gender')
+const roleList: any = constantMng.formatGroup('role', 'value', 'label')
 
 const formItemLayout = {
   labelCol: { span: 4 },
