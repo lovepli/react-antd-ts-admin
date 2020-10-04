@@ -42,12 +42,25 @@ const getList = (config: any) => {
 
 const getDetail = (config: any) => {
   const { id } = JSON.parse(config.body)
-  const detail = list.find((item) => item.id === id)
   return {
     code: 200,
-    data: {
-      detail
+    data: util.find(list, id)
+  }
+}
+
+const update = (config) => {
+  const { detail } = JSON.parse(config.body)
+  if (!detail.id) {
+    const initRow = {
+      createDate: Date.now(),
+      consume: 0
     }
+    Object.assign(detail, initRow)
+  }
+  util.update(list, detail)
+  return {
+    code: 200,
+    data: {}
   }
 }
 
@@ -63,5 +76,6 @@ const remove = (config: any) => {
 export default {
   getList,
   getDetail,
+  update,
   remove
 }

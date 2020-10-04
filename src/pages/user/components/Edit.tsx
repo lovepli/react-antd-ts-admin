@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Modal, Form, Input, Radio, Checkbox, InputNumber, Button } from 'antd'
+import { Drawer, Form, Input, Radio, Checkbox, InputNumber, Button } from 'antd'
 import service from '../service'
 import constantMng from '@/utils/constantMng'
 
@@ -13,12 +13,14 @@ const formItemLayout = {
 
 interface IProps {
   visible: boolean
-  editKey: number
+  id: number
   onClose: () => void
 }
 
 const Edit: React.FC<IProps> = (props) => {
-  const { editKey, visible, onClose } = props
+  const { id, visible, onClose } = props
+  // 提交时的loading状态
+  const [loading, setLoading] = useState(false)
   const [detail, setDetail] = useState({
     name: '',
     age: '',
@@ -28,12 +30,14 @@ const Edit: React.FC<IProps> = (props) => {
 
   // 获取用户详情
   useEffect(() => {
-    if (!editKey) return
-    service.getUserDetail(editKey).then((res) => setDetail(res))
-  }, [editKey])
+    if (!id) return
+    service.getUserDetail(id).then((res) => {
+      setDetail(res)
+    })
+  }, [id])
 
   const handleSubmit = (e: any) => {
-    if (props.editKey) {
+    if (id) {
       $message.success('修改成功')
     } else {
       $message.success('新增成功')
@@ -46,11 +50,11 @@ const Edit: React.FC<IProps> = (props) => {
   }
 
   return (
-    <Modal
-      title={`${editKey ? '修改' : '新增'}用户信息`}
-      width={600}
+    <Drawer
+      title={`${id ? '修改' : '新增'}用户`}
+      width={400}
       visible={visible}
-      onCancel={onClose}
+      onClose={onClose}
       footer={null}
       destroyOnClose={true}
     >
@@ -87,7 +91,7 @@ const Edit: React.FC<IProps> = (props) => {
             }
           ]}
         >
-          <InputNumber placeholder="请输入年龄" min={1} max={150} />
+          <Input placeholder="请输入年龄" />
         </Form.Item>
 
         <Form.Item
@@ -125,15 +129,13 @@ const Edit: React.FC<IProps> = (props) => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8 }}>
-          <Button type="primary" onClick={onClose}>
-            取消
-          </Button>
+          <Button onClick={onClose}>取消</Button>
           <Button type="primary" htmlType="submit" style={{ marginLeft: '20px' }}>
-            保存
+            确认
           </Button>
         </Form.Item>
       </Form>
-    </Modal>
+    </Drawer>
   )
 }
 

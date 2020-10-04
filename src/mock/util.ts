@@ -1,5 +1,3 @@
-import { guid } from '@/utils/core'
-
 /**
  * 过滤对象的属性，数据表中有些字段前端不需要，可以使用此方法过滤掉
  * @param  fields 需要的字段组成的数组
@@ -22,21 +20,22 @@ const filterFieldByTable = (table, fields) => {
 /**
  * 新增/修改
  */
-const update = (table, row) => {
+const update = (table: any[], row: any) => {
   if (row.id) {
     const index = table.findIndex((item) => item.id === row.id)
     Object.assign(table[index], row)
   } else {
-    row.id = guid()
+    row.id = Date.now()
     table.unshift(row)
   }
 }
 
 /**
  * 单个删除/批量删除
- * @param {Array} ids   要删除的项的id组成的数组
+ * @param {Array} ids  要删除的项的id组成的数组
  */
-const remove = (table, ids) => {
+const remove = (table: any[], id: number | number[]) => {
+  const ids = Array.isArray(id) ? id : [id]
   ids.forEach((id) => {
     const index = table.findIndex((row) => row.id === id)
     table.splice(index, 1)

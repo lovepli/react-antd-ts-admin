@@ -26,4 +26,5 @@ Mock.mock(/\/baseTable/, 'get', baseTable.getBaseTable)
 
 Mock.mock(/\/user\/list/, 'post', user.getList)
 Mock.mock(/\/user\/detail/, 'post', user.getDetail)
+Mock.mock(/\/user\/update/, 'post', user.update)
 Mock.mock(/\/user\/delete/, 'post', user.remove)

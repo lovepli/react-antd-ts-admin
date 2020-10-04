@@ -17,10 +17,15 @@ const getUserList = async (params: IParams): Promise<{ list: IUser[]; total: num
 // 获取用户详情
 const getUserDetail = (id: number) => $request.post('/user/detail', { id })
 
-const deleteUser = (ids: number[]) => $request.post('/user/delete', { ids })
+// 编辑/新增用户
+const updateUser = (detail: IUser) => $request.post('/user/update', { detail })
+
+// 删除用户
+const deleteUser = (id: number | number[]) => $request.post('/user/delete', { id })
 
 export default {
   getUserList,
   getUserDetail,
+  updateUser,
   deleteUser
 }

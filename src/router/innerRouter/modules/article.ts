@@ -1,4 +1,3 @@
-import baseTable from '@/mock/baseTable'
 // 文章管理
 import { lazy } from 'react'
 import IRoute from '../IRoute'

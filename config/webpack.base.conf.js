@@ -24,7 +24,7 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       $request: [resolve('src/utils/request.ts'), 'default'],
-      $msg: [resolve('node_modules/antd/es/message/index.js'), 'default']
+      $message: [resolve('node_modules/antd/es/message/index.js'), 'default']
     }),
     new CopyWebpackPlugin([
       {

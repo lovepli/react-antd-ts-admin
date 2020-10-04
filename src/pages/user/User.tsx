@@ -17,32 +17,29 @@ const User = () => {
   })
   // 表格当前页显示的数据
   const [list, setList] = useState<IUser[]>([])
-  // 某项数据详情
-  const [detail, setDetail] = useState<IUser>()
   // 数据总数
   const [total, setTotal] = useState(0)
   // 表格loading状态
-  const [tableLoading, setTabelLoading] = useState(false)
-  // 新增或编辑数据提交时的loading状态
-  const [submitLoading, setSubmitLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   // 编辑模态窗是否显示
   const [editVisible, setEditVisible] = useState(false)
   // 多选的表格行
-  const [selectedRows, setSelectedRows] = useState<any[]>([])
-  const [editKey, setEditKey] = useState<number>(0)
+  const [selectedRows, setSelectedRows] = useState<IUser[]>([])
+  // 当前正在编辑的用户的id
+  const [userId, setUserId] = useState<number>(0)
 
+  // 获取用户列表
   useEffect(() => {
-    // 获取表格数据
-    const getList = async () => {
-      setTabelLoading(true)
-      const res = await service.getUserList(params)
-      console.log(res)
-      setTabelLoading(false)
-      setList(res.list)
-      setTotal(res.total)
-    }
-    getList()
+    getUserList()
   }, [params])
+
+  const getUserList = async () => {
+    setLoading(true)
+    const res = await service.getUserList(params)
+    setLoading(false)
+    setList(res.list)
+    setTotal(res.total)
+  }
 
   // 搜索
   const handleSearch = (keyword: string) => {
@@ -50,43 +47,45 @@ const User = () => {
   }
 
   // 翻页
-  const handlePagination = (pageNumber: number, pageSize: number) => {
-    setParams((state) => ({ ...state, pageNumber, pageSize }))
+  const handlePagination = (pageNumber: number, pageSize?: number) => {
+    setParams((state) => ({ ...state, pageNumber, pageSize: pageSize! }))
   }
 
   // 新增或编辑
-  const handleEdit = (record: any) => {
-    console.log(record)
+  const handleEdit = (id: number) => {
     setEditVisible(true)
-    setEditKey(record.id || '')
+    setUserId(id)
   }
 
   // 单个删除
   const handleDeleteSingle = async (record: IUser) => {
     const { id, name } = record
-    await service.deleteUser([id])
+    await service.deleteUser(id)
+    await getUserList()
     $message.success(`成功删除用户“${name}”！`)
   }
 
   // 批量删除
   const handleDeleteBatch = () => {
-    if (selectedRows.length === 0) {
+    if (selectedRows.length > 0) {
+      const ids = selectedRows.map((row) => row.id)
+      const names = selectedRows.map((row) => row.name).join('，')
+      Modal.confirm({
+        title: '确认删除以下用户吗?',
+        content: names,
+        onOk: async () => {
+          await service.deleteUser(ids)
+          await getUserList()
+          $message.success(`成功删除用户“${names}”！`)
+        }
+      })
+    } else {
       $message.warning('请选择要删除的用户')
-      return
     }
-    const ids = selectedRows.map((row: any) => row.key)
-    const names = selectedRows.map((row: any) => row.name).join('，')
-    Modal.confirm({
-      title: '确认删除以下用户吗?',
-      content: names,
-      onOk: () => {
-        $message.success(`成功删除用户“${names}”！`)
-      }
-    })
   }
 
   // 多选
-  const handleSelectedRows = (selectedRows: any[]) => {
+  const handleChangeRows = (selectedRowKeys: React.ReactText[], selectedRows: IUser[]) => {
     setSelectedRows(selectedRows)
   }
 
@@ -105,10 +104,10 @@ const User = () => {
           </div>
 
           <Button.Group>
-            <Button type="primary" icon={<PlusOutlined />} onClick={handleEdit}>
+            <Button type="primary" icon={<PlusOutlined />} onClick={handleEdit.bind(null, 0)}>
               新增用户
             </Button>
-            <Button danger={true} icon={<MinusOutlined />}>
+            <Button danger={true} icon={<MinusOutlined />} onClick={handleDeleteBatch}>
               批量删除
             </Button>
           </Button.Group>
@@ -119,31 +118,39 @@ const User = () => {
         </Col>
       </Row>
 
-      <Table dataSource={list} rowKey="id" loading={tableLoading} pagination={{ total }}>
+      <Table<IUser>
+        dataSource={list}
+        rowKey="id"
+        rowSelection={{ onChange: handleChangeRows }}
+        loading={loading}
+        pagination={{
+          total,
+          showQuickJumper: true,
+          showSizeChanger: true,
+          showTotal: (total) => `共${total}个用户`,
+          onChange: handlePagination
+        }}
+      >
         <Column
           title="序号"
           dataIndex="number"
           width={80}
-          render={(value: undefined, record: IUser, index: number) =>
-            (params.pageNumber - 1) * params.pageSize + index + 1
-          }
+          render={(value, record, index) => (params.pageNumber - 1) * params.pageSize + index + 1}
         />
         <Column title="姓名" dataIndex="name" />
         <Column title="年龄" dataIndex="age" />
         <Column
           title="性别"
           dataIndex="gender"
-          render={(value: number, record: IUser, index: number) =>
-            constantMng.getNameById('gender', value)
-          }
+          render={(value, record, index) => constantMng.getNameById('gender', value)}
         />
-        <Column
+        <Column<IUser>
           title="操作"
           dataIndex="operate"
           width={140}
-          render={(value: undefined, record: IUser, index: number) => (
+          render={(value, record, index) => (
             <div>
-              <Button type="link" size="small">
+              <Button type="link" size="small" onClick={handleEdit.bind(null, record.id)}>
                 编辑
               </Button>
               <Divider type="vertical" />
@@ -160,7 +167,7 @@ const User = () => {
         />
       </Table>
 
-      <Edit visible={editVisible} editKey={editKey} onClose={handleClose} />
+      <Edit visible={editVisible} id={userId} onClose={handleClose} />
     </div>
   )
 }
