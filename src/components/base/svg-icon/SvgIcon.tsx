@@ -4,20 +4,16 @@ import { tupleStr } from '@/utils/tuple'
 import Article from '@/assets/icons/article.svg'
 import Blank from '@/assets/icons/blank.svg'
 import Chart from '@/assets/icons/chart.svg'
-import Component from '@/assets/icons/component.svg'
 import Form from '@/assets/icons/form.svg'
 import Home from '@/assets/icons/home.svg'
-import Other from '@/assets/icons/other.svg'
 import User from '@/assets/icons/user.svg'
 
 const ICON_NAME_MAP = {
   article: Article,
   blank: Blank,
   chart: Chart,
-  component: Component,
   form: Form,
   home: Home,
-  other: Other,
   user: User
 }
 
@@ -25,10 +21,8 @@ const iconNames = tupleStr(
   'article',
   'blank',
   'chart',
-  'component',
   'form',
   'home',
-  'other',
   'user'
 )
 

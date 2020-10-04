@@ -12,14 +12,13 @@ const formItemLayout = {
 }
 
 interface IProps {
-  title: string
-  editVisible: boolean
-  editKey: string
+  visible: boolean
+  editKey: number
   onClose: () => void
 }
 
 const Edit: React.FC<IProps> = (props) => {
-  const { title, editKey, editVisible, onClose } = props
+  const { editKey, visible, onClose } = props
   const [detail, setDetail] = useState({
     name: '',
     age: '',
@@ -30,7 +29,7 @@ const Edit: React.FC<IProps> = (props) => {
   // 获取用户详情
   useEffect(() => {
     if (!editKey) return
-    service.getDetail(editKey).then((res) => setDetail(res))
+    service.getUserDetail(editKey).then((res) => setDetail(res))
   }, [editKey])
 
   const handleSubmit = (e: any) => {
@@ -48,14 +47,21 @@ const Edit: React.FC<IProps> = (props) => {
 
   return (
     <Modal
-      title={`${editKey ? '修改' : '新增'}${title}`}
+      title={`${editKey ? '修改' : '新增'}用户信息`}
       width={600}
-      visible={editVisible}
+      visible={visible}
       onCancel={onClose}
       footer={null}
       destroyOnClose={true}
     >
-      <Form layout="horizontal" colon labelAlign="left" {...formItemLayout} onFinish={handleSubmit}>
+      <Form
+        layout="horizontal"
+        colon
+        labelAlign="left"
+        {...formItemLayout}
+        onFinish={handleSubmit}
+        onFinishFailed={handleFinishFailed}
+      >
         <Form.Item
           label="姓名"
           name="name"

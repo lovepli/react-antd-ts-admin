@@ -1,144 +1,75 @@
-import { Button, Input, Row, Col, Modal, Table } from 'antd'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Button, Divider, Input, Row, Col, Modal, Popconfirm, Table } from 'antd'
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
-import { PagedTable, createColumnBuilder } from '@/components/table'
+import constantMng from '@/utils/constantMng'
 import Edit from './components/Edit'
-import { IState, defaultState, IItem } from './state'
-import service from './service'
+import { IUser } from './model'
+import service, { IParams } from './service'
 import './style.less'
 
-class User extends React.Component<{}, IState> {
-  public readonly state: Readonly<IState> = defaultState
+const { Column } = Table
 
-  public componentDidMount() {
-    this.getList()
-  }
+const User = () => {
+  // 查询参数
+  const [params, setParams] = useState<IParams>({
+    pageNumber: 1,
+    pageSize: 10
+  })
+  // 表格当前页显示的数据
+  const [list, setList] = useState<IUser[]>([])
+  // 某项数据详情
+  const [detail, setDetail] = useState<IUser>()
+  // 数据总数
+  const [total, setTotal] = useState(0)
+  // 表格loading状态
+  const [tableLoading, setTabelLoading] = useState(false)
+  // 新增或编辑数据提交时的loading状态
+  const [submitLoading, setSubmitLoading] = useState(false)
+  // 编辑模态窗是否显示
+  const [editVisible, setEditVisible] = useState(false)
+  // 多选的表格行
+  const [selectedRows, setSelectedRows] = useState<any[]>([])
+  const [editKey, setEditKey] = useState<number>(0)
 
-  public render() {
-    return (
-      <div className="curd-table">
-        <Row justify="space-between">
-          <Col>
-            <div className="section-title">
-              <span className="section-title__tag" />
-              <span className="section-title__name">用户列表</span>
-            </div>
-
-            <Button.Group>
-              <Button type="primary" icon={<PlusOutlined />} onClick={this.handleEdit}>
-                新增用户
-              </Button>
-              <Button danger={true} icon={<MinusOutlined />}>
-                批量删除
-              </Button>
-            </Button.Group>
-          </Col>
-          <Col>
-            <Input.Search
-              placeholder="请输入查询关键词"
-              onSearch={this.handleSearch}
-              enterButton={true}
-            />
-          </Col>
-        </Row>
-
-        <PagedTable
-          columns={this.getTableColumns()}
-          dataSource={this.state.list}
-          loading={this.state.tableLoading}
-          total={this.state.total}
-          onSelectedRows={this.handleSelectedRows}
-          onPagination={this.handlePagination}
-        />
-
-        <Edit
-          title="用户信息"
-          editVisible={this.state.editVisible}
-          editKey={this.state.editKey}
-          onClose={this.handleClose}
-        />
-      </div>
-    )
-  }
-
-  // 创建表格列
-  private getTableColumns() {
-    const builder = createColumnBuilder()
-    builder.AddSortNum(this.state.query.pageNumber, this.state.query.pageSize, 80)
-    builder.addText('姓名', 'name')
-    builder.addText('年龄', 'age')
-    builder.addCodeIdToName('性别', 'gender', 'gender')
-    builder.addHandle(
-      [
-        {
-          type: 'edit',
-          handle: this.handleEdit
-        },
-        {
-          type: 'delete',
-          handle: this.handleDeleteSingle
-        }
-      ],
-      140
-    )
-
-    const columns = builder.getColumns()
-    return columns
-  }
-
-  // 获取表格数据
-  private getList = async () => {
-    this.setState({ tableLoading: true })
-    const data = await service.getList(this.state.query)
-    this.setState({
-      list: data.list,
-      total: data.total,
-      tableLoading: false
-    })
-  }
+  useEffect(() => {
+    // 获取表格数据
+    const getList = async () => {
+      setTabelLoading(true)
+      const res = await service.getUserList(params)
+      console.log(res)
+      setTabelLoading(false)
+      setList(res.list)
+      setTotal(res.total)
+    }
+    getList()
+  }, [params])
 
   // 搜索
-  private handleSearch = (keyword: string) => {
-    this.setState(
-      {
-        query: { ...this.state.query, keyword }
-      },
-      this.getList
-    )
+  const handleSearch = (keyword: string) => {
+    setParams((state) => ({ ...state, keyword }))
   }
 
   // 翻页
-  private handlePagination = (pageNumber: number, pageSize: number) => {
-    this.setState(
-      {
-        query: {
-          ...this.state.query,
-          ...{ pageNumber, pageSize }
-        }
-      },
-      this.getList
-    )
+  const handlePagination = (pageNumber: number, pageSize: number) => {
+    setParams((state) => ({ ...state, pageNumber, pageSize }))
   }
 
   // 新增或编辑
-  private handleEdit = (record: any) => {
+  const handleEdit = (record: any) => {
     console.log(record)
-    this.setState({
-      editVisible: true,
-      editKey: record.id || ''
-    })
+    setEditVisible(true)
+    setEditKey(record.id || '')
   }
 
   // 单个删除
-  private handleDeleteSingle = async (record: any) => {
+  const handleDeleteSingle = async (record: IUser) => {
     const { id, name } = record
-    await service.handeDelete([id])
+    await service.deleteUser([id])
     $message.success(`成功删除用户“${name}”！`)
   }
 
   // 批量删除
-  private handleDeleteBatch = () => {
-    const selectedRows = this.state.selectedRows
+  const handleDeleteBatch = () => {
     if (selectedRows.length === 0) {
       $message.warning('请选择要删除的用户')
       return
@@ -155,13 +86,83 @@ class User extends React.Component<{}, IState> {
   }
 
   // 多选
-  private handleSelectedRows = (selectedRows: any[]) => {
-    this.setState({ selectedRows })
+  const handleSelectedRows = (selectedRows: any[]) => {
+    setSelectedRows(selectedRows)
   }
 
   // 取消
-  private handleClose = () => {
-    this.setState({ editVisible: false })
+  const handleClose = () => {
+    setEditVisible(false)
   }
+
+  return (
+    <div className="page-user">
+      <Row justify="space-between">
+        <Col>
+          <div className="section-title">
+            <span className="section-title__tag" />
+            <span className="section-title__name">用户列表</span>
+          </div>
+
+          <Button.Group>
+            <Button type="primary" icon={<PlusOutlined />} onClick={handleEdit}>
+              新增用户
+            </Button>
+            <Button danger={true} icon={<MinusOutlined />}>
+              批量删除
+            </Button>
+          </Button.Group>
+        </Col>
+
+        <Col>
+          <Input.Search placeholder="请输入查询关键词" onSearch={handleSearch} enterButton={true} />
+        </Col>
+      </Row>
+
+      <Table dataSource={list} rowKey="id" loading={tableLoading} pagination={{ total }}>
+        <Column
+          title="序号"
+          dataIndex="number"
+          width={80}
+          render={(value: undefined, record: IUser, index: number) =>
+            (params.pageNumber - 1) * params.pageSize + index + 1
+          }
+        />
+        <Column title="姓名" dataIndex="name" />
+        <Column title="年龄" dataIndex="age" />
+        <Column
+          title="性别"
+          dataIndex="gender"
+          render={(value: number, record: IUser, index: number) =>
+            constantMng.getNameById('gender', value)
+          }
+        />
+        <Column
+          title="操作"
+          dataIndex="operate"
+          width={140}
+          render={(value: undefined, record: IUser, index: number) => (
+            <div>
+              <Button type="link" size="small">
+                编辑
+              </Button>
+              <Divider type="vertical" />
+              <Popconfirm
+                title="确定删除这条数据吗？"
+                onConfirm={handleDeleteSingle.bind(null, record)}
+              >
+                <Button type="link" size="small" danger={true}>
+                  删除
+                </Button>
+              </Popconfirm>
+            </div>
+          )}
+        />
+      </Table>
+
+      <Edit visible={editVisible} editKey={editKey} onClose={handleClose} />
+    </div>
+  )
 }
+
 export default User

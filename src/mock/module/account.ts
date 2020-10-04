@@ -1,5 +1,5 @@
 import Mock from 'mockjs'
-import { IConfig } from './interface'
+import { IConfig } from '../interface'
 import { getURLParams } from '@/utils/core'
 
 const loginData = Mock.mock({
@@ -40,10 +40,6 @@ const accountInfo = Mock.mock({
     },
     {
       id: 6,
-      name: 'other'
-    },
-    {
-      id: 7,
       name: 'user'
     }
   ]
