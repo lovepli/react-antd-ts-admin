@@ -6,7 +6,6 @@ import chartRoute from './modules/chart'
 import formRoute from './modules/form'
 import userRoute from './modules/user'
 import articleRoute from './modules/article'
-import componentRoute from './modules/component'
 import otherRoute from './modules/other'
 
 const routeMap = [
@@ -16,7 +15,6 @@ const routeMap = [
   formRoute,
   userRoute,
   articleRoute,
-  componentRoute,
   otherRoute
 ]
 

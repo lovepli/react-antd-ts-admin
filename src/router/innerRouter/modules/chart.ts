@@ -15,6 +15,7 @@ const RadarChart = lazy(
 const route: IRoute = {
   name: 'chart',
   title: '图表',
+  path: '/chart',
   icon: 'chart',
   children: [
     {

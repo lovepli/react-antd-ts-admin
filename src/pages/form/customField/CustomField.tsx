@@ -1,52 +1,47 @@
 import React, { useState } from 'react'
 import { Form, Button, Typography } from 'antd'
-import HookSelect from '@/components/hookSelect'
-
+import CheckboxList from '@/components/base/checkbox-list'
 const { Title } = Typography
 
 const options = [
   {
-    label: '山东省',
-    value: '2001'
+    id: 2001,
+    name: '山东省'
   },
   {
-    label: '广西省',
-    value: '2002'
+    id: 2002,
+    name: '广西省'
   },
   {
-    label: '江西省',
-    value: '2003'
+    id: 2003,
+    name: '江西省'
   }
 ]
 
 const CustomField: React.FC = () => {
-  const [province, setProvince] = useState<any>(['2001', '2002'])
+  const [province, setProvince] = useState<number[]>([2001, 2002])
 
-  const handleChange = (value: any) => {
-    setProvince(province)
+  const handleChange = (value: number[]) => {
+    setProvince(value)
   }
 
-  const handleSubmit = (e: any) => {
-    // this.props.form.resetFields()
+  const handleFinish = (values) => {
+    console.log(values)
   }
 
   return (
     <div>
-      <p>展示自定义的HookSelect表单控件的使用</p>
-      <p>可多选或单选，传入的value为数组是就是多选</p>
+      <p>展示自定义的表单控件的使用</p>
 
-      <Title level={4}>单独作为受控组件使用：</Title>
-      <HookSelect value={province} options={options} onChange={handleChange} />
+      <Title level={5}>单独作为受控组件使用：</Title>
+      <CheckboxList column={3} value={province} list={options} onChange={handleChange} />
 
-      <Title level={4}>在表单中使用：</Title>
-
-      <Form onFinish={handleSubmit}>
+      <Title level={5}>在表单中使用：</Title>
+      <Form onFinish={handleFinish}>
         <Form.Item
           label="选择地区"
           name="province"
-          labelCol={{ span: 2 }}
-          wrapperCol={{ span: 22 }}
-          initialValue="2001"
+          initialValue={[2001]}
           rules={[
             {
               required: true,
@@ -54,15 +49,13 @@ const CustomField: React.FC = () => {
             }
           ]}
         >
-          <HookSelect options={options} />
+          <CheckboxList column={3} single={true} list={options} />
         </Form.Item>
 
         <Form.Item
           label="选择地区(多选)"
           name="provinceMultiple"
-          labelCol={{ span: 2 }}
-          wrapperCol={{ span: 22 }}
-          initialValue={['2001', '2002']}
+          initialValue={[2001, 2002]}
           rules={[
             {
               required: true,
@@ -70,7 +63,7 @@ const CustomField: React.FC = () => {
             }
           ]}
         >
-          <HookSelect options={options} />
+          <CheckboxList column={3} list={options} />
         </Form.Item>
 
         <Form.Item>

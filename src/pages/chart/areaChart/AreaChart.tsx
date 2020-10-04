@@ -1,9 +1,8 @@
-import React from 'react';
-import { Row, Col } from 'antd';
-import Basic from './components/Basic';
-import Overlay from './components/Overlay';
+import React from 'react'
+import { Row, Col } from 'antd'
+import Basic from './components/Basic'
+import Overlay from './components/Overlay'
 class AreaChart extends React.Component {
-
   public render() {
     return (
       <div className="chart">
@@ -22,4 +21,4 @@ class AreaChart extends React.Component {
   }
 }
 
-export default AreaChart;
+export default AreaChart

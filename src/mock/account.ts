@@ -36,18 +36,14 @@ const accountInfo = Mock.mock({
     },
     {
       id: 5,
-      name: 'component'
-    },
-    {
-      id: 6,
       name: 'form'
     },
     {
-      id: 7,
+      id: 6,
       name: 'other'
     },
     {
-      id: 8,
+      id: 7,
       name: 'user'
     }
   ]

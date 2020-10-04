@@ -10,6 +10,7 @@ const ArticleEdit = lazy(() => import(/* webpackChunkName:"article-edit" */ '@/p
 const route: IRoute = {
   name: 'article',
   title: '文章管理',
+  path: '/article',
   icon: 'article',
   children: [
     {

@@ -6,6 +6,7 @@ export default interface IRoute extends RouteProps {
   name: string
   // title供菜单使用
   title: string
+  path: string
   // icon供菜单使用
   icon?: IconName
   // 是否在侧边菜单显示

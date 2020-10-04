@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { Menu } from 'antd'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { IRoute } from '@/router/innerRouter'
@@ -28,27 +28,32 @@ const renderThumb = (props: any) => {
 }
 
 const SiderBar: React.FC<IProps> = ({ routeMap }) => {
-  // 当前选择的菜单
-  const [activeMenu, setActiveMenu] = useState('Dashboard')
+  const location = useLocation()
 
-  //
+  // 当前激活的菜单
+  const [activeMenu, setActiveMenu] = useState('/dashboard')
+
+  useEffect(() => {
+    setActiveMenu(location.pathname)
+  }, [])
+
   const handelClickMenu = (e) => {
     setActiveMenu(e.key)
   }
 
   // 根据路由配置生成菜单
   const getMenuItem = (route: IRoute) => {
-    const { name, title, path, icon, children } = route
+    const { title, path, icon, children } = route
 
     if (children) {
       return (
-        <Menu.SubMenu key={name} icon={icon ? <SvgIcon name={icon} /> : null} title={title}>
+        <Menu.SubMenu key={path + ''} icon={icon ? <SvgIcon name={icon} /> : null} title={title}>
           {children.map((route: IRoute) => getMenuItem(route))}
         </Menu.SubMenu>
       )
     }
     return (
-      <Menu.Item key={name}>
+      <Menu.Item key={path + ''}>
         <NavLink path={path + ''} icon={icon} title={title} />
       </Menu.Item>
     )

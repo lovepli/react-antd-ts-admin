@@ -2,7 +2,6 @@ import { Button, Input, Row, Col, Modal, Table } from 'antd'
 import React from 'react'
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
 import { PagedTable, createColumnBuilder } from '@/components/table'
-import SectionTitle from '@/components/sectionTitle'
 import Edit from './components/Edit'
 import { IState, defaultState, IItem } from './state'
 import service from './service'
@@ -20,7 +19,11 @@ class User extends React.Component<{}, IState> {
       <div className="curd-table">
         <Row justify="space-between">
           <Col>
-            <SectionTitle name="用户列表" />
+            <div className="section-title">
+              <span className="section-title__tag" />
+              <span className="section-title__name">用户列表</span>
+            </div>
+
             <Button.Group>
               <Button type="primary" icon={<PlusOutlined />} onClick={this.handleEdit}>
                 新增用户
