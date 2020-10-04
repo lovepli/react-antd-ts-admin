@@ -1,4 +1,4 @@
-import config from '@/config'
+import { IPermission } from '@/model/common'
 import IRoute from './IRoute'
 import dashboardRoute from './modules/dashboard'
 import blankRoute from './modules/blank'
@@ -19,14 +19,6 @@ const routeMap = [
   componentRoute,
   otherRoute
 ]
-
-// 从路由权限表中获取到角色可访问的路由名称
-const getRouteNames = (roles: string[]) => {
-  const permission = config.permission
-  let routeNames: string[] = []
-  roles.forEach((role: string) => (routeNames = [...new Set([...routeNames, ...permission[role]])]))
-  return routeNames
-}
 
 // 根据路由名称获取可访问的路由表
 const filterRouteMap = (routeNames: string[], routeMap: IRoute[]) => {
@@ -49,8 +41,9 @@ const filterRouteMap = (routeNames: string[], routeMap: IRoute[]) => {
   return acceptedRouteMap
 }
 
-const initRoutes = (roles: string[]) => {
-  const routeNames = getRouteNames(roles)
+// 获取可访问的路由表
+const initRoutes = (permission: IPermission[]) => {
+  const routeNames = permission.map((item) => item.name)
   return filterRouteMap(routeNames, routeMap)
 }
 

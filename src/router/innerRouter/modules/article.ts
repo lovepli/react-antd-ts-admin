@@ -8,19 +8,19 @@ const ArticleList = lazy(() => import(/* webpackChunkName:"article-list" */ '@/p
 const ArticleEdit = lazy(() => import(/* webpackChunkName:"article-edit" */ '@/pages/article/edit'))
 
 const route: IRoute = {
-  name: 'Article',
+  name: 'article',
   title: '文章管理',
   icon: 'article',
   children: [
     {
-      name: 'ArticleList',
+      name: 'articleList',
       title: '文章列表',
       path: '/article/list',
       exact: true,
       component: ArticleList
     },
     {
-      name: 'ArticleEdit',
+      name: 'articleEdit',
       title: '编辑文章',
       path: '/article/edit',
       exact: true,

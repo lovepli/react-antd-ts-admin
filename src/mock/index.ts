@@ -1,8 +1,8 @@
-import Mock from 'mockjs';
+import Mock from 'mockjs'
 
-import account from './account';
-import baseTable from './baseTable';
-import user from './user';
+import account from './account'
+import baseTable from './baseTable'
+import user from './user'
 
 // 修复在使用 MockJS 情况下，设置 withCredentials = true，且未被拦截的跨域请求丢失 Cookies 的问题
 // https://github.com/nuysoft/Mock/issues/300
@@ -14,17 +14,15 @@ Mock.XHR.prototype.send = function () {
   this.proxy_send(...arguments)
 }
 
-
 // 延时数据返回,模拟loading效果
 Mock.setup({
   timeout: '300-800'
 })
 
+Mock.mock(/login/, 'post', account.login)
+Mock.mock(/accountInfo/, 'get', account.getAccountInfo)
 
-Mock.mock(/login/, 'post', account.login);
-Mock.mock(/userInfo/, 'get', account.getUserInfo);
+Mock.mock(/\/baseTable/, 'get', baseTable.getBaseTable)
 
-Mock.mock(/\/baseTable/, 'get', baseTable.getBaseTable);
-
-Mock.mock(/\/user\/userList/, 'post', user.getList);
-Mock.mock(/\/user\/userDetail/, 'post', user.getDetail);
+Mock.mock(/\/user\/userList/, 'post', user.getList)
+Mock.mock(/\/user\/userDetail/, 'post', user.getDetail)

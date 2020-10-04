@@ -8,19 +8,19 @@ const EditableTree = lazy(
 const Mask = lazy(() => import(/* webpackChunkName:"mask" */ '@/pages/component/mask'))
 
 const route: IRoute = {
-  name: 'Component',
+  name: 'component',
   title: '组件',
   icon: 'component',
   children: [
     {
-      name: 'EditableTree',
+      name: 'editableTree',
       title: '可编辑树',
       path: '/component/editableTree',
       exact: true,
       component: EditableTree
     },
     {
-      name: 'Mask',
+      name: 'mask',
       title: '遮罩',
       path: '/component/mask',
       exact: true,

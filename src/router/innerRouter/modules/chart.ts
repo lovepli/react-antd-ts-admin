@@ -13,40 +13,40 @@ const RadarChart = lazy(
 )
 
 const route: IRoute = {
-  name: 'Chart',
+  name: 'chart',
   title: '图表',
   icon: 'chart',
   children: [
     {
-      name: 'LineChart',
+      name: 'lineChart',
       title: '折线图',
       path: '/chart/lineChart',
       exact: true,
       component: LineChart
     },
     {
-      name: 'AreaChart',
+      name: 'areaChart',
       title: '面积图',
       path: '/chart/areaChart',
       exact: true,
       component: AreaChart
     },
     {
-      name: 'PieChart',
+      name: 'pieChart',
       title: '饼状图',
       path: '/chart/pieChart',
       exact: true,
       component: PieChart
     },
     {
-      name: 'PillarChart',
+      name: 'pillarChart',
       title: '柱状图',
       path: '/chart/pillarChart',
       exact: true,
       component: PillarChart
     },
     {
-      name: 'RadarChart',
+      name: 'radarChart',
       title: '雷达图',
       path: '/chart/radarChart',
       exact: true,

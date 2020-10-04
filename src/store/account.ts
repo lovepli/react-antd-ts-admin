@@ -1,14 +1,10 @@
 import { observable, action } from 'mobx'
-import { IUserInfo, IPermission } from '@/model/account'
+import { IUserInfo } from '@/model/common'
 class AccountStore {
-  // 账户信息
-  @observable account: IUserInfo = {}
-
   // token
   @observable token: string = sessionStorage.getItem('token') || ''
-
-  // 权限
-  @observable permissionList: IPermission[] = []
+  // 账户信息
+  @observable accountInfo: IUserInfo = { roles: [], permission: [] }
 
   @action
   public setToken(value: string) {
@@ -17,22 +13,8 @@ class AccountStore {
   }
 
   @action
-  public setAccount(value: any) {
-    this.account = value
-  }
-
-  @action
-  public setPermission() {
-    this.permissionList = [
-      {
-        id: 1,
-        name: 'deleteUser'
-      },
-      {
-        id: 2,
-        name: 'deleteArticle'
-      }
-    ]
+  public setAccountInfo(value: IUserInfo) {
+    this.accountInfo = value
   }
 }
 

@@ -1,9 +1,8 @@
-export interface IGetUserInfoPayload {
-  token: string
-}
+import { IUserInfo } from '@/model/common'
+// 获取当前登录用户的信息
+const getAccountInfo = (params: { token: string }): Promise<IUserInfo> =>
+  $request.get('/accountInfo', params)
 
-class Service {
-  public getUserInfo = (params: IGetUserInfoPayload) => $request.get('/userInfo', { params })
+export default {
+  getAccountInfo
 }
-
-export default new Service()

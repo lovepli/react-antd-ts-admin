@@ -10,7 +10,7 @@ import './style.less'
 
 const InnerLayout: React.FC = () => {
   const history = useHistory()
-  // 收购折叠侧边菜单
+  // 是否折叠侧边菜单
   const [collapse, setCollapse] = useState(false)
   // 路由配置
   const [routeMap, setRouteMap] = useState<IRoute[]>([])
@@ -20,9 +20,9 @@ const InnerLayout: React.FC = () => {
     if (!token) {
       history.replace('/account/login')
     } else {
-      service.getUserInfo({ token }).then((res) => {
-        accountStore.setAccount(res)
-        setRouteMap(initRoutes(res.roles))
+      service.getAccountInfo({ token }).then((res) => {
+        accountStore.setAccountInfo(res)
+        setRouteMap(initRoutes(res.permission))
       })
     }
   }, [])
@@ -36,9 +36,9 @@ const InnerLayout: React.FC = () => {
     <Layout className="inner-layout">
       <Layout.Sider
         className="inner-layout__sider"
-        width={180}
+        width={160}
         trigger={null}
-        collapsible
+        collapsible={true}
         collapsed={collapse}
       >
         <SideBar routeMap={routeMap} />

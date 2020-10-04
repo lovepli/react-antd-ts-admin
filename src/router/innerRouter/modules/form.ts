@@ -7,11 +7,11 @@ const CustomField = lazy(() => import( /* webpackChunkName:"customField" */ '@/p
 
 
 const route: IRoute = {
-  name: 'Form',
+  name: 'form',
   title: '表单',
   icon: 'form',
   children: [{
-    name: 'CustomField',
+    name: 'customField',
     title: '自定义表单控件',
     path: '/form/customField',
     exact: true,

@@ -42,8 +42,8 @@ const AvatarMenu: React.FC = () => {
   return (
     <Dropdown overlay={getMenuList}>
       <div className="header-bar-avatar">
-        <Avatar src={accountStore.account.avatar} />
-        <div className="username">{accountStore.account.username}</div>
+        <Avatar src={accountStore.accountInfo.avatar} />
+        <div className="username">{accountStore.accountInfo.name}</div>
       </div>
     </Dropdown>
   )

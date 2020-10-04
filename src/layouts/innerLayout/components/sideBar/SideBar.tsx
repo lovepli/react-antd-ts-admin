@@ -1,10 +1,9 @@
-// 侧边栏
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Menu } from 'antd'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { IRoute } from '@/router/innerRouter'
-import SvgIcon, { IconName } from '@/components/base/svg-icon'
+import SvgIcon from '@/components/base/svg-icon'
 import logo from '@/assets/images/logo.png'
 import NavLink from './NavLink'
 import './style.less'
@@ -13,6 +12,9 @@ interface IProps {
   routeMap: IRoute[]
 }
 
+/**
+ * 侧边菜单
+ */
 const renderThumb = (props: any) => {
   const { style, ...rest } = props
 
@@ -26,21 +28,21 @@ const renderThumb = (props: any) => {
 }
 
 const SiderBar: React.FC<IProps> = ({ routeMap }) => {
+  // 当前选择的菜单
+  const [activeMenu, setActiveMenu] = useState('Dashboard')
+
+  //
+  const handelClickMenu = (e) => {
+    setActiveMenu(e.key)
+  }
+
   // 根据路由配置生成菜单
   const getMenuItem = (route: IRoute) => {
     const { name, title, path, icon, children } = route
 
     if (children) {
       return (
-        <Menu.SubMenu
-          key={name}
-          title={
-            <span>
-              {icon ? <SvgIcon name={icon} /> : null}
-              <span>{title}</span>
-            </span>
-          }
-        >
+        <Menu.SubMenu key={name} icon={icon ? <SvgIcon name={icon} /> : null} title={title}>
           {children.map((route: IRoute) => getMenuItem(route))}
         </Menu.SubMenu>
       )
@@ -62,7 +64,7 @@ const SiderBar: React.FC<IProps> = ({ routeMap }) => {
           </Link>
         </div>
 
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['Dashboard']}>
+        <Menu theme="dark" mode="inline" selectedKeys={[activeMenu]} onClick={handelClickMenu}>
           {routeMap.map((route) => getMenuItem(route))}
         </Menu>
       </div>

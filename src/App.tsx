@@ -13,11 +13,6 @@ const InnerLayout = React.lazy(
 )
 
 const App: React.FC = () => {
-  // 获取一些全局状态
-  useEffect(() => {
-    accountStore.setPermission()
-  }, [])
-
   // 初始化常量表
   useEffect(() => {
     const initTable = async () => {

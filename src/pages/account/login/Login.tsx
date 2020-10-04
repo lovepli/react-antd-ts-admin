@@ -40,7 +40,7 @@ const Login: React.FC = () => {
       <Form onFinish={handleFinish}>
         <Form.Item
           label={<div className="form-item__label">账号</div>}
-          name="accountName"
+          name="account"
           validateTrigger="onBlur"
           initialValue="admin"
           rules={[{ required: true, message: '账号不能为空' }]}

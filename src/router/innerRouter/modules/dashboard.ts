@@ -4,7 +4,7 @@ import IRoute from '../IRoute'
 const Dashboard = lazy(() => import(/* webpackChunkName:"dashboard" */ '@/pages/dashboard'))
 
 const route: IRoute = {
-  name: 'Dashboard',
+  name: 'dashboard',
   title: '首页',
   icon: 'home',
   path: '/dashboard',

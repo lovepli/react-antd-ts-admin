@@ -5,7 +5,7 @@ import IRoute from '../IRoute'
 const Blank = lazy(() => import(/* webpackChunkName:"blank" */ '@/pages/blank'))
 
 const route: IRoute = {
-  name: 'Blank',
+  name: 'blank',
   title: '空白页',
   icon: 'blank',
   path: '/blank',
